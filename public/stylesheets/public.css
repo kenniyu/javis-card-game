@@ -1,11 +1,17 @@
 #wrapper {
-	position: absolute;
 	width: 100%;
-	top: 35%;
+	height: 100%;
     margin: auto;
 }
 
+#wrapper-inner {
+	position: relative;
+	top: 30%;
+}
+
 body {
+/*	background-image: url("/images/bg1.png");*/
+	background-color: black;
 	font: 15px "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
 }
 
@@ -27,35 +33,29 @@ a:hover {
 }
 
 .heading{
-	font-size: 30px;
+	font-size: 70px;
 	font-weight: bold;
 	text-transform: uppercase;
 	text-align: center;
+	color: rgba(255,155,255,0.8);
+	text-shadow: 2px 2px 50px rgba(255, 231, 0, 1);
 	margin: 0 0 20 0;
 }
 
 .btn {
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	border-width: 1px;
-	border-style: solid;
-	border-top-color: #cccccc;
-	border-left-color: #cccccc;
-	border-right-color: #aaaaaa;
-	border-bottom-color: #aaaaaa;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 	padding: 10px;
 	text-transform: uppercase;
-	font-size: 12px;
+	font-size: 14px;
+	color: #333333;
 	font-weight: bold;
 	cursor: pointer;
 	text-align: center;
+	text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .btn:hover{
-	border-top-color: #aaaaaa;
-	border-left-color: #aaaaaa;
-	border-right-color: #aaaaaa;
-	border-bottom-color: #aaaaaa;
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
 	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
 	box-shadow: 0 1px 2px rgba(0,0,0,.2);
@@ -73,7 +73,6 @@ a:hover {
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#E0FFFF', endColorstr='#97FFFF');
 	margin: auto;
 }
-/*E0EEE0*/
 
 #join-game:hover {
 	left: 130px;

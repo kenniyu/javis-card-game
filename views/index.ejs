@@ -1,19 +1,26 @@
 <head>
-	<link rel='stylesheet' href='/stylesheets/public.css' />
-	<title>javis - it's the best card game</title>
+	<link rel='stylesheet' href='../stylesheets/public.css' />
+	<title>javis - the best card game</title>
 	
 	<script type="text/javascript">
 		$().ready(function(){
 			$('#join-game').live("click", function(e){
 				document.location.href="game";
 			});
+			
+			$('#javis').fadeIn(1500);
+			$('#join-game').delay(2500).animate({"height": "show", "opacity": "show"});
 		});
 	</script>
 </head>
 
 <body>
 	<div id="wrapper">
-		<div class="heading">Javis</div>
-		<div class="btn" id="join-game">Play Me</div>
+		<div id="wrapper-inner">
+			
+			<div class="heading" id="javis" style="display:none;">Javis</div>
+			<div class="btn" id="join-game" style="display:none;">Play Me</div>
+			
+		</div>
 	</div>
 </body>

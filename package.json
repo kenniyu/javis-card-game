@@ -1,6 +1,5 @@
 {
-  "name": "javis",
-  "version": "0.7.6-31",
+  "version": "0.7.6-44",
   "private": true,
   "dependencies": {
     "express": "2.5.2",
@@ -11,5 +10,6 @@
   "scripts": {
     "start": "app.js"
   },
-  "subdomain": "javis"
+  "subdomain": "javis",
+  "name": "javis"
 }

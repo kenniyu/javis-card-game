@@ -2,6 +2,8 @@
 <head>
 <title>javis - big2 on roids</title>
 <link rel='stylesheet' href='../stylesheets/game.css' />
+
+<script src="/javascripts/jquery.animate-colors.js"></script>
 <script src="/nowjs/now.js"></script>
 <script type="text/javascript">
 
@@ -15,6 +17,13 @@ var chatFlashInterval, chatFlashTimeout;
 var windowFocused = false;
 var windowTitleInterval;
 var keyMapping = {49: 1, 50: 2, 51: 3, 52: 4, 53: 5, 54: 6, 55: 7, 56: 8, 57: 9, 48: 10, 113: 11, 119: 12, 101: 13, 114: 14, 116: 15, 121: 16, 117: 17, 105: 18}
+var cardValueMapping = {"A": 14, "2": 15, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "10": 10, "J": 11, "Q": 12, "K": 13};
+function urlify(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, function(url) {
+        return '<a href="' + url + '" target="_blank">' + url + '</a>';
+    });
+}
 
 Object.size = function(obj) {
     var size = 0, key;
@@ -479,6 +488,44 @@ $(document).ready(function(){
 		readjustDivs('#slot-bot-sc', true);
 	}
 	
+	// adding cards to my hand 
+	now.addToPersonalHand = function(cards){
+		var cardsToAnimate = [];
+		cards.forEach(function(card, index){
+			if (card.length == 3){
+				var cardToAddValue = 10;
+			}
+			else{
+				var cardToAddValue = cardValueMapping[card[0]];
+			}
+			var cardsInHand = $('#slot-bot').children();
+			for (var i = 0; i < cardsInHand.length; i++){
+				var cardDiv = cardsInHand[i];
+				var text = $(cardDiv).find('.index').text();
+				text = text.substring(0, text.length - 1);
+				var value = cardValueMapping[text];
+				if (value > cardToAddValue){
+					var cardHtml = getCardHtml(card, true);
+					var newCardDiv = $(cardHtml);
+					newCardDiv.find('.front').css("background-color", "#aaaaaa").delay(5000).animate({backgroundColor: '#ffffff'}, 4000);
+					newCardDiv.insertBefore(cardDiv);
+					console.log("inserted before card " + i);
+					break;
+				}
+				if (i == cardsInHand.length - 1){
+					var cardHtml = getCardHtml(card, true);
+					var newCardDiv = $(cardHtml);
+					newCardDiv.find('.front').css("background-color", "#aaaaaa").delay(5000).animate({backgroundColor: '#ffffff'}, 4000);
+					newCardDiv.insertAfter(cardDiv);
+					console.log("inserted before card " + i);
+				}
+			}
+		});
+		readjustDivs("#slot-bot", false);
+		readjustDivs('#slot-bot-sc', true);
+
+	}
+	
 	now.removeFromOtherHand = function(numCardsToRemove, playerIndex, numPlayers){
 		if (numPlayers == 2){
 			if (playerIndex == 0){
@@ -504,6 +551,37 @@ $(document).ready(function(){
 		}
 		for (var i = 0; i < numCardsToRemove; i++){
 			$(div).find('.card:first-child').remove();	
+		}
+		// readjust spacing of hand
+		readjustDivs(div, false);
+	}
+	
+	now.addToOtherHand = function(numCardsToAdd, playerIndex, numPlayers){
+		if (numPlayers == 2){
+			if (playerIndex == 0){
+				var div = "#slot-top";
+			}
+			else{
+				var div = "#slot-bot";
+			}
+		}
+		else{
+			if (playerIndex == 0){
+				var div = "#slot-left";
+			}
+			else if (playerIndex == 1){
+				var div = '#slot-top';
+			}
+			else if (playerIndex == 2){
+				var div = '#slot-right';
+			}
+			else if (playerIndex == 3){
+				var div = '#slot-bot';
+			}
+		}
+		for (var i = 0; i < numCardsToAdd; i++){
+			var cardHtml = getCardHtml("", false);
+			$(div).append($(cardHtml));
 		}
 		// readjust spacing of hand
 		readjustDivs(div, false);
@@ -594,6 +672,14 @@ $(document).ready(function(){
 		});
 	}
 	
+	now.removeFromDiscardPile = function(numCards){
+		var numDiscarded = $('#slot-discard').children().length;
+		for (var i = 0; i < numCards; i++){
+			var randomChildIndex = Math.floor(Math.random()*numDiscarded) + 1;
+			$('#slot-discard .card:nth-child('+randomChildIndex+')').remove();
+		}
+	}
+	
 	$('.card').live("click", function(e){
 		if ($(this).find('.front').length > 0 && $(this).closest("#slot-middle").length == 0){
 			if ($(this).hasClass('selected')){
@@ -634,7 +720,7 @@ $(document).ready(function(){
 			$('#chat-messages').append("<span class='chat-message passive'>"+name+" "+text+"<br/></span>");
 		}
 		else if (type == "chat"){
-			$('#chat-messages').append("<span class='chat-message active'><strong>"+name+":</strong> "+text+"<br/></span>");
+			$('#chat-messages').append("<span class='chat-message active'><strong>"+name+":</strong> "+urlify(text)+"<br/></span>");
 		}
 		if ($("#chat-header").hasClass("min")){
 			if (type == "chat"){

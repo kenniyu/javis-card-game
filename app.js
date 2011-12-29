@@ -280,8 +280,51 @@ function assignHands(){
 	}
 }
 
-// a player has just played a hand, so update everyone's view of his hand
+function addToPlayerHand(cards, playerId){
+	// this player just drew some cards, so update everyone's view of his hand
+	console.log(cards);
+	var playerHand = usersHash[playerId]["hand"];
+	nowjs.getClient(playerId, function(){
+		this.now.addToPersonalHand(cards);
+	});
+	
+	// update everyone elses view of the player's hand
+		
+	var playerIds = gameState["players"];		// get array of player ids
+	var numPlayers = playerIds.length;	// get number of players in the game (leavers, finishers included)
+	var playerIndex = playerIds.indexOf(playerId);
+	for (var i = playerIndex + 1; i < playerIndex + numPlayers; i++){
+		var otherPlayerId = playerIds[i%numPlayers];
+		var otherPlayerIndex = playerIds.indexOf(otherPlayerId);
+		
+		var relativeIndex = 0;
+		for (var j = otherPlayerIndex + 1; j < otherPlayerIndex + numPlayers; j++){
+			if (playerIds[j%numPlayers] == playerId){
+				break;
+			}
+			relativeIndex++;
+		}
+		
+		if (usersHash[otherPlayerId] != undefined){
+			nowjs.getClient(otherPlayerId, function(){
+				// this.now.dealOtherHand(dummyHand, relativeIndex, numPlayers, false);
+				this.now.addToOtherHand(cards.length, relativeIndex, numPlayers);
+			});
+		}
+	}
+	
+	var observerIds = getObserverIds();
+	observerIds.forEach(function(observerId){
+		// for each observer, update their view of the player's hand
+		nowjs.getClient(observerId, function(){
+			this.now.addToOtherHand(cards.length, relativeIndex, numPlayers);
+			// this.now.dealOtherHand(dummyHand, playerIndex, numPlayers, false);
+		});
+	});
+}
+
 function updatePlayerHands(hand, playerId){
+	// a player has just played a hand, so update everyone's view of his hand
 	// playerId is the player who just played, update his frontend
 	var playerHand = usersHash[playerId]["hand"];
 	nowjs.getClient(playerId, function(){
@@ -413,8 +456,12 @@ everyone.now.sendMove = function(hand){
 		everyone.now.addToCurrentPlay(hand);	
 		
 		// LOGISTICS
+		// check for 5's
+		checkForFives(hand, clientId);
+		
 		// check if the player who just played now has an empty hand
 		checkEmptyHand(clientId);
+		
 		if (canPlayHigher(hand)){
 			// the hand just played can be beaten, so alert the next player to make a move
 			alertNextPlayer();
@@ -437,22 +484,49 @@ everyone.now.sendMove = function(hand){
 	}
 }
 
+function checkForFives(hand, clientId){
+	var numFives = 0;
+	for (var i = 0; i < hand.length; i++){
+		var card = hand[i];
+		if (card[0] == "5"){
+			numFives++;
+		}
+	}
+	var numDiscard = gameState["discardPile"].length;
+	var cardsToAdd = [];
+	for (var i = 0; i < Math.min(numFives, numDiscard); i++){
+		var randomCard = gameState["discardPile"].splice(Math.random()*gameState["discardPile"].length, 1);
+		cardsToAdd.push(randomCard);
+		usersHash[clientId]["hand"].push(randomCard);
+	}
+	cardsToAdd = cardsToAdd.flatten();
+	sortHand(usersHash[clientId]["hand"]);
+	addToPlayerHand(cardsToAdd, clientId);
+	everyone.now.removeFromDiscardPile(cardsToAdd.length);
+}
+
 function canPlayHigher(hand){	
 	// can hand be beaten?
 	if (hand.length == 1){
 		var card = hand[0];
-		if (card[0] == "2"){
+		if (card[0] == "2" || card[0] == "8"){
 			return false;
 		}
 	}
 	else if (hand.length == 2){
-		if (getHandValue(hand) == 30){
+		var handValue = getHandValue(hand);
+		if (handValue == 30 || handValue == 16){
 			return false;
 		}
 	}
 	else if (hand.length == 5){
 		if (isFourKind(hand) && getFourKindValue(hand) == 60){
 			return false;
+		}
+		for (var i = 0; i < hand.length; i++){
+			if (hand[i][0] == "8"){
+				return false;
+			}
 		}
 	}
 	return true;
