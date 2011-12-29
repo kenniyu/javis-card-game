@@ -1,0 +1,782 @@
+<html>
+<head>
+<title>javis - big2 on roids</title>
+<link rel='stylesheet' href='../stylesheets/game.css' />
+<script src="/nowjs/now.js"></script>
+<script type="text/javascript">
+
+
+var players = [];
+var gameId = 0;
+var currentCombosPlayed = 0;
+var randomLeftOffset = 0;
+
+var chatFlashInterval, chatFlashTimeout;
+var windowFocused = false;
+var windowTitleInterval;
+var keyMapping = {49: 1, 50: 2, 51: 3, 52: 4, 53: 5, 54: 6, 55: 7, 56: 8, 57: 9, 48: 10, 113: 11, 119: 12, 101: 13, 114: 14, 116: 15, 121: 16, 117: 17, 105: 18}
+
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
+function ping(){
+	document.getElementById('ping').play();
+}
+
+// card helper functions
+function getCardHtml(card, shown){
+	if (card.length == 3) {
+		var val = '10';
+		var suit = card[2];
+	}
+	else {
+		var val = card[0];
+		var suit = card[1];
+	}
+	
+	var htmlString = "";
+	if (shown){
+	switch (suit){
+		case "C":
+			switch (val){
+				case 'A':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>A<br />&clubs;</div><div class='ace'>&clubs;</div></div></div>";
+					break;
+				case '2':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>2<br />&clubs;</div><div class='spotB1'>&clubs;</div><div class='spotB5'>&clubs;</div></div></div>";
+					break;
+				case '3':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>3<br />&clubs;</div><div class='spotB1'>&clubs;</div><div class='spotB3'>&clubs;</div><div class='spotB5'>&clubs;</div></div></div>";
+					break;
+				case '4':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>4<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>";
+					break;
+				case '5':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>5<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotB3'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>";
+					break;
+				case '6':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>6<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA3'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC3'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>";
+					break;
+				case '7':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>7<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA3'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotB2'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC3'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>";
+					break;
+				case '8':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>8<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA3'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotB2'>&clubs;</div><div class='spotB4'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC3'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>";
+					break;					
+				case '9':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>9<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA2'>&clubs;</div><div class='spotA4'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotB3'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC2'>&clubs;</div><div class='spotC4'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>";
+					break;
+				case '10':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>10<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA2'>&clubs;</div><div class='spotA4'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotB2'>&clubs;</div><div class='spotB4'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC2'>&clubs;</div><div class='spotC4'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>";
+					break;
+				case 'J':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>J<br />&clubs;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/jack.gif' alt='' /><div class='spotA1'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>";
+					break;
+				case 'Q':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>Q<br />&clubs;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/queen.gif' alt='' /><div class='spotA1'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>";
+					break;
+				case 'K':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='c'>K<br />&clubs;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/king.gif' alt='' /><div class='spotA1'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>";
+					break;
+			}
+			break;
+		case "D":
+			switch (val){
+				case 'A':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>A<br />&diams;</div><div class='ace'>&diams;</div></div></div>";
+					break;
+				case '2':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>2<br />&diams;</div><div class='spotB1'>&diams;</div><div class='spotB5'>&diams;</div></div></div>";
+					break;
+				case '3':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>3<br />&diams;</div><div class='spotB1'>&diams;</div><div class='spotB3'>&diams;</div><div class='spotB5'>&diams;</div></div></div>";
+					break;
+				case '4':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>4<br />&diams;</div><div class='spotA1'>&diams;</div><div class='spotA5'>&diams;</div><div class='spotC1'>&diams;</div><div class='spotC5'>&diams;</div></div></div>";
+					break;
+				case '5':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>5<br />&diams;</div><div class='spotA1'>&diams;</div><div class='spotA5'>&diams;</div><div class='spotB3'>&diams;</div><div class='spotC1'>&diams;</div><div class='spotC5'>&diams;</div></div></div>";
+					break;
+				case '6':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>6<br />&diams;</div><div class='spotA1'>&diams;</div><div class='spotA3'>&diams;</div><div class='spotA5'>&diams;</div><div class='spotC1'>&diams;</div><div class='spotC3'>&diams;</div><div class='spotC5'>&diams;</div></div></div>";
+					break;
+				case '7':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>7<br />&diams;</div><div class='spotA1'>&diams;</div><div class='spotA3'>&diams;</div><div class='spotA5'>&diams;</div><div class='spotB2'>&diams;</div><div class='spotC1'>&diams;</div><div class='spotC3'>&diams;</div><div class='spotC5'>&diams;</div></div></div>";
+					break;
+				case '8':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>8<br />&diams;</div><div class='spotA1'>&diams;</div><div class='spotA3'>&diams;</div><div class='spotA5'>&diams;</div><div class='spotB2'>&diams;</div><div class='spotB4'>&diams;</div><div class='spotC1'>&diams;</div><div class='spotC3'>&diams;</div><div class='spotC5'>&diams;</div></div></div>";
+					break;					
+				case '9':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>9<br />&diams;</div><div class='spotA1'>&diams;</div><div class='spotA2'>&diams;</div><div class='spotA4'>&diams;</div><div class='spotA5'>&diams;</div><div class='spotB3'>&diams;</div><div class='spotC1'>&diams;</div><div class='spotC2'>&diams;</div><div class='spotC4'>&diams;</div><div class='spotC5'>&diams;</div></div></div>";
+					break;
+				case '10':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>10<br />&diams;</div><div class='spotA1'>&diams;</div><div class='spotA2'>&diams;</div><div class='spotA4'>&diams;</div><div class='spotA5'>&diams;</div><div class='spotB2'>&diams;</div><div class='spotB4'>&diams;</div><div class='spotC1'>&diams;</div><div class='spotC2'>&diams;</div><div class='spotC4'>&diams;</div><div class='spotC5'>&diams;</div></div></div>";
+					break;
+				case 'J':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>J<br />&diams;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/jack.gif' alt='' /><div class='spotA1'>&diams;</div><div class='spotC5'>&diams;</div></div></div>";
+					break;
+				case 'Q':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>Q<br />&diams;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/queen.gif' alt='' /><div class='spotA1'>&diams;</div><div class='spotC5'>&diams;</div></div></div>";
+					break;
+				case 'K':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='d'>K<br />&diams;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/king.gif' alt='' /><div class='spotA1'>&diams;</div><div class='spotC5'>&diams;</div></div></div>";
+					break;
+			}
+			break;
+		case "H":
+			switch (val){
+				case 'A':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>A<br />&hearts;</div><div class='ace'>&hearts;</div></div></div>";
+					break;
+				case '2':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>2<br />&hearts;</div><div class='spotB1'>&hearts;</div><div class='spotB5'>&hearts;</div></div></div>";
+					break;
+				case '3':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>3<br />&hearts;</div><div class='spotB1'>&hearts;</div><div class='spotB3'>&hearts;</div><div class='spotB5'>&hearts;</div></div></div>";
+					break;
+				case '4':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>4<br />&hearts;</div><div class='spotA1'>&hearts;</div><div class='spotA5'>&hearts;</div><div class='spotC1'>&hearts;</div><div class='spotC5'>&hearts;</div></div></div>";
+					break;
+				case '5':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>5<br />&hearts;</div><div class='spotA1'>&hearts;</div><div class='spotA5'>&hearts;</div><div class='spotB3'>&hearts;</div><div class='spotC1'>&hearts;</div><div class='spotC5'>&hearts;</div></div></div>";
+					break;
+				case '6':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>6<br />&hearts;</div><div class='spotA1'>&hearts;</div><div class='spotA3'>&hearts;</div><div class='spotA5'>&hearts;</div><div class='spotC1'>&hearts;</div><div class='spotC3'>&hearts;</div><div class='spotC5'>&hearts;</div></div></div>";
+					break;
+				case '7':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>7<br />&hearts;</div><div class='spotA1'>&hearts;</div><div class='spotA3'>&hearts;</div><div class='spotA5'>&hearts;</div><div class='spotB2'>&hearts;</div><div class='spotC1'>&hearts;</div><div class='spotC3'>&hearts;</div><div class='spotC5'>&hearts;</div></div></div>";
+					break;
+				case '8':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>8<br />&hearts;</div><div class='spotA1'>&hearts;</div><div class='spotA3'>&hearts;</div><div class='spotA5'>&hearts;</div><div class='spotB2'>&hearts;</div><div class='spotB4'>&hearts;</div><div class='spotC1'>&hearts;</div><div class='spotC3'>&hearts;</div><div class='spotC5'>&hearts;</div></div></div>";
+					break;					
+				case '9':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>9<br />&hearts;</div><div class='spotA1'>&hearts;</div><div class='spotA2'>&hearts;</div><div class='spotA4'>&hearts;</div><div class='spotA5'>&hearts;</div><div class='spotB3'>&hearts;</div><div class='spotC1'>&hearts;</div><div class='spotC2'>&hearts;</div><div class='spotC4'>&hearts;</div><div class='spotC5'>&hearts;</div></div></div>";
+					break;
+				case '10':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>10<br />&hearts;</div><div class='spotA1'>&hearts;</div><div class='spotA2'>&hearts;</div><div class='spotA4'>&hearts;</div><div class='spotA5'>&hearts;</div><div class='spotB2'>&hearts;</div><div class='spotB4'>&hearts;</div><div class='spotC1'>&hearts;</div><div class='spotC2'>&hearts;</div><div class='spotC4'>&hearts;</div><div class='spotC5'>&hearts;</div></div></div>";
+					break;
+				case 'J':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>J<br />&hearts;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/jack.gif' alt='' /><div class='spotA1'>&hearts;</div><div class='spotC5'>&hearts;</div></div></div>";
+					break;
+				case 'Q':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>Q<br />&hearts;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/queen.gif' alt='' /><div class='spotA1'>&hearts;</div><div class='spotC5'>&hearts;</div></div></div>";
+					break;
+				case 'K':
+					htmlString += "<div class='card'><div class='front red'><div class='index' data-suit='h'>K<br />&hearts;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/king.gif' alt='' /><div class='spotA1'>&hearts;</div><div class='spotC5'>&hearts;</div></div></div>";
+					break;
+			}
+			break;
+		case "S":
+			switch (val){
+				case 'A':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>A<br />&spades;</div><div class='ace'>&spades;</div></div></div>";
+					break;
+				case '2':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>2<br />&spades;</div><div class='spotB1'>&spades;</div><div class='spotB5'>&spades;</div></div></div>";
+					break;
+				case '3':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>3<br />&spades;</div><div class='spotB1'>&spades;</div><div class='spotB3'>&spades;</div><div class='spotB5'>&spades;</div></div></div>";
+					break;
+				case '4':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>4<br />&spades;</div><div class='spotA1'>&spades;</div><div class='spotA5'>&spades;</div><div class='spotC1'>&spades;</div><div class='spotC5'>&spades;</div></div></div>";
+					break;
+				case '5':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>5<br />&spades;</div><div class='spotA1'>&spades;</div><div class='spotA5'>&spades;</div><div class='spotB3'>&spades;</div><div class='spotC1'>&spades;</div><div class='spotC5'>&spades;</div></div></div>";
+					break;
+				case '6':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>6<br />&spades;</div><div class='spotA1'>&spades;</div><div class='spotA3'>&spades;</div><div class='spotA5'>&spades;</div><div class='spotC1'>&spades;</div><div class='spotC3'>&spades;</div><div class='spotC5'>&spades;</div></div></div>";
+					break;
+				case '7':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>7<br />&spades;</div><div class='spotA1'>&spades;</div><div class='spotA3'>&spades;</div><div class='spotA5'>&spades;</div><div class='spotB2'>&spades;</div><div class='spotC1'>&spades;</div><div class='spotC3'>&spades;</div><div class='spotC5'>&spades;</div></div></div>";
+					break;
+				case '8':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>8<br />&spades;</div><div class='spotA1'>&spades;</div><div class='spotA3'>&spades;</div><div class='spotA5'>&spades;</div><div class='spotB2'>&spades;</div><div class='spotB4'>&spades;</div><div class='spotC1'>&spades;</div><div class='spotC3'>&spades;</div><div class='spotC5'>&spades;</div></div></div>";
+					break;					
+				case '9':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>9<br />&spades;</div><div class='spotA1'>&spades;</div><div class='spotA2'>&spades;</div><div class='spotA4'>&spades;</div><div class='spotA5'>&spades;</div><div class='spotB3'>&spades;</div><div class='spotC1'>&spades;</div><div class='spotC2'>&spades;</div><div class='spotC4'>&spades;</div><div class='spotC5'>&spades;</div></div></div>";
+					break;
+				case '10':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>10<br />&spades;</div><div class='spotA1'>&spades;</div><div class='spotA2'>&spades;</div><div class='spotA4'>&spades;</div><div class='spotA5'>&spades;</div><div class='spotB2'>&spades;</div><div class='spotB4'>&spades;</div><div class='spotC1'>&spades;</div><div class='spotC2'>&spades;</div><div class='spotC4'>&spades;</div><div class='spotC5'>&spades;</div></div></div>";
+					break;
+				case 'J':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>J<br />&spades;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/jack.gif' alt='' /><div class='spotA1'>&spades;</div><div class='spotC5'>&spades;</div></div></div>";
+					break;
+				case 'Q':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>Q<br />&spades;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/queen.gif' alt='' /><div class='spotA1'>&spades;</div><div class='spotC5'>&spades;</div></div></div>";
+					break;
+				case 'K':
+					htmlString += "<div class='card'><div class='front'><div class='index' data-suit='s'>K<br />&spades;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/king.gif' alt='' /><div class='spotA1'>&spades;</div><div class='spotC5'>&spades;</div></div></div>";
+					break;
+			}
+			break;
+		}
+	}
+	else{
+		htmlString += "<div class='card'></div>";	
+	}
+	return htmlString;
+}
+
+$(document).ready(function(){
+	var top = 30;
+	var left = 0;
+	
+	now.showCurrentPlayer = function(clientId){
+		$('.player-name').each(function(){
+			if ($(this).attr("data-id") == clientId){
+				$(this).css("color", "red").css("font-weight", "bold");
+			}
+			else{
+				$(this).css("color", "black").css("font-weight", "normal");
+			}
+		});
+	}
+	
+	now.removeUser = function(clientId){
+		$('#user-'+clientId).remove();
+	}
+	
+	// client button updates
+	now.removeStartButton = function(){
+		$('#start-btn').remove();
+	}
+	
+	now.removeGameOverButton = function(){
+		$('#game-over-btn').remove();
+	}
+	
+	now.removeWaitForGame = function(){
+		$('#wait-for-game').remove();
+	}
+	
+	now.showStartButton = function(){
+		if ($('#start-btn').length == 0){
+			$('#game-controls').prepend('<span id="start-btn" class="btn">Start</span>');
+		}
+	}
+	
+	now.showMakeMoveButton = function(){
+		if ($('#make-move-btn').length == 0){
+			$('#game-controls').append('<span id="make-move-btn" class="btn">Make move</span>');
+		}
+	}
+	
+	now.showMakePassMoveButton = function(){
+		if ($('#make-pass-move-btn').length == 0){
+			$('#game-controls').append('<span id="make-pass-move-btn" class="btn">Pass</span>');
+		}
+	}
+	
+	now.showWaitForGame = function(){
+		if ($('#wait-for-game').length == 0){
+			$('#game-controls').append('<span id="wait-for-game">Waiting for more players...</span>');
+		}
+	}
+	
+	now.showAutoPass = function(){
+		// auto passing
+		if ($('#auto-pass').length == 0){
+			$('#game-controls').append('<span id="auto-pass">Passing...</span>');
+		}
+	}
+	
+	now.removeAutoPass = function(){
+		$('#auto-pass').remove();
+	}
+	
+	now.handleGameOver = function(places){
+		$('#make-move-btn').remove();
+		$('#make-pass-move-btn').remove();
+		$('#game-controls').append('<span id="game-over-btn" class="btn">Game Over (Play Again)</span>');
+	}
+	
+	// client button actions
+	$('#start-btn').live("click", function(e){
+		now.initGame();
+		$(this).remove();
+	});
+	
+	$('#make-move-btn').live("click", function(e){
+		var selectedCards = $('.selected');
+		var hand = [];
+		var value;
+		var text;
+		selectedCards.each(function(){
+			text = $(this).find('.index').text();
+			text = text.substring(0, text.length-1);
+			var suit = $(this).find('.index').attr('data-suit');
+			if (suit == 'c' || suit == 'd' || suit == 'h' || suit == 's'){
+				text += suit.toUpperCase();
+			}
+			hand.push(text);
+		});
+		$(this).remove();
+		$('#make-pass-move-btn').remove();
+		now.sendMove(hand);
+	});
+	
+	$('#make-pass-move-btn').live("click", function(e){
+		$('#make-move-btn').remove();
+		$(this).remove();
+		now.sendPassMove();
+	});
+	
+	$('#game-over-btn').live("click", function(e){
+		$(this).remove();
+		now.waitForGame();
+	});
+	
+	// client dealing	
+	now.dealPersonalHand = function(hand){
+		$('#slot-bot').empty();
+		hand.forEach(function(card, index){
+			var leftOffset = index*(520-100)/(hand.length-1);
+			var cardHtml = getCardHtml(card, true);
+			var cardDiv = $(''+cardHtml).css("left", leftOffset);
+			$('#slot-bot').append(cardDiv);
+		});
+		showShortcuts();
+	}
+	
+	function showShortcuts(){
+		$('#slot-bot-sc').empty();
+		var numCards = $('#slot-bot').children().length;
+		$('#slot-bot').children().each(function(index, cardDiv){
+			if (index <= 8){
+				var scDiv = $('<div>'+(index+1)+'</div>');
+			}
+			else if (index == 9){
+				var scDiv = $('<div>0</div>');
+			}
+			else if (index == 10){
+				var scDiv = $('<div>q</div>');
+			}
+			else if (index == 11){
+				var scDiv = $('<div>w</div>');
+			}
+			else if (index == 12){
+				var scDiv = $('<div>e</div>');
+			}
+			else if (index == 13){
+				var scDiv = $('<div>r</div>');
+			}
+			else if (index == 14){
+				var scDiv = $('<div>t</div>');
+			}
+			else if (index == 15){
+				var scDiv = $('<div>y</div>');
+			}
+			else if (index == 16){
+				var scDiv = $('<div>u</div>');
+			}
+			else if (index == 17){
+				var scDiv = $('<div>i</div>');
+			}
+			scDiv.css("position", "absolute").css("left", $(cardDiv).position().left);
+			$('#slot-bot-sc').append(scDiv);
+		});
+		$('#slot-bot-sc').hide().fadeIn(1000);
+		readjustDivs("#slot-bot-sc", true);
+		
+	}
+	
+	now.dealOtherHand = function(hand, playerIndex, numPlayers, show){
+		if (numPlayers == 2){
+			if (playerIndex == 0){
+				var div = "#slot-top";
+			}
+			else{
+				var div = "#slot-bot";
+			}
+		}
+		else{
+			if (playerIndex == 0){
+				var div = "#slot-left";
+			}
+			else if (playerIndex == 1){
+				var div = '#slot-top';
+			}
+			else if (playerIndex == 2){
+				var div = '#slot-right';
+			}
+			else if (playerIndex == 3){
+				var div = '#slot-bot';
+			}
+		}
+		$(div).empty();
+		hand.forEach(function(card, index){
+			var leftOffset = index*($(div).width()-100)/(hand.length-1);
+			var cardHtml = getCardHtml("", false);
+			var cardDiv = $(''+cardHtml).css("left", leftOffset);
+			$(div).append(cardDiv);
+		});
+	}
+	
+	// show names of players on their cards
+	now.showPlayerName = function(playerIndex, playerName, playerId, numPlayers){
+		if (numPlayers == 2){
+			if (playerIndex == 0){
+				var div = "#slot-top-label";	
+			}
+			else{
+				var div = "#slot-bot-label";
+			}
+		}
+		else{
+			if (playerIndex == 0){
+				var div = '#slot-left-label';
+			}
+			else if (playerIndex == 1){
+				var div = '#slot-top-label';
+			}
+			else if (playerIndex == 2){
+				var div = '#slot-right-label';
+			}
+			else if (playerIndex == 3){
+				var div = '#slot-bot-label';
+			}
+		}
+		$(div).text(playerName).attr("data-id", playerId);
+	}
+	
+	// add cards to slot middle
+	now.addToCurrentPlay = function(hand){
+		randomLeftOffset = 50 + Math.floor(30*Math.random());
+		hand.forEach(function(card, index){
+			var cardHtml = getCardHtml(card, true);
+			var leftOffset = index * 30 + randomLeftOffset;			
+			var cardDiv = $(''+cardHtml).css("left", leftOffset).css("top", currentCombosPlayed%5*25);
+			$('#slot-middle').append(cardDiv);
+		});
+		currentCombosPlayed ++;
+	}
+	
+	// removing card from my hand
+	now.removeFromPersonalHand = function(hand){
+		var text;
+		$('#slot-bot').find('.card').each(function(){
+			text = $(this).find('.index').text();
+			text = text.substring(0, text.length-1);
+			var suit = $(this).find('.index').attr('data-suit');
+			if (suit == 'c' || suit == 'd' || suit == 'h' || suit == 's'){
+				text += suit.toUpperCase();
+			}
+			if (hand.indexOf(text) > -1){
+				$(this).remove();
+			}
+		});
+		
+		hand.forEach(function(){
+			$('#slot-bot-sc').children(":last-child").remove();
+		})
+		// readjust spacing of hand
+		readjustDivs('#slot-bot', false);
+		readjustDivs('#slot-bot-sc', true);
+	}
+	
+	now.removeFromOtherHand = function(numCardsToRemove, playerIndex, numPlayers){
+		if (numPlayers == 2){
+			if (playerIndex == 0){
+				var div = "#slot-top";
+			}
+			else{
+				var div = "#slot-bot";
+			}
+		}
+		else{
+			if (playerIndex == 0){
+				var div = "#slot-left";
+			}
+			else if (playerIndex == 1){
+				var div = '#slot-top';
+			}
+			else if (playerIndex == 2){
+				var div = '#slot-right';
+			}
+			else if (playerIndex == 3){
+				var div = '#slot-bot';
+			}
+		}
+		for (var i = 0; i < numCardsToRemove; i++){
+			$(div).find('.card:first-child').remove();	
+		}
+		// readjust spacing of hand
+		readjustDivs(div, false);
+	}
+	
+	function readjustDivs(div, margin){
+		var numCards = $(div).children().length;
+		var increment = 420/(numCards - 1);
+		
+		if (increment <= 50){
+			var leftMargin = 0;
+		}
+		else{
+			increment = 50;
+			var leftMargin = (420 - (numCards-1)*increment)/2;	
+		}
+		$(div).children().each(function(index, cardDiv){
+			if (margin){
+				if (numCards == 1){
+					var leftOffset = leftMargin+index*increment+100/2-2;
+				}
+				else{
+					var leftOffset = leftMargin+index*increment+increment/2-2;	
+				}
+			}
+			else{
+				var leftOffset = leftMargin+index*increment;
+			}
+			$(this).css("left", leftOffset);
+		});
+		
+	}
+	
+	now.showErrorMessage = function(message){
+		$('#error-message').text(message).show().delay(3000).fadeOut();
+	}
+	
+	now.clearStage = function(){
+		currentCombosPlayed = 0;
+		$('#slot-middle :not(#slot-middle-label)').remove();
+	}
+	
+	now.clearDiscardPile = function(){
+		$('#slot-discard :not(#slot-discard-label)').remove();
+	}
+	
+	now.clearSlots = function(){
+		$('.slot').empty();
+		$('.player-name').empty();
+	}
+	
+	now.removePlayer = function(relativeIndex, numPlayers){
+		if (numPlayers == 2){
+			if (relativeIndex == 0){
+				var div = "#slot-top";
+			}
+			else{
+				var div = "#slot-bot";
+			}
+		}
+		else{
+			if (relativeIndex == 0){
+				var div = "#slot-left";
+			}
+			else if (relativeIndex == 1){
+				var div = '#slot-top';
+			}
+			else if (relativeIndex == 2){
+				var div = '#slot-right';
+			}
+			else if (relativeIndex == 3){
+				var div = '#slot-bot';
+			}
+		}
+		$(div).empty();
+	}
+	
+	now.addToDiscardPile = function(dummyHand){
+		// $('#slot-discard :not(#slot-discard-label)').remove();
+		dummyHand.forEach(function(card, index){
+			var cardHtml = getCardHtml(card, false);			
+			var left = Math.random()/3*100;
+			var top = Math.random()/2.3*100;
+			
+			var cardDiv = $(''+cardHtml).css("left", left+"%").css("top", top+"%");
+			
+			$('#slot-discard').append(cardDiv);
+		});
+	}
+	
+	$('.card').live("click", function(e){
+		if ($(this).find('.front').length > 0 && $(this).closest("#slot-middle").length == 0){
+			if ($(this).hasClass('selected')){
+				$(this).animate({top: '+=40'}, 10, "linear");
+			}
+			else{
+				$(this).animate({top: '-=40'}, 10, "linear");
+			}
+			$(this).toggleClass('selected');
+		}
+	});
+	
+	$('#chat-submit').live("keypress", function(e){
+		var message = $(this).val().trim();
+		if (e.keyCode == 13 && message != ""){
+			now.submitChat(message);
+			$(this).val("");
+		}
+	});
+	
+	$('#nickname-submit').live("keypress focusout", function(e){
+		console.log(e.type);
+		if (e.keyCode == 13 || e.type == "focusout"){
+			$('#chat-submit').focus();
+			var name = $(this).val().trim();
+			if (name != ""){
+				now.submitNickname(name);	
+			}
+		}
+	});
+	
+	now.updateChat = function(messageHash){
+		var type = messageHash["type"];
+		var text = messageHash["text"];
+		var name = messageHash["userInfo"]["name"];
+		var id = messageHash["userInfo"]["id"];
+		if (type == "emote"){
+			$('#chat-messages').append("<span class='chat-message passive'>"+name+" "+text+"<br/></span>");
+		}
+		else if (type == "chat"){
+			$('#chat-messages').append("<span class='chat-message active'><strong>"+name+":</strong> "+text+"<br/></span>");
+		}
+		if ($("#chat-header").hasClass("min")){
+			if (type == "chat"){
+				startChatFlash();
+			}
+		}
+		else{
+			$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 100);
+		}
+	}
+	
+	$('#chat-header').live("click", function(e){
+		$(this).toggleClass("min");
+		$('#chat-messages').toggle();
+		$('#chat-input').toggle();
+		$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 1);
+		stopChatFlash();
+	});
+	
+	$('#scoreboard-header').live("click", function(e){
+		$(this).toggleClass("min");
+		$('#scoreboard-list').toggle();
+	});
+	
+	function startChatFlash(){
+		if (chatFlashInterval == null){
+			chatFlashInterval = setInterval(function(){ $("#chat-header").toggleClass("alert"); }, 1200);
+			chatFlashTimeout = setTimeout(function(){
+				clearInterval(chatFlashInterval);
+				chatFlashInterval = null;
+				$('#chat-header').addClass("alert");
+			}, 6000);
+		}
+	}
+	
+	function stopChatFlash(){
+		clearInterval(chatFlashInterval);
+		clearTimeout(chatFlashTimeout);
+		chatFlashInterval = null;
+		$('#chat-header').removeClass("alert");
+	}
+	
+	// scoreboard
+	now.updateScoreboard = function(usersHash){
+		$('#scoreboard-list').empty();
+		for (var clientId in usersHash){
+			if (usersHash[clientId]["type"] == "Observer"){
+				$('#scoreboard-list').append('<div class="user-'+clientId+' score passive"><strong>'+usersHash[clientId]["name"]+':</strong> '+usersHash[clientId]["score"]+'</div>');
+			}
+			else{
+				$('#scoreboard-list').append('<div class="user-'+clientId+' score"><strong>'+usersHash[clientId]["name"]+':</strong> '+usersHash[clientId]["score"]+'</div>');
+			}
+		}
+	}
+	
+	// notification of turn
+	now.notifyTurn = function(){
+		var counter = 0;
+		if (windowFocused == false){
+			ping();
+			windowTitleInterval = setInterval(function(){
+				if (counter % 2 == 0){
+					document.title = "javis - YOUR MOVE";
+				}
+				else{
+					document.title = "javis - big2 on roids";
+				}
+				counter++;
+			}, 1500);
+		}
+	}
+	
+	window.onblur = function(){
+		windowFocused = false;
+	}
+	window.onfocus = function(){
+		windowFocused = true;
+		clearInterval(windowTitleInterval);
+		document.title = "javis - big2 on roids";
+	}
+	
+	$('#game-board').live("keypress", function(e){
+		var cardIndex = keyMapping[e.keyCode];
+		if (e.keyCode == 13){
+			$('#make-move-btn').click();
+		}
+		else if (e.keyCode == 112){
+			$('#make-pass-move-btn').click();
+		}
+		else if (cardIndex != undefined){
+			$('#slot-bot').find(".card:nth-child("+cardIndex+")").click();
+		}
+	});
+	
+});
+
+</script>
+
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="game-board" tabindex=1>
+			<div id="slot-bot-label" class="player-name"></div>
+			<div id="slot-bot" class="slot"></div>
+			<div id="slot-bot-sc"></div>
+			
+			<div id="slot-left-label" class="player-name horizontal-left"></div>
+			<div id="slot-left" class="slot horizontal"></div>
+			
+			<div id="slot-top-label" class="player-name"></div>
+			<div id="slot-top" class="slot"></div>
+			
+			<div id="slot-right-label" class="player-name horizontal"></div>
+			<div id="slot-right" class="slot horizontal"></div>
+			
+			<div id="stage">
+				<div id="slot-middle">
+				</div>
+			
+				<div id="slot-discard">
+				</div>
+			</div>
+			
+			<div id="game-controls">
+				<div id="error-message" style="display:none;"></div>
+			</div>
+		</div>		
+	</div>	
+	
+	<div id="chat">
+		<div id="scoreboard-header">Scoreboard</div>
+		<div id="scoreboard-list"></div>
+		
+		<div id="chat-header">Chat</div>
+		<div id="chat-messages"></div>
+		<div id="chat-input">
+			<input type="text" id="nickname-submit" placeholder="nickname" />
+			<input type="text" id="chat-submit" placeholder="type here to chat" x-webkit-speech/>
+		</div>
+	</div>
+	
+	<audio id="ping" src="http://www.schillmania.com/projects/soundmanager2/demo/_mp3/mouseover.mp3" preload="auto"></audio>
+</body>
+</html>
