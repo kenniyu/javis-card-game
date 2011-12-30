@@ -507,7 +507,7 @@ $(document).ready(function(){
 				if (value > cardToAddValue){
 					var cardHtml = getCardHtml(card, true);
 					var newCardDiv = $(cardHtml);
-					newCardDiv.find('.front').css("background-color", "#aaaaaa").delay(5000).animate({backgroundColor: '#ffffff'}, 4000);
+					newCardDiv.find('.front').css("background-color", "##ffedcc").delay(5000).animate({backgroundColor: '#ffffff'}, 3000);
 					newCardDiv.insertBefore(cardDiv);
 					console.log("inserted before card " + i);
 					break;
@@ -515,15 +515,14 @@ $(document).ready(function(){
 				if (i == cardsInHand.length - 1){
 					var cardHtml = getCardHtml(card, true);
 					var newCardDiv = $(cardHtml);
-					newCardDiv.find('.front').css("background-color", "#aaaaaa").delay(5000).animate({backgroundColor: '#ffffff'}, 4000);
+					newCardDiv.find('.front').css("background-color", "##ffedcc").delay(5000).animate({backgroundColor: '#ffffff'}, 3000);
 					newCardDiv.insertAfter(cardDiv);
 					console.log("inserted before card " + i);
 				}
 			}
 		});
 		readjustDivs("#slot-bot", false);
-		readjustDivs('#slot-bot-sc', true);
-
+		showShortcuts();
 	}
 	
 	now.removeFromOtherHand = function(numCardsToRemove, playerIndex, numPlayers){
