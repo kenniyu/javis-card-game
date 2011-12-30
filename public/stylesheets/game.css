@@ -73,7 +73,7 @@
 .ace {
 	font-size: 250%;
 	position: absolute;
-	left: 0.38em;
+	left: 0.45em;
 	top:  0.350em;
 }
 .index {
@@ -396,7 +396,7 @@ li {
 	right: 0px;
 	bottom: 0px;
 	
-	border-left: 1px solid #666666;
+/*	border-left: 1px solid #666666;*/
 	background-color: #eeeeee;
 }
 
@@ -408,48 +408,56 @@ li {
 	right: 0px;
 	top: 0px;
 	
-	border-left: 1px solid #333333;
+/*	border-left: 1px solid #333333;*/
 	border-top: 1px solid #333333;
 	background-color: #eeeeee;
 }
 
-#chat-header, #scoreboard-header {
-	border-bottom: 1px solid #cccccc;
-	border-top: 1px solid #666666;
+#chat-header {
 	padding: 5px;
 	font-weight: bold;
 	font-size: 14px;
-	background-color: #dddddd;
+	background-color: #B0DCA3;
 	cursor: pointer;
-	background: -webkit-gradient(linear, left top, left bottom, from(#bbbbbb), to(#eeeeee));
-	background: -moz-linear-gradient(top,  #bbbbbb,  #eeeeee);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbbbbb', endColorstr='#eeeeee');
+	background: -webkit-gradient(linear, left top, left bottom, from(#E0EEE0), to(#B0DCA3));
+	background: -moz-linear-gradient(top,  #E0EEE0,  #B0DCA3);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAEBD7', endColorstr='#B0DCA3');
+}
+
+#scoreboard-header {
+	border-top-left-radius: 10px;
+	border-top: 1px solid #B0DCA3;
+	padding: 5px;
+	font-weight: bold;
+	font-size: 14px;
+	background-color: #B0DCA3;
+	cursor: pointer;
+	background: -webkit-gradient(linear, left top, left bottom, from(#E0EEE0), to(#B0DCA3));
+	background: -moz-linear-gradient(top,  #E0EEE0,  #B0DCA3);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#E0EEE0', endColorstr='#B0DCA3');
 }
 
 #chat-header.alert {
-	border-bottom: 1px solid #333333;
-	border-top: 1px solid #333333;
 	padding: 5px;
 	font-weight: bold;
-	color: white;
 	font-size: 14px;
-	background-color: #333333;
+	background-color: #EE9A00;
 	cursor: pointer;
-	background: -webkit-gradient(linear, left top, left bottom, from(#aaaaaa), to(#333333));
-	background: -moz-linear-gradient(top,  #aaaaaa,  #333333);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#aaaaaa', endColorstr='#333333');
+	background: -webkit-gradient(linear, left top, left bottom, from(#FAEBD7), to(#EE9A00));
+	background: -moz-linear-gradient(top,  #FAEBD7,  #EE9A00);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAEBD7', endColorstr='#EE9A00');
 }
 
 #chat-messages, #scoreboard-list{
 	padding: 5px;
-	border-bottom: 1px solid #cccccc;
 	height: expression( this.scrollHeight > 332 ? "333px" : "auto" ); /* sets max-height for IE */
 	max-height: 333px; /* sets max-height value for all standards-compliant browsers */
 	overflow: auto;
 	overflow-x: hidden; 
-	background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#dddddd));
+	background-color: rgba(250, 238, 217, 0.5);
+/*	background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#dddddd));
 	background: -moz-linear-gradient(top,  #eeeeee,  #dddddd);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#dddddd');
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#dddddd');*/
 }
 
 #chat-message{
@@ -463,7 +471,7 @@ li {
 
 #nickname-submit {
 	padding: 3px 5px 3px 5px;
-	width: 28%;
+	width: 25%;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 }

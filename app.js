@@ -56,7 +56,6 @@ nowjs.on('connect', function() {
 	var name, basename;
 	var clientId = this.user.clientId;
 	var nameIsUnique = true;
-	var numPlayers = getNumPlayers();
 	
 	basename = "Player";
 	
@@ -69,13 +68,14 @@ nowjs.on('connect', function() {
 			}
 		}
 		if (nameIsUnique){
-			var userType = ((waitingPlayers.length > 0 || (numPlayers < 4 && !gameState["isPlaying"])) ? "Player" : "Observer");
+			var userType = ((gameState["isPlaying"] || getNumPlayers() == 4) ? "Observer": "Player");
 			this.now.name = name;
-			usersHash[clientId] = {"id": clientId, "name": name, "type": userType, "score": 0, "hand": []};
+			usersHash[clientId] = {"id": clientId, "name": name, "type": userType, "score": 0, "hand": [], "color": "#000000"};
 			if (userType == "Observer"){
 				initObserverView(clientId);
 				waitingPlayers.push(clientId);
 			}
+			assignUniqueColor(clientId);
 			break;
 		}
 		else{
@@ -88,7 +88,7 @@ nowjs.on('connect', function() {
 	broadcastJoin(clientId);
 	everyone.now.updateScoreboard(usersHash);
 	
-	// show everyone start button
+	// show players start button
 	if (getNumPlayers() > 1 && !gameState["isPlaying"]){
 		var playerIds = getPlayerIds();
 		// show players the start button
@@ -189,6 +189,13 @@ everyone.now.initGame = function(){
 		
 		assignHands();						// assigns each players hand on the backend
 		dealPlayerHands();					// deals each players hand on the frontend
+		
+		// init observer view
+		var observerIds = getObserverIds();
+		observerIds.forEach(function(clientId){
+			initObserverView(clientId);
+		});
+		
 		beginPlaying();						// start taking turns
 	}
 }
@@ -199,7 +206,8 @@ function broadcastJoin(clientId){
 	var text = " is here.";
 	var userInfo = {"id": clientId, "name": name};
 	var messageHash = {"userInfo": userInfo, "type": "emote", "text": text}
-	everyone.now.updateChat(messageHash);
+	var color = usersHash[clientId]["color"];
+	everyone.now.updateChat(messageHash, color);
 }
 
 function broadcastLeave(clientId){
@@ -208,7 +216,8 @@ function broadcastLeave(clientId){
 		var text = " left.";
 		var userInfo = {"id": clientId, "name": name};
 		var messageHash = {"userInfo": userInfo, "type": "emote", "text": text}
-		everyone.now.updateChat(messageHash);
+		var color = usersHash[clientId]["color"];
+		everyone.now.updateChat(messageHash, color);
 	}
 }
 
@@ -1439,8 +1448,8 @@ everyone.now.submitChat = function(message) {
 	var clientName = getPlayerName(clientId);
 	var userInfo = {"id": clientId, "name": clientName};
 	var messageHash = {"userInfo": userInfo, "type": type, "text": text}
-	
-	everyone.now.updateChat(messageHash);
+	var color = usersHash[clientId]["color"];
+	everyone.now.updateChat(messageHash, color);
 }
 everyone.now.submitNickname = function(name) {
 	// when someone submits new nickname, sanitize and check for uniqueness
@@ -1485,6 +1494,22 @@ function updateName() {
 			}
 		});
 	}
+}
+
+// assign unique colors
+function assignUniqueColor(clientId){
+	var color = "#";
+	var firstHexKey = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A'];
+	var secondHexKey = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+	for (var i = 0; i < 6; i++){
+		if (i%2 == 0){
+			color += firstHexKey[Math.floor(Math.random()*firstHexKey.length)];
+		}
+		else{
+			color += secondHexKey[Math.floor(Math.random()*secondHexKey.length)];
+		}
+	}
+	usersHash[clientId]["color"] = color;
 }
 
 // ******************** deck functions ********************

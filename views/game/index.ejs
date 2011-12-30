@@ -725,7 +725,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	now.updateChat = function(messageHash){
+	now.updateChat = function(messageHash, color){
 		var type = messageHash["type"];
 		var text = messageHash["text"];
 		var name = encodeHTML(messageHash["userInfo"]["name"]);
@@ -734,7 +734,7 @@ $(document).ready(function(){
 			$('#chat-messages').append("<span class='chat-message passive'>"+name+" "+text+"<br/></span>");
 		}
 		else if (type == "chat"){
-			$('#chat-messages').append("<span class='chat-message active'><strong>"+name+":</strong> "+urlify(text)+"<br/></span>");
+			$('#chat-messages').append("<span class='chat-message active'><strong style='color: "+color+";'>"+name+":</strong> "+urlify(text)+"<br/></span>");
 		}
 		if ($("#chat-header").hasClass("min")){
 			if (type == "chat"){
@@ -748,15 +748,15 @@ $(document).ready(function(){
 	
 	$('#chat-header').live("click", function(e){
 		$(this).toggleClass("min");
-		$('#chat-messages').toggle();
-		$('#chat-input').toggle();
+		$('#chat-messages').slideToggle(100);
+		$('#chat-input').slideToggle(100);
 		$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 1);
 		stopChatFlash();
 	});
 	
 	$('#scoreboard-header').live("click", function(e){
 		$(this).toggleClass("min");
-		$('#scoreboard-list').toggle();
+		$('#scoreboard-list').slideToggle(100);
 	});
 	
 	function startChatFlash(){
@@ -782,11 +782,12 @@ $(document).ready(function(){
 		$('#scoreboard-list').empty();
 		for (var clientId in usersHash){
 			var name = encodeHTML(usersHash[clientId]["name"]);
+			var color = usersHash[clientId]["color"];
 			if (usersHash[clientId]["type"] == "Observer"){
-				$('#scoreboard-list').append('<div class="user-'+clientId+' score passive"><strong>'+name+':</strong> '+usersHash[clientId]["score"]+'</div>');
+				$('#scoreboard-list').append('<div class="user-'+clientId+' score passive"><strong style="color: '+color+';">'+name+':</strong> '+usersHash[clientId]["score"]+'</div>');
 			}
 			else{
-				$('#scoreboard-list').append('<div class="user-'+clientId+' score"><strong>'+name+':</strong> '+usersHash[clientId]["score"]+'</div>');
+				$('#scoreboard-list').append('<div class="user-'+clientId+' score"><strong style="color: '+color+';">'+name+':</strong> '+usersHash[clientId]["score"]+'</div>');
 			}
 		}
 	}
