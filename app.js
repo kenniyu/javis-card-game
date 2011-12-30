@@ -493,6 +493,7 @@ everyone.now.sendMove = function(hand){
 			}
 		}
 		updateJackCounter();
+		notifyJackInPlay();
 	}
 	else{
 		var message = "Bad hand. Try again.";
@@ -504,6 +505,7 @@ everyone.now.sendMove = function(hand){
 		if (gameState["currentPlaySize"] != null){
 			this.now.showMakePassMoveButton();
 		}
+		notifyJackInPlay();
 	}
 }
 
@@ -690,6 +692,15 @@ function getPlayerName(playerId){
 		return usersHash[playerId]["name"];
 	}
 	return null;
+}
+
+function notifyJackInPlay(){
+	if (gameState["jackCounter"] > 0){
+		var currentPlayer = gameState["currentPlayer"];
+		nowjs.getClient(currentPlayer, function(){
+			this.now.showJackMessage();
+		});
+	}
 }
 
 function alertCurrentPlayer(){

@@ -279,7 +279,7 @@ body {
 	margin: auto;
 }
 
-#error-message {
+.game-feedback {
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	border-width: 1px;
@@ -293,12 +293,20 @@ body {
 	text-transform: uppercase;
 	font-size: 12px;
 	font-weight: bold;
-	color: #aa0000;
-	background: #dddddd;
+	background: rgba(255,255,255,0.5);
 	top: 0px;
-	left: 355px;
 	width: auto;
 	margin: auto;
+}
+
+#game-error-message {
+	left: 355px;
+	color: #bb0000;
+}
+
+#game-jack-message {
+	left: 200px;
+	color: #00bb00;
 }
 
 #start-btn {
@@ -307,7 +315,7 @@ body {
 }
 
 #make-pass-move-btn {
-	left: 130px;
+	left: 120px;
 	top: 0px;
 	background: #E0EEE0;
 	background: -webkit-gradient(linear, left top, left bottom, from(#FFE4E1), to(#FFCCCC));
@@ -316,8 +324,6 @@ body {
 }
 
 #make-pass-move-btn:hover {
-	left: 130px;
-	top: 0px;
 	background: #E0EEE0;
 	background: -webkit-gradient(linear, left top, left bottom, from(#FFE4E1), to(#F08080));
 	background: -moz-linear-gradient(top,  #FFE4E1,  #F08080);
@@ -325,8 +331,6 @@ body {
 }
 
 #make-pass-move-btn:active {
-	left: 130px;
-	top: 0px;
 	background: #E0EEE0;
 	background: -webkit-gradient(linear, left top, left bottom, from(#F08080), to(#FFE4E1));
 	background: -moz-linear-gradient(top,  #F08080,  #FFE4E1);

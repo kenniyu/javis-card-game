@@ -287,6 +287,10 @@ $(document).ready(function(){
 		}
 	}
 	
+	now.showJackMessage = function(){
+		$('#game-jack-message').show();
+	}
+	
 	now.showAutoPass = function(){
 		// auto passing
 		if ($('#auto-pass').length == 0){
@@ -326,11 +330,13 @@ $(document).ready(function(){
 		});
 		$(this).remove();
 		$('#make-pass-move-btn').remove();
+		$('#game-jack-message').hide();
 		now.sendMove(hand);
 	});
 	
 	$('#make-pass-move-btn').live("click", function(e){
 		$('#make-move-btn').remove();
+		$('#game-jack-message').hide();
 		$(this).remove();
 		now.sendPassMove();
 	});
@@ -615,7 +621,7 @@ $(document).ready(function(){
 	}
 	
 	now.showErrorMessage = function(message){
-		$('#error-message').text(message).show().delay(3000).fadeOut();
+		$('#game-error-message').text(message).show().delay(3000).fadeOut();
 	}
 	
 	now.clearStage = function(){
@@ -845,7 +851,8 @@ $(document).ready(function(){
 			</div>
 			
 			<div id="game-controls">
-				<div id="error-message" style="display:none;"></div>
+				<div class="game-feedback" id="game-jack-message" style="display:none;">Play Lower!</div>
+				<div class="game-feedback" id="game-error-message" style="display:none;"></div>
 			</div>
 		</div>		
 	</div>	
