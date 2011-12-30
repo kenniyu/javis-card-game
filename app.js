@@ -431,44 +431,46 @@ everyone.now.sendMove = function(hand){
 			// check if the player who just played now has an empty hand
 			checkEmptyHand(clientId);
 			
-			if (checkForSevens(hand, clientId)){
-				// if there are sevens, handle all send move actions later
-			}
-			else if (checkForTens(hand, clientId)){
-				// if there are tens, handle all send move actions later
-			}
-			else{
-				if (containsEight(hand)){
-					passEveryone();
-					resetJackCounter();
+			if (gameState["isPlaying"]){
+				if (checkForSevens(hand, clientId)){
+					// if there are sevens, handle all send move actions later
+				}
+				else if (checkForTens(hand, clientId)){
+					// if there are tens, handle all send move actions later
 				}
 				else{
-					if (gameState["jackCounter"] > 0){
-						// there is a jack in play
-						if (canPlayLower(hand)){
-							// can play lower
-							alertNextPlayer();
-						}
-						else{
-							// cant play lower, so alert jack player
-							// alertJackPlayer();
-							alertNextPlayer();
-						}
+					if (containsEight(hand)){
+						passEveryone();
+						resetJackCounter();
 					}
 					else{
-						// there is no jack in play
-						if (canPlayHigher(hand)){
-							// the hand just played can be beaten, so alert the next player to make a move
-							alertNextPlayer();
+						if (gameState["jackCounter"] > 0){
+							// there is a jack in play
+							if (canPlayLower(hand)){
+								// can play lower
+								alertNextPlayer();
+							}
+							else{
+								// cant play lower, so alert jack player
+								// alertJackPlayer();
+								alertNextPlayer();
+							}
 						}
 						else{
-							// the hand just played CANNOT be beaten, so pass everyone
-							passEveryone();
+							// there is no jack in play
+							if (canPlayHigher(hand)){
+								// the hand just played can be beaten, so alert the next player to make a move
+								alertNextPlayer();
+							}
+							else{
+								// the hand just played CANNOT be beaten, so pass everyone
+								passEveryone();
+							}
 						}
 					}
+					updateJackCounter();
+					notifyJackInPlay();
 				}
-				updateJackCounter();
-				notifyJackInPlay();
 			}
 		}
 		else{
