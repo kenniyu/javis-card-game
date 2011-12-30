@@ -288,6 +288,7 @@ function updatePlayerHand(cards, playerId, type){
 			this.now.removeFromPersonalHand(cards);
 		}
 		else{
+			console.log("adding to personal hand: " + cards);
 			this.now.addToPersonalHand(cards);
 		}
 	});
@@ -427,7 +428,8 @@ everyone.now.sendMove = function(hand){
 			checkForFives(hand, clientId);
 			// check for J's
 			checkForJacks(hand, clientId);
-
+			
+			console.log("player just made a move. his hand is now: "+usersHash[clientId]["hand"]);
 			// check if the player who just played now has an empty hand
 			checkEmptyHand(clientId);
 			
@@ -627,6 +629,7 @@ function checkForFives(hand, clientId){
 			numFives++;
 		}
 	}
+	console.log("numfives = "+numFives);
 	// drawing X cards from discard pile
 	var numDiscard = gameState["discardPile"].length;
 	var cardsToAdd = [];
@@ -790,6 +793,7 @@ function checkEmptyHand(clientId){
 	var tempHand = usersHash[clientId]["hand"];
 	var playerIndex = gameState["players"].indexOf(clientId);
 	if (tempHand.length == 0){
+		console.log("hand is empty for "+clientId);
 		var activePlayerIndex = gameState["activePlayers"].indexOf(clientId);
 		
 		gameState["moveBits"][playerIndex] = -1;		// use -1 to indicate the player is done playing
@@ -801,6 +805,7 @@ function checkEmptyHand(clientId){
 		checkGameOver();
 	}
 	else{
+		console.log("hand is not empty for "+clientId);
 		// set player who just made a move to 2
 		gameState["moveBits"][playerIndex] = 2;
 	}
@@ -808,6 +813,7 @@ function checkEmptyHand(clientId){
 
 // game over functions
 function checkGameOver(){
+	console.log("we are checking if game is over");
 	if (gameState["activePlayers"].length == 1){
 		// if there's only one active player left, then the game is over, so call gameOver		
 		gameOver();
@@ -1438,7 +1444,8 @@ everyone.now.submitChat = function(message) {
 }
 everyone.now.submitNickname = function(name) {
 	// when someone submits new nickname, sanitize and check for uniqueness
-	var cleanName = encodeHTML(name);
+	// var cleanName = encodeHTML(name);
+	var cleanName = name;
 	for (var clientId in usersHash){
 		if (usersHash[clientId]["name"] == cleanName){
 			return;

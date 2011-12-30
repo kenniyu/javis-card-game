@@ -3,7 +3,6 @@
 <title>javis - big2 on roids</title>
 <link rel='stylesheet' href='../stylesheets/game.css' />
 
-<script src="/javascripts/jquery.animate-colors.js"></script>
 <script src="/nowjs/now.js"></script>
 <script type="text/javascript">
 
@@ -35,6 +34,10 @@ Object.size = function(obj) {
 
 function ping(){
 	document.getElementById('ping').play();
+}
+
+function encodeHTML(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 }
 
 // card helper functions
@@ -505,25 +508,31 @@ $(document).ready(function(){
 				var cardToAddValue = cardValueMapping[card[0]];
 			}
 			var cardsInHand = $('#slot-bot').children();
-			for (var i = 0; i < cardsInHand.length; i++){
-				var cardDiv = cardsInHand[i];
-				var text = $(cardDiv).find('.index').text();
-				text = text.substring(0, text.length - 1);
-				var value = cardValueMapping[text];
-				if (value > cardToAddValue){
-					var cardHtml = getCardHtml(card, true);
-					var newCardDiv = $(cardHtml);
-					newCardDiv.find('.front').css("background-color", "##ffedcc").delay(5000).animate({backgroundColor: '#ffffff'}, 3000);
-					newCardDiv.insertBefore(cardDiv);
-					console.log("inserted before card " + i);
-					break;
-				}
-				if (i == cardsInHand.length - 1){
-					var cardHtml = getCardHtml(card, true);
-					var newCardDiv = $(cardHtml);
-					newCardDiv.find('.front').css("background-color", "##ffedcc").delay(5000).animate({backgroundColor: '#ffffff'}, 3000);
-					newCardDiv.insertAfter(cardDiv);
-					console.log("inserted before card " + i);
+			if (cardsInHand.length == 0){
+				var cardHtml = getCardHtml(card, true);
+				var newCardDiv = $(cardHtml);
+				newCardDiv.find('.front').css("background-color", "##ffedcc").delay(5000).animate({backgroundColor: '#ffffff'}, 3000);
+				$('#slot-bot').append(newCardDiv);
+			}
+			else{
+				for (var i = 0; i < cardsInHand.length; i++){
+					var cardDiv = cardsInHand[i];
+					var text = $(cardDiv).find('.index').text();
+					text = text.substring(0, text.length - 1);
+					var value = cardValueMapping[text];
+					if (value > cardToAddValue){
+						var cardHtml = getCardHtml(card, true);
+						var newCardDiv = $(cardHtml);
+						newCardDiv.find('.front').css("background-color", "##ffedcc").delay(5000).animate({backgroundColor: '#ffffff'}, 3000);
+						newCardDiv.insertBefore(cardDiv);
+						break;
+					}
+					if (i == cardsInHand.length - 1){
+						var cardHtml = getCardHtml(card, true);
+						var newCardDiv = $(cardHtml);
+						newCardDiv.find('.front').css("background-color", "##ffedcc").delay(5000).animate({backgroundColor: '#ffffff'}, 3000);
+						newCardDiv.insertAfter(cardDiv);
+					}
 				}
 			}
 		});
@@ -719,7 +728,7 @@ $(document).ready(function(){
 	now.updateChat = function(messageHash){
 		var type = messageHash["type"];
 		var text = messageHash["text"];
-		var name = messageHash["userInfo"]["name"];
+		var name = encodeHTML(messageHash["userInfo"]["name"]);
 		var id = messageHash["userInfo"]["id"];
 		if (type == "emote"){
 			$('#chat-messages').append("<span class='chat-message passive'>"+name+" "+text+"<br/></span>");
@@ -772,23 +781,24 @@ $(document).ready(function(){
 	now.updateScoreboard = function(usersHash){
 		$('#scoreboard-list').empty();
 		for (var clientId in usersHash){
+			var name = encodeHTML(usersHash[clientId]["name"]);
 			if (usersHash[clientId]["type"] == "Observer"){
-				$('#scoreboard-list').append('<div class="user-'+clientId+' score passive"><strong>'+usersHash[clientId]["name"]+':</strong> '+usersHash[clientId]["score"]+'</div>');
+				$('#scoreboard-list').append('<div class="user-'+clientId+' score passive"><strong>'+name+':</strong> '+usersHash[clientId]["score"]+'</div>');
 			}
 			else{
-				$('#scoreboard-list').append('<div class="user-'+clientId+' score"><strong>'+usersHash[clientId]["name"]+':</strong> '+usersHash[clientId]["score"]+'</div>');
+				$('#scoreboard-list').append('<div class="user-'+clientId+' score"><strong>'+name+':</strong> '+usersHash[clientId]["score"]+'</div>');
 			}
 		}
 	}
 	
 	// alert to pass cards
 	now.notifyPassCards = function(numCardsToPass){
-		$('#game-seven-message').text("Select "+numCardsToPass+" cards to pass").show();
+		$('#game-seven-message').text("Select "+numCardsToPass+" card"+(numCardsToPass == 1 ? '' : 's')+" to pass").show();
 	}
 	
 	// alert to discard cards
 	now.notifyDiscardCards = function(numCardsToPass){
-		$('#game-ten-message').text("Select "+numCardsToPass+" cards to discard").show();
+		$('#game-ten-message').text("Select "+numCardsToPass+" card"+(numCardsToPass == 1 ? '' : 's')+" to discard").show();
 	}
 	
 	// notification of turn

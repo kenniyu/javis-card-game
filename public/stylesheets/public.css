@@ -37,9 +37,12 @@ a:hover {
 	font-weight: bold;
 	text-transform: uppercase;
 	text-align: center;
-	color: rgba(255,155,255,0.8);
-	text-shadow: 2px 2px 50px rgba(255, 231, 0, 1);
 	margin: 0 0 20 0;
+}
+
+#javis{
+	color: rgba(255,155,255,0.8);
+	text-shadow: 0px 0px 70px rgba(255, 231, 0, 1);
 }
 
 .btn {
