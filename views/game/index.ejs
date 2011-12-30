@@ -24,6 +24,7 @@ function urlify(text) {
     });
 }
 
+
 Object.size = function(obj) {
     var size = 0, key;
     for (key in obj) {
@@ -706,7 +707,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('#chat-submit').live("keypress", function(e){
+	$('#chat-submit').live("keypress", function(e){		
 		var message = $(this).val().trim();
 		if (e.keyCode == 13 && message != ""){
 			now.submitChat(message);
@@ -758,6 +759,11 @@ $(document).ready(function(){
 		$(this).toggleClass("min");
 		$('#scoreboard-list').slideToggle(100);
 	});
+	
+	$('#rules-header').live("click", function(e){
+		$(this).toggleClass("min");
+		$('#rules-list').slideToggle(100);
+	})
 	
 	function startChatFlash(){
 		if (chatFlashInterval == null){
@@ -880,11 +886,22 @@ $(document).ready(function(){
 		</div>		
 	</div>	
 	
-	<div id="chat">
-		<div id="scoreboard-header">Scoreboard</div>
+	<div id="sidebar">
+		<div id="rules-header" class="sb-header min">What were the cards again?</div>
+		<div id="rules-list" style="display:none;">
+			<strong>5</strong> - Draw X cards from the discard pile<br/>
+			<strong>7</strong> - Pass X cards to the next player<br/>
+			<strong>8</strong> - Clear the round and go again<br/>
+			<strong>10</strong> - Discard X card<br/>
+			<strong>J</strong> - Play lower than the previous hand (until turn returns to the player who most recently played a J)<br/>
+			<br/>
+			Where X is how many of that card was in the hand that you played<br/>
+		</div>
+		
+		<div id="scoreboard-header" class="sb-header">Scoreboard</div>
 		<div id="scoreboard-list"></div>
 		
-		<div id="chat-header">Chat</div>
+		<div id="chat-header" class="sb-header">Chat</div>
 		<div id="chat-messages"></div>
 		<div id="chat-input">
 			<input type="text" id="nickname-submit" placeholder="nickname" />

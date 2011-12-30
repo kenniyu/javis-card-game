@@ -1,0 +1,172 @@
+#wrapper {
+	width: 100%;
+	height: 100%;
+    margin: auto;
+}
+
+#wrapper-inner {
+	position: relative;
+}
+
+body {
+/*	background-image: url("/images/bg1.png");*/
+	background-color: black;
+	color: #eeeeee;
+	font: 15px "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+}
+
+a:link, a:visited{
+	text-decoration: none;
+	color: #00B7FF;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+	-webkit-transition: background-color .7s linear;  
+    -moz-transition: background-color .7s linear;  
+    -o-transition: background-color .7s linear;
+}
+
+a:hover {
+	color: #00B7FF;
+	text-decoration: none;
+	padding: 10px;
+}
+
+.heading{
+	font-size: 70px;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-align: center;
+	margin: 0 0 20 0;
+}
+
+#rules{
+	color: rgba(255,255,100,0.8);
+	text-shadow: 3px 3px 30px rgba(255, 231, 0, 1);
+}
+
+strong {
+	color: rgba(200,255,160,0.8);
+}
+
+.btn {
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 10px;
+	text-transform: uppercase;
+	font-size: 14px;
+	color: #333333;
+	font-weight: bold;
+	cursor: pointer;
+	text-align: center;
+	text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.btn:hover{
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+.btn:active{
+    padding: 11px 10px 9px 10px; /* push text down 1px */
+}
+
+#join-game, #learn-game {
+	width: 100px;
+	background: #E0FFFF;
+	background: -webkit-gradient(linear, left top, left bottom, from(#E0FFFF), to(#97FFFF));
+	background: -moz-linear-gradient(top,  #E0FFFF,  #97FFFF);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#E0FFFF', endColorstr='#97FFFF');
+	margin-bottom: 20px;
+}
+
+#join-game:hover, #learn-game:hover{
+	background: #05EDFF;
+	background: -webkit-gradient(linear, left top, left bottom, from(#E0FFFF), to(#05EDFF));
+	background: -moz-linear-gradient(top,  #E0FFFF,  #05EDFF);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#E0FFFF', endColorstr='#05EDFF');
+}
+
+#join-game:active, #learn-game:active {
+	background: #E0FFFF;
+	background: -webkit-gradient(linear, left top, left bottom, from(#05EDFF), to(#E0FFFF));
+	background: -moz-linear-gradient(top,  #05EDFF,  #E0FFFF);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#05EDFF', endColorstr='#E0FFFF');
+}
+
+.content {
+	margin-top: 50px;
+}
+
+
+.black {
+	color: black;
+}
+
+.red {
+	color: #ff0000;
+}
+
+.card {
+	background-image: url("/images/domo.jpg");
+	background-size: 100px 130px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #333333;
+	position: absolute;
+	font-size: 30px;
+	width:  125px;
+	height: 165px;
+	-webkit-box-shadow: 2px 2px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 2px 2px 2px rgba(0,0,0,.2);
+	box-shadow: 2px 2px 2px rgba(0,0,0,.2);
+}
+
+.front {
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 0px;
+	background-color: #ffffff;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+
+.spotA1 { position: absolute; left: 0.7em; top: 0.4em; }
+.spotA2 { position: absolute; left: 0.7em; top: 1.5em; }
+.spotA3 { position: absolute; left: 0.7em; top: 2.1em; }
+.spotA4 { position: absolute; left: 0.7em; top: 2.7em; }
+.spotA5 { position: absolute; left: 0.7em; top: 3.8em; }
+.spotB1 { position: absolute; left: 1.75em; top: 0.4em; }
+.spotB2 { position: absolute; left: 1.75em; top: 0.8em; }
+.spotB3 { position: absolute; left: 1.75em; top: 2.1em; }
+.spotB4 { position: absolute; left: 1.75em; top: 3.4em; }
+.spotB5 { position: absolute; left: 1.75em; top: 3.8em; }
+.spotC1 { position: absolute; left: 2.8em; top: 0.4em; }
+.spotC2 { position: absolute; left: 2.8em; top: 1.5em; }
+.spotC3 { position: absolute; left: 2.8em; top: 2.1em; }
+.spotC4 { position: absolute; left: 2.8em; top: 2.7em; }
+.spotC5 { position: absolute; left: 2.8em; top: 3.8em; }
+
+.index {
+	font-size: 50%;
+	font-weight: bold;
+	text-align: center;
+	position: absolute;
+	left: 0.25em;
+	top:  0.25em;
+}
+
+.face {
+	border: 1px solid #000000;
+	position: absolute;
+	left: 0.7em;
+	top:  0.58em;
+	width:  3.0em;
+	height: 4.5em;
+}
+
+#special-cards{
+	height: 170px;
+}

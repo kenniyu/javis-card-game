@@ -1,0 +1,97 @@
+<head>
+	<link rel='stylesheet' href='../stylesheets/rules.css' />
+	<title>javis - the best card game</title>
+	
+	<script type="text/javascript">
+		$().ready(function(){
+			$('#join-game').live("click", function(e){
+				document.location.href="game";
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<div id="wrapper">
+		<div id="wrapper-inner">
+			<div class="heading" id="rules">Rules</div>
+			<div class="content" id="rules-logistics">
+				<h2>Logistics</h2>
+				<p><strong>Javis</strong> is a highly strategic game based off of <a href="http://www.pagat.com/climbing/bigtwo.html" target="_blank">Big2</a>. In fact, the rules are similar to those of Big2. The order of the cards from lowest to highest is 3-4-5-6-7-8-9-10-J-Q-K-A-2. The main difference is that <strong>suits don't matter</strong>. You can't beat a 3 of clubs with a 3 of spades - you gotta play 4 or higher.</p>
+				<p>The valid hands are singles, pairs, and 5 card hands - straights < full houses < four of a kind (+1 random card). <strong>No triples!</strong> Also, straights are now simple: they start lowest from 3 and end highest at 2. </p>
+				<p>Whoever has the lowest card at the start of the game must play that card in their first hand (This is the only time suits do matter, and the order goes clubs < diamonds < hearts < spades)</p>
+				<p>When everyone passes on a hand, the round is "cleared", the cards are turned over and added to the <strong>discard pile</strong>, and the player who played that hand can play whatever valid hand he wants</p>
+				
+			</div>
+			
+			<div class="content" id="rules-cards">
+				<h2>Special Cards</h2>
+				<p>Besides the rules above, there are also 5 special cards that do special things...</p>
+				<div id="special-cards">
+					<div class='card'><div class='front black'><div class='index' data-suit='c'>5<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotB3'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>
+					<div class='card' style="left: 150px;"><div class='front black'><div class='index' data-suit='c'>7<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA3'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotB2'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC3'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>
+					<div class='card' style="left: 300px;"><div class='front black'><div class='index' data-suit='c'>8<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA3'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotB2'>&clubs;</div><div class='spotB4'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC3'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>
+					<div class='card' style="left: 450px;"><div class='front black'><div class='index' data-suit='c'>10<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA2'>&clubs;</div><div class='spotA4'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotB2'>&clubs;</div><div class='spotB4'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC2'>&clubs;</div><div class='spotC4'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>
+					<div class='card' style="left: 600px;"><div class='front black'><div class='index' data-suit='c'>J<br />&clubs;</div><img class='face' src='http://www.brainjar.com/css/cards/graphics/jack.gif' alt='' /><div class='spotA1'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>
+				</div>
+			</div>
+			
+			<p>
+			<strong>5</strong> - Draw X cards from the discard pile<br/>
+			<strong>7</strong> - Pass X cards to the next player<br/>
+			<strong>8</strong> - Clear the round and go again<br/>
+			<strong>10</strong> - Discard X card<br/>
+			<strong>J</strong> - Play lower than the previous hand (until turn returns to the player who most recently played a J)<br/>
+			Where X is how many of that card that you played in that hand. For example, playing a pair of 7's means passing 2 cards to the next player.<br/>
+			</p>
+			<p>
+			Don't worry about memorizing these cards, you'll have this cheatsheet in the game. Since J's may be confusing, you'll be notified when to play LOWER instead of higher.<br/>
+			And don't forget, <strong>suit's don't matter!</strong></br>
+			</p>
+			
+			<div class="content" id="rules-examples">
+				<h2>Examples</h2>
+				<p>Here are some sample hands/plays just so you can get an idea of how Javis works.</p>
+				
+				<p>
+					<strong>Straight: 7-8-9-10-J</strong><br/>
+					Pass a card to the next player (7), discard a card from your hand (10), clear the round and go again (8). Since round is cleared, J means nothing.<br/>
+				</p>
+				
+				<p>
+					<strong>Full house: 5-5-5-7-7</strong><br/>
+					Draw three cards (5), pass two cards to the next player (7)<br/>
+				</p>
+				
+				<p>
+					<strong>Sample Play:</strong><br/>
+					3 players - P1, P2, P3<br/>
+					<br/>
+					P1 plays a pair J<br/>
+					P2 must play lower than P1's pair<br/>
+					P3 must play lower than P2's pair<br/>
+					P1 must play higher than P3's pair - <strong>since the turn returned to P1 (who was the most recent player who played a J), they start playing higher</strong><br/>
+				</p>
+			</div>
+			
+			<div class="content" id="rules-hints">
+				<h2>Hints</h2>
+				<p>
+					<ul>
+						<li>Get rid of your 5's by playing them early in the game when there is nothing in the discard pile (so there's nothing to draw), passing them away (by playing 7s) or discarding them (by playing 10s)</li>
+						<li>Try not to play a straight like J-Q-K-A-2 (or any high 5 card hand that contains a J). This might waste your 2, and chances are, someone has a lower straight than that. Up to you to take that risk.</li>
+						<li>Don't pass cards in the beginning of the game. You might give the next player a full house or four of a kind.</li>
+						<li>J's can be helpful if you know players after you have really high cards. But if the players have 8's, they can also take possession since you're allowing them to play lower</li>
+					</ul>
+				</p>				
+			</div>
+			
+			<div class="content" id="rules-hints">
+				<h2>When you're ready...</h2>
+				<div class="btn" id="join-game">Play me!</div>
+			</div>
+			
+		</div>
+		
+	</div>
+</body>

@@ -8,8 +8,13 @@
 				document.location.href="game";
 			});
 			
+			$('#learn-game').live("click", function(e){
+				document.location.href="rules";
+			});
+			
 			$('#javis').fadeIn(1500);
 			$('#join-game').delay(2500).animate({"height": "show", "opacity": "show"});
+			$('#learn-game').delay(3000).animate({"height": "show", "opacity": "show"});
 			
 		});
 	</script>
@@ -21,7 +26,7 @@
 			
 			<div class="heading" id="javis" style="display:none;">Javis</div>
 			<div class="btn" id="join-game" style="display:none;">Play Me</div>
-			
+			<div class="btn" id="learn-game" style="display:none;">Rules</div>
 		</div>
 	</div>
 </body>

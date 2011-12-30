@@ -38,6 +38,10 @@ app.get('/game', function(req, res){
 	res.render('game');
 });
 
+app.get('/rules', function(req, res){
+	res.render('rules');
+});
+
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 
