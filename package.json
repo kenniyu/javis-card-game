@@ -1,5 +1,5 @@
 {
-  "version": "0.7.6-46",
+  "version": "0.7.6-47",
   "private": true,
   "dependencies": {
     "express": "2.5.2",

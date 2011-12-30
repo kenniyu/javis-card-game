@@ -48,7 +48,7 @@ var anonId = 1;
 var observerId = 1;
 var deck = [];
 var maxPlayers = 4;
-var gameState = {"isPlaying": false, "currentPlayer": 0, "players": [], "currentPlaySize": null, "currentPlayHistory": [], "discardPile": [], "moves": 0, "activePlayers": [], "places": [], "moveBits": [], "jackCounter": 0};
+var gameState = {"isPlaying": false, "currentPlayer": 0, "players": [], "currentPlaySize": null, "currentPlayHistory": [], "discardPile": [], "moves": 0, "activePlayers": [], "places": [], "moveBits": [], "jackCounter": 0, "passNum": 0, "discardNum": 0};
 var waitingPlayers = [];
 
 // when a client connects
@@ -69,7 +69,7 @@ nowjs.on('connect', function() {
 			}
 		}
 		if (nameIsUnique){
-			var userType = ((numPlayers < 4 && !gameState["isPlaying"]) ? "Player" : "Observer");
+			var userType = ((waitingPlayers.length > 0 || (numPlayers < 4 && !gameState["isPlaying"])) ? "Player" : "Observer");
 			this.now.name = name;
 			usersHash[clientId] = {"id": clientId, "name": name, "type": userType, "score": 0, "hand": []};
 			if (userType == "Observer"){
@@ -115,7 +115,7 @@ nowjs.on('disconnect', function() {
 	var playerIndex = gameState["players"].indexOf(clientId);
 	if (playerIndex > -1){
 		console.log("removing player "+clientId+" and his index is "+playerIndex);
-		removeFromPlayerHand(usersHash[clientId]["hand"], clientId);	// hand is the hand to remove
+		updatePlayerHand(usersHash[clientId]["hand"], clientId, "remove");	// hand is the hand to remove
 		// udpate gameState vars
 		gameState["moveBits"][playerIndex] = -1
 		gameState["activePlayers"].splice(gameState["activePlayers"].indexOf(clientId), 1);
@@ -159,6 +159,7 @@ everyone.now.waitForGame = function(){
 everyone.now.initGame = function(){
 	// check to make sure gameState isPlaying is really false in case of concurrency issues?
 	if (!gameState["isPlaying"]){
+		resetGameState();
 		gameState["isPlaying"] = true;		// we are now playing...
 	
 		// hide the start button for all clients
@@ -241,12 +242,8 @@ function initObserverView(clientId){
 	
 	// set the discard pile
 	var numDiscarded = gameState["discardPile"].length;
-	var dummyHand = [];
-	for (var i = 0; i < numDiscarded; i++){
-		dummyHand.push("");
-	}
 	nowjs.getClient(clientId, function(){
-		this.now.addToDiscardPile(dummyHand);
+		this.now.addToDiscardPile(numDiscarded);
 	});
 }
 
@@ -280,17 +277,24 @@ function assignHands(){
 	}
 }
 
-function addToPlayerHand(cards, playerId){
-	// this player just drew some cards, so update everyone's view of his hand
-	console.log(cards);
+function updatePlayerHand(cards, playerId, type){
+	// cards 	= cards to add/remove
+	// playerId = player's hand to modify
+	// type 	= add/remove
+	
+	// update playerId's frontend
 	nowjs.getClient(playerId, function(){
-		this.now.addToPersonalHand(cards);
+		if (type == "remove"){
+			this.now.removeFromPersonalHand(cards);
+		}
+		else{
+			this.now.addToPersonalHand(cards);
+		}
 	});
 	
-	// update everyone elses view of the player's hand
-		
+	// update everyone elses view of the player's hand, including observers' view
 	var playerIds = gameState["players"];		// get array of player ids
-	var numPlayers = playerIds.length;	// get number of players in the game (leavers, finishers included)
+	var numPlayers = playerIds.length;			// get number of players in the game (leavers, finishers included)
 	var playerIndex = playerIds.indexOf(playerId);
 	for (var i = playerIndex + 1; i < playerIndex + numPlayers; i++){
 		var otherPlayerId = playerIds[i%numPlayers];
@@ -306,8 +310,12 @@ function addToPlayerHand(cards, playerId){
 		
 		if (usersHash[otherPlayerId] != undefined){
 			nowjs.getClient(otherPlayerId, function(){
-				// this.now.dealOtherHand(dummyHand, relativeIndex, numPlayers, false);
-				this.now.addToOtherHand(cards.length, relativeIndex, numPlayers);
+				if (type == "remove"){
+					this.now.removeFromOtherHand(cards.length, relativeIndex, numPlayers);	
+				}
+				else{
+					this.now.addToOtherHand(cards.length, relativeIndex, numPlayers);	
+				}
 			});
 		}
 	}
@@ -316,52 +324,12 @@ function addToPlayerHand(cards, playerId){
 	observerIds.forEach(function(observerId){
 		// for each observer, update their view of the player's hand
 		nowjs.getClient(observerId, function(){
-			this.now.addToOtherHand(cards.length, relativeIndex, numPlayers);
-			// this.now.dealOtherHand(dummyHand, playerIndex, numPlayers, false);
-		});
-	});
-}
-
-function removeFromPlayerHand(hand, playerId){
-	// a player has just played a hand, so update everyone's view of his hand
-	// playerId is the player who just played, update his frontend
-	var playerHand = usersHash[playerId]["hand"];
-	nowjs.getClient(playerId, function(){
-		this.now.removeFromPersonalHand(hand);
-		// this.now.dealPersonalHand(usersHash[playerId]["hand"]);
-	});
-	
-	// update everyone elses view of the player's hand
-		
-	var playerIds = gameState["players"];		// get array of player ids
-	var numPlayers = playerIds.length;	// get number of players in the game (leavers, finishers included)
-	var playerIndex = playerIds.indexOf(playerId);
-	for (var i = playerIndex + 1; i < playerIndex + numPlayers; i++){
-		var otherPlayerId = playerIds[i%numPlayers];
-		var otherPlayerIndex = playerIds.indexOf(otherPlayerId);
-		
-		var relativeIndex = 0;
-		for (var j = otherPlayerIndex + 1; j < otherPlayerIndex + numPlayers; j++){
-			if (playerIds[j%numPlayers] == playerId){
-				break;
+			if (type == "remove"){
+				this.now.removeFromOtherHand(cards.length, relativeIndex, numPlayers);	
 			}
-			relativeIndex++;
-		}
-		
-		if (usersHash[otherPlayerId] != undefined){
-			nowjs.getClient(otherPlayerId, function(){
-				// this.now.dealOtherHand(dummyHand, relativeIndex, numPlayers, false);
-				this.now.removeFromOtherHand(hand.length, relativeIndex, numPlayers);
-			});
-		}
-	}
-	
-	var observerIds = getObserverIds();
-	observerIds.forEach(function(observerId){
-		// for each observer, update their view of the player's hand
-		nowjs.getClient(observerId, function(){
-			this.now.removeFromOtherHand(hand.length, relativeIndex, numPlayers);
-			// this.now.dealOtherHand(dummyHand, playerIndex, numPlayers, false);
+			else{
+				this.now.addToOtherHand(cards.length, relativeIndex, numPlayers);	
+			}
 		});
 	});
 }
@@ -437,75 +405,205 @@ function beginPlaying(){
 }
 
 everyone.now.sendMove = function(hand){
-	hand = sortHand(hand);
-	if (checkRules(hand)){
-		// valid hand, game state should've already been updated
-		console.log("===============valid hand==============");
-		console.log(gameState);
-		
-		// set move bits to 1 (more details in function)
-		setMoveBitsToOne();
-		
-		var clientId = this.user.clientId;
-		// remove the hand from the player who made the move (BACKEND)
-		removeCardsFromHand(hand, clientId);		
-		// update everyone's view of the player's hand based on what he played (FRONTEND)
-		removeFromPlayerHand(hand, clientId);
-		// update everyone's view of the stage (FRONTEND)
-		everyone.now.addToCurrentPlay(hand);	
-		
-		// LOGISTICS
-		// check for 5's
-		checkForFives(hand, clientId);
-		// check for J's
-		checkForJacks(hand, clientId);
-		
-		// check if the player who just played now has an empty hand
-		checkEmptyHand(clientId);
-		
-		if (containsEight(hand)){
-			passEveryone();
-			resetJackCounter();
-		}
-		else{
-			if (gameState["jackCounter"] > 0){
-				// there is a jack in play
-				if (canPlayLower(hand)){
-					// can play lower
-					alertNextPlayer();
-				}
-				else{
-					// cant play lower, so alert jack player
-					// alertJackPlayer();
-					alertNextPlayer();
-				}
+	console.log("The hand is "+hand);
+	if (gameState["passNum"] == 0 && gameState["discardNum"] == 0){
+		hand = sortHand(hand);
+		if (checkRules(hand)){
+			// valid hand, game state should've already been updated
+			console.log("===============valid hand==============");
+			console.log(gameState);
+
+			// set move bits to 1 (more details in function)
+			setMoveBitsToOne();
+
+			var clientId = this.user.clientId;
+			// remove the hand from the player who made the move (BACKEND and FRONTEND)
+			removeCardsFromHand(hand, clientId);
+			// update everyone's view of the stage (FRONTEND)
+			everyone.now.addToCurrentPlay(hand);	
+
+			// LOGISTICS
+			// check for 5's
+			checkForFives(hand, clientId);
+			// check for J's
+			checkForJacks(hand, clientId);
+
+			// check if the player who just played now has an empty hand
+			checkEmptyHand(clientId);
+			
+			if (checkForSevens(hand, clientId)){
+				// if there are sevens, handle all send move actions later
+			}
+			else if (checkForTens(hand, clientId)){
+				// if there are tens, handle all send move actions later
 			}
 			else{
-				// there is no jack in play
-				if (canPlayHigher(hand)){
-					// the hand just played can be beaten, so alert the next player to make a move
-					alertNextPlayer();
+				if (containsEight(hand)){
+					passEveryone();
+					resetJackCounter();
 				}
 				else{
-					// the hand just played CANNOT be beaten, so pass everyone
-					passEveryone();
+					if (gameState["jackCounter"] > 0){
+						// there is a jack in play
+						if (canPlayLower(hand)){
+							// can play lower
+							alertNextPlayer();
+						}
+						else{
+							// cant play lower, so alert jack player
+							// alertJackPlayer();
+							alertNextPlayer();
+						}
+					}
+					else{
+						// there is no jack in play
+						if (canPlayHigher(hand)){
+							// the hand just played can be beaten, so alert the next player to make a move
+							alertNextPlayer();
+						}
+						else{
+							// the hand just played CANNOT be beaten, so pass everyone
+							passEveryone();
+						}
+					}
+				}
+				updateJackCounter();
+				notifyJackInPlay();
+			}
+		}
+		else{
+			var message = "Bad hand. Try again.";
+			this.now.showErrorMessage(message);
+
+			// show make move button again
+			this.now.showMakeMoveButton();
+			// only show the pass button if it's NOT the first hand of the round
+			if (gameState["currentPlaySize"] != null){
+				this.now.showMakePassMoveButton();
+			}
+			notifyJackInPlay();
+		}
+	}
+	
+	else if (gameState["passNum"] > 0){
+		// we get here from playing 7s
+		var cardsToPass = hand;
+		if (cardsToPass.length < gameState["passNum"] || cardsToPass.length > gameState["passNum"]){
+			var message = "<~ Read";
+			this.now.showErrorMessage(message);
+			// show make move button again
+			this.now.showMakeMoveButton();
+			// show the pass message again
+			this.now.notifyPassCards(gameState["passNum"]);
+		}
+		else{
+			var clientId = this.user.clientId;
+			var nextPlayerId = getNextPlayer();
+			addCardsToHand(cardsToPass, nextPlayerId);
+			removeCardsFromHand(cardsToPass, clientId);
+			gameState["passNum"] = 0;
+			
+			checkEmptyHand(clientId);
+			
+			if (gameState["isPlaying"]){
+				var currentPlayHistory = gameState["currentPlayHistory"];
+				var playedHand = currentPlayHistory[currentPlayHistory.length - 1];
+
+				if (checkForTens(playedHand, clientId)){
+					// this guy played tens, handle send move actions later
+				}
+				else{
+					if (containsEight(playedHand)){
+						passEveryone();
+						resetJackCounter();
+					}
+					else{
+						if (gameState["jackCounter"] > 0){
+							// there is a jack in play
+							if (canPlayLower(playedHand)){
+								// can play lower
+								alertNextPlayer();
+							}
+							else{
+								// cant play lower, so alert jack player
+								// alertJackPlayer();
+								alertNextPlayer();
+							}
+						}
+						else{
+							// there is no jack in play
+							if (canPlayHigher(playedHand)){
+								// the hand just played can be beaten, so alert the next player to make a move
+								alertNextPlayer();
+							}
+							else{
+								// the hand just played CANNOT be beaten, so pass everyone
+								passEveryone();
+							}
+						}
+					}
+					updateJackCounter();
+					notifyJackInPlay();
 				}
 			}
 		}
-		updateJackCounter();
-		notifyJackInPlay();
 	}
-	else{
-		var message = "Bad hand. Try again.";
-		this.now.showErrorMessage(message);
-		
-		// show make move button again
-		this.now.showMakeMoveButton();
-		// only show the pass button if it's NOT the first hand of the round
-		if (gameState["currentPlaySize"] != null){
-			this.now.showMakePassMoveButton();
+	
+	else if (gameState["discardNum"] > 0){
+		var cardsToDiscard = hand;
+		if (cardsToDiscard.length < gameState["discardNum"] || cardsToDiscard.length > gameState["discardNum"]){
+			var message = "<~ Read";
+			this.now.showErrorMessage(message);
+			// show make move button again
+			this.now.showMakeMoveButton();
+			// show the pass message again
+			this.now.notifyDiscardCards(gameState["discardNum"]);
 		}
-		notifyJackInPlay();
+		else{
+			var clientId = this.user.clientId;
+			removeCardsFromHand(cardsToDiscard, clientId);
+			everyone.now.addToDiscardPile(cardsToDiscard.length);
+			gameState["discardNum"] = 0;
+			
+			checkEmptyHand(clientId);
+			
+			
+			if (gameState["isPlaying"]){
+				var currentPlayHistory = gameState["currentPlayHistory"];
+				var playedHand = currentPlayHistory[currentPlayHistory.length - 1];
+				if (containsEight(playedHand)){
+					passEveryone();
+					resetJackCounter();
+				}
+				else{
+					if (gameState["jackCounter"] > 0){
+						// there is a jack in play
+						if (canPlayLower(playedHand)){
+							// can play lower
+							alertNextPlayer();
+						}
+						else{
+							// cant play lower, so alert jack player
+							// alertJackPlayer();
+							alertNextPlayer();
+						}
+					}
+					else{
+						// there is no jack in play
+						if (canPlayHigher(playedHand)){
+							// the hand just played can be beaten, so alert the next player to make a move
+							alertNextPlayer();
+						}
+						else{
+							// the hand just played CANNOT be beaten, so pass everyone
+							passEveryone();
+						}
+					}
+				}
+				updateJackCounter();
+				notifyJackInPlay();
+			}
+		}
 	}
 }
 
@@ -527,19 +625,88 @@ function checkForFives(hand, clientId){
 			numFives++;
 		}
 	}
+	// drawing X cards from discard pile
 	var numDiscard = gameState["discardPile"].length;
 	var cardsToAdd = [];
 	for (var i = 0; i < Math.min(numFives, numDiscard); i++){
 		var randomCard = gameState["discardPile"].splice(Math.random()*gameState["discardPile"].length, 1);
 		cardsToAdd.push(randomCard);
-		usersHash[clientId]["hand"].push(randomCard);
 	}
 	cardsToAdd = cardsToAdd.flatten();
+	
+	// if cards are present, add cards to hand and remove from discard pile
 	if (cardsToAdd.length > 0){
-		sortHand(usersHash[clientId]["hand"]);
-		addToPlayerHand(cardsToAdd, clientId);
+		addCardsToHand(cardsToAdd, clientId);
 		everyone.now.removeFromDiscardPile(cardsToAdd.length);
 	}
+}
+
+function addCardsToHand(hand, clientId){
+	for (var i = 0; i < hand.length; i++){
+		var card = hand[i];
+		usersHash[clientId]["hand"].push(card);
+	}
+	sortHand(usersHash[clientId]["hand"]);
+	updatePlayerHand(hand, clientId, "add");
+}
+
+function checkForSevens(hand, clientId){
+	var numSevens = 0;
+	for (var i = 0; i < hand.length; i++){
+		var card = hand[i];
+		if (card[0] == "7"){
+			numSevens++;
+		}
+	}
+	if (numSevens > 0){
+		var currentHand = usersHash[clientId]["hand"];
+		if (currentHand.length == 0){
+			// user need not pass any cards, just alert next player
+			alertNextPlayer();
+		}
+		else{
+			// if 2 7's were played, but player only has 1 card left, then he only passes 1 card.
+			var numCardsToPass = Math.min(currentHand.length, numSevens);
+			// set up passNum in the gameState so we know how many cards we expect to receive as input from the player
+			gameState["passNum"] = numCardsToPass;
+			// alert the player to select cards to pass
+			nowjs.getClient(clientId, function(){
+				this.now.notifyPassCards(numCardsToPass);
+				this.now.showMakeMoveButton();
+			});
+		}
+		return true;
+	}
+	return false;
+}
+
+function checkForTens(hand, clientId){
+	var numTens = 0;
+	for (var i = 0; i < hand.length; i++){
+		var card = hand[i];
+		if (card[0] == "1" && card[1] == "0"){
+			numTens++;
+		}
+	}
+	if (numTens > 0){
+		var currentHand = usersHash[clientId]["hand"];
+		console.log("chekcing for tens. hand is "+currentHand);
+		if (currentHand.length == 0){
+			alertNextPlayer();
+		}
+		else{
+			// if 2 10's were played but player only has 1 card left, then he only discards one card
+			var numCardsToDiscard = Math.min(currentHand.length, numTens);
+			gameState["discardNum"] = numCardsToDiscard;
+			// alert the player to select cards to discard
+			nowjs.getClient(clientId, function(){
+				this.now.notifyDiscardCards(numCardsToDiscard);
+				this.now.showMakeMoveButton();
+			});
+		}
+		return true;
+	}
+	return false;
 }
 
 function checkForJacks(hand){
@@ -648,10 +815,11 @@ function checkGameOver(){
 function gameOver(){
 	// update places
 	gameState["places"].push(gameState["activePlayers"].pop());
+	gameState["isPlaying"] = false;
 	// broadcast game over
 	broadcastGameOver();
 	// reset the game
-	clearGame();
+	// clearGame();
 }
 
 function updateScores(index){
@@ -681,11 +849,10 @@ function broadcastGameOver(){
 	});
 }
 
-function clearGame(){
-	gameState = {"isPlaying": false, "currentPlayer": 0, "players": [], "currentPlaySize": null, "currentPlayHistory": [], "discardPile": [], "moves": 0, "activePlayers": [], "places": [], "moveBits": [], "jackCounter": 0};
+function resetGameState(){
+	gameState = {"isPlaying": false, "currentPlayer": 0, "players": [], "currentPlaySize": null, "currentPlayHistory": [], "discardPile": [], "moves": 0, "activePlayers": [], "places": [], "moveBits": [], "jackCounter": 0, "passNum": 0, "discardNum": 0};
 	deck = [];
 }
-
 
 function getPlayerName(playerId){
 	if (usersHash[playerId] != undefined){
@@ -711,16 +878,22 @@ function alertCurrentPlayer(){
 	});
 }
 
+function getNextPlayer(){
+	var players = gameState["players"];
+	var nextPlayerIndex = (players.indexOf(gameState["currentPlayer"])+1)%(players.length);
+	while (gameState["moveBits"][nextPlayerIndex] == -1){
+		nextPlayerIndex = (nextPlayerIndex+1)%(players.length);
+	}
+	var nextPlayerId = players[nextPlayerIndex];
+	return nextPlayerId;
+}
+
 function alertNextPlayer(){
 	// finds the next player with moveBit != -1
 	var players = gameState["players"];
 	
 	if (players.length > 0){
-		var nextPlayerIndex = (players.indexOf(gameState["currentPlayer"])+1)%(players.length);
-		while (gameState["moveBits"][nextPlayerIndex] == -1){
-			nextPlayerIndex = (nextPlayerIndex+1)%(players.length);
-		}
-		var nextPlayerId = players[nextPlayerIndex];
+		var nextPlayerId = getNextPlayer();
 
 		everyone.now.showCurrentPlayer(nextPlayerId);
 		nowjs.getClient(nextPlayerId, function(){
@@ -801,6 +974,8 @@ function removeCardsFromHand(cards, clientId){
 		tempHand.splice(indexOfCard, 1);
 	});
 	usersHash[clientId]["hand"] = tempHand;
+	// make call to update FRONTEND
+	updatePlayerHand(cards, clientId, "remove");
 }
 
 function handleEveryonePass(){
@@ -810,10 +985,8 @@ function handleEveryonePass(){
 	// get all the cards played in the current round and shove to discard pile
 	var currentRoundCards = gameState["currentPlayHistory"].flatten();		
 	var numDiscarded = currentRoundCards.length;
-	var dummyHand = [];
 	currentRoundCards.forEach(function(card){
 		gameState["discardPile"].push(card);
-		dummyHand.push("");
 	});
 	// update play history and play size
 	gameState["currentPlayHistory"] = [];
@@ -823,7 +996,7 @@ function handleEveryonePass(){
 	setMoveBitsToOne();
 	
 	// update the discard pile (FRONTEND)
-	everyone.now.addToDiscardPile(dummyHand);
+	everyone.now.addToDiscardPile(currentRoundCards.length);
 }
 
 everyone.now.sendPassMove = function(){

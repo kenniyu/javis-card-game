@@ -309,6 +309,16 @@ body {
 	color: #00bb00;
 }
 
+#game-seven-message {
+	left: 150px;
+	color: #00bb00;
+}
+
+#game-ten-message {
+	left: 150px;
+	color: #00bb00;
+}
+
 #start-btn {
 	left: 0px;
 	top: 0px;

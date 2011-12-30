@@ -331,12 +331,15 @@ $(document).ready(function(){
 		$(this).remove();
 		$('#make-pass-move-btn').remove();
 		$('#game-jack-message').hide();
+		$('#game-seven-message').hide();
+		$('#game-ten-message').hide();
 		now.sendMove(hand);
 	});
 	
 	$('#make-pass-move-btn').live("click", function(e){
 		$('#make-move-btn').remove();
 		$('#game-jack-message').hide();
+		
 		$(this).remove();
 		now.sendPassMove();
 	});
@@ -395,7 +398,7 @@ $(document).ready(function(){
 			scDiv.css("position", "absolute").css("left", $(cardDiv).position().left);
 			$('#slot-bot-sc').append(scDiv);
 		});
-		$('#slot-bot-sc').hide().fadeIn(1000);
+		// $('#slot-bot-sc').hide().fadeIn(1000);
 		readjustDivs("#slot-bot-sc", true);
 		
 	}
@@ -486,12 +489,9 @@ $(document).ready(function(){
 			}
 		});
 		
-		hand.forEach(function(){
-			$('#slot-bot-sc').children(":last-child").remove();
-		})
+		showShortcuts();
 		// readjust spacing of hand
 		readjustDivs('#slot-bot', false);
-		readjustDivs('#slot-bot-sc', true);
 	}
 	
 	// adding cards to my hand 
@@ -664,17 +664,17 @@ $(document).ready(function(){
 		$(div).empty();
 	}
 	
-	now.addToDiscardPile = function(dummyHand){
+	now.addToDiscardPile = function(numCards){
 		// $('#slot-discard :not(#slot-discard-label)').remove();
-		dummyHand.forEach(function(card, index){
-			var cardHtml = getCardHtml(card, false);			
+		for (var i = 0; i < numCards; i++){
+			var cardHtml = getCardHtml("", false);
 			var left = Math.random()/3*100;
 			var top = Math.random()/2.3*100;
 			
 			var cardDiv = $(''+cardHtml).css("left", left+"%").css("top", top+"%");
 			
 			$('#slot-discard').append(cardDiv);
-		});
+		};
 	}
 	
 	now.removeFromDiscardPile = function(numCards){
@@ -781,6 +781,16 @@ $(document).ready(function(){
 		}
 	}
 	
+	// alert to pass cards
+	now.notifyPassCards = function(numCardsToPass){
+		$('#game-seven-message').text("Select "+numCardsToPass+" cards to pass").show();
+	}
+	
+	// alert to discard cards
+	now.notifyDiscardCards = function(numCardsToPass){
+		$('#game-ten-message').text("Select "+numCardsToPass+" cards to discard").show();
+	}
+	
 	// notification of turn
 	now.notifyTurn = function(){
 		var counter = 0;
@@ -851,6 +861,8 @@ $(document).ready(function(){
 			</div>
 			
 			<div id="game-controls">
+				<div class="game-feedback" id="game-seven-message" style="display:none;"></div>
+				<div class="game-feedback" id="game-ten-message" style="display:none;"></div>
 				<div class="game-feedback" id="game-jack-message" style="display:none;">Play Lower!</div>
 				<div class="game-feedback" id="game-error-message" style="display:none;"></div>
 			</div>
