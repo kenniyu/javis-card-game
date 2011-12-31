@@ -113,35 +113,37 @@ nowjs.on('connect', function() {
 // when a client disconnects
 nowjs.on('disconnect', function() {
 	var clientId = this.user.clientId;
-	// update chat
-	broadcastLeave(clientId);
 	
-	var playerIndex = gameState["players"].indexOf(clientId);
-	if (playerIndex > -1){
-		console.log("removing player "+clientId+" and his index is "+playerIndex);
-		updatePlayerHand(usersHash[clientId]["hand"], clientId, "remove");	// hand is the hand to remove
-		// udpate gameState vars
-		gameState["moveBits"][playerIndex] = -1
-		gameState["activePlayers"].splice(gameState["activePlayers"].indexOf(clientId), 1);
-		console.log(gameState);
-		
-		if (gameState["currentPlayer"] == clientId){
-			alertNextPlayer();
-			// everyone.now.showCurrentPlayer(gameState["currentPlayer"]);
+	if (Object.size(usersHash) > 1){
+		// update chat
+		broadcastLeave(clientId);
+
+		var playerIndex = gameState["players"].indexOf(clientId);
+		if (playerIndex > -1){
+			console.log("removing player "+clientId+" and his index is "+playerIndex);
+			updatePlayerHand(usersHash[clientId]["hand"], clientId, "remove");	// hand is the hand to remove
+			// update gameState vars
+			gameState["moveBits"][playerIndex] = -1
+			gameState["activePlayers"].splice(gameState["activePlayers"].indexOf(clientId), 1);
+			console.log(gameState);
+
+			if (gameState["currentPlayer"] == clientId){
+				alertNextPlayer();
+				// everyone.now.showCurrentPlayer(gameState["currentPlayer"]);
+			}
+
+			checkGameOver();
 		}
-		
-		checkGameOver();
-	}
-	// delete user from the server
-	delete usersHash[clientId];
-	
-	// update scoreboard
-	everyone.now.updateScoreboard(usersHash);
-	
-	if (gameState["isPlaying"] == false && Object.size(usersHash) < 2){
-		// hide the start button
-		everyone.now.removeStartButton();
-		everyone.now.showWaitForGame();
+		// delete user from the server
+		delete usersHash[clientId];
+
+		// update scoreboard
+		everyone.now.updateScoreboard(usersHash);
+		if (gameState["isPlaying"] == false && Object.size(usersHash) < 2){
+			// hide the start button
+			everyone.now.removeStartButton();
+			everyone.now.showWaitForGame();
+		}
 	}
 });
 
