@@ -13,6 +13,7 @@ body {
 	background-color: black;
 	color: #eeeeee;
 	font: 15px "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+	margin: 30px;
 }
 
 a:link, a:visited{
@@ -96,6 +97,7 @@ strong {
 
 .content {
 	margin-top: 50px;
+	margin-bottom: 50px;
 }
 
 
