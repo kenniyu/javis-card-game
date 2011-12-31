@@ -115,6 +115,7 @@ nowjs.on('disconnect', function() {
 	var clientId = this.user.clientId;
 	
 	if (Object.size(usersHash) > 1){
+		// continue if there's still someone connected to the server		
 		// update chat
 		broadcastLeave(clientId);
 

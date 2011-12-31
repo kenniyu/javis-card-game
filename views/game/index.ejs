@@ -716,7 +716,6 @@ $(document).ready(function(){
 	});
 	
 	$('#nickname-submit').live("keypress focusout", function(e){
-		console.log(e.type);
 		if (e.keyCode == 13 || e.type == "focusout"){
 			$('#chat-submit').focus();
 			var name = $(this).val().trim();
