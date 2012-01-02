@@ -3,11 +3,35 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
+var express = require('express'),
+	routes = require('./routes'),
+	everyauth = require('everyauth'),
+	util = require('util'),
+	Promise = everyauth.Promise,
+	couchUsers = require('./lib/users');
+	
+var userData = [];
 
 var app = module.exports = express.createServer();
+everyauth.helpExpress(app);
+
+everyauth.facebook
+  .appId("204725489614645")
+  .appSecret("814fa2018da9c4ca3a42c3307d219a0b")
+  // .logoutPath('/logout')
+  // .logoutRedirectPath('/')
+  .handleAuthCallbackError( function (req, res) {
+    //Define here for routing in case user decline app     
+  })
+  .findOrCreateUser( function (session, accessToken, accessTokExtra, fbUserMetadata) {
+	var promise = new Promise();
+	couchUsers.findOrCreateByFacebookData(fbUserMetadata, promise, userData);
+	return promise;
+  })
+  .redirectPath('/game');
+
 var nowjs = require('now');
+var connectedFbIds = [];
 
 // Configuration
 
@@ -15,7 +39,10 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.use(express.bodyParser());
+  app.use(express.cookieParser());
   app.use(express.methodOverride());
+  app.use(express.session({secret: "javisivaj"}));
+  app.use(everyauth.middleware());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
@@ -28,6 +55,8 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
+everyauth.helpExpress(app);
+
 // Routes
 
 app.get('/', function(req, res){
@@ -35,7 +64,36 @@ app.get('/', function(req, res){
 });
 
 app.get('/game', function(req, res){
-	res.render('game');
+	if (req.session.auth == undefined){
+		// no fb session, so redirect
+		res.redirect('/');
+	}
+	else if (connectedFbIds.indexOf(req.session.auth.userId) > -1) {
+		// already connected to a game, so can't join
+		res.redirect('/');
+	}
+	else{
+		// can reach the case where they closed window, came back to game (session still defined)
+		// but they weren't in connectedFbIds, (ie. refresh), so must fetch user data from db again
+		
+		// loop through userData to see if user with fbId is in there, if not, must fetch again
+		var found = false;
+		for (var i = 0; i < userData.length; i++){
+			if (userData[i].facebookId == req.session.auth.userId){
+				found = true;
+				break;
+			}
+		}
+		if (!found){
+			// not found, so much fetch
+			res.redirect("/auth/facebook");
+		}
+		else{
+			// get here if first time log in with fb, or if page refresh
+			connectedFbIds.push(req.session.auth.userId);
+			res.render('game');
+		}
+	}	
 });
 
 app.get('/rules', function(req, res){
@@ -57,65 +115,71 @@ var waitingPlayers = [];
 
 // when a client connects
 nowjs.on('connect', function() {
-	var name, basename;
 	var clientId = this.user.clientId;
-	var nameIsUnique = true;
 	
-	basename = "Player";
-	
-	while (true){
-		name = basename + anonId;
-		for (var key in usersHash){
-			if (usersHash[key]["name"] == name){
-				nameIsUnique = false;
-				break;
-			}
+	var myData = userData.shift();
+	if (myData != undefined){
+		var score = myData.score;
+		var wins = myData.wins;
+		var name = myData.name.split(" ")[0];
+		var facebookId = myData.facebookId;
+		var numGames = myData.numGames;
+		var userType = ((gameState["isPlaying"] || getNumPlayers() == 4) ? "Observer": "Player");
+		
+		this.now.name = name;
+		usersHash[clientId] = {"id": clientId, "name": name, "type": userType, "score": score, "wins": wins, "hand": [], "color": "#000000", "fbid": facebookId, "numGames": numGames};
+		
+		console.log("********** A user has connected **********");
+		console.log(usersHash[clientId]);
+		console.log("******************************************");
+		
+		if (userType == "Observer"){
+			initObserverView(clientId);
+			waitingPlayers.push(clientId);
 		}
-		if (nameIsUnique){
-			var userType = ((gameState["isPlaying"] || getNumPlayers() == 4) ? "Observer": "Player");
-			this.now.name = name;
-			usersHash[clientId] = {"id": clientId, "name": name, "type": userType, "score": 0, "hand": [], "color": "#000000"};
-			if (userType == "Observer"){
-				initObserverView(clientId);
-				waitingPlayers.push(clientId);
-			}
-			assignUniqueColor(clientId);
-			break;
-		}
-		else{
-			anonId++;
-		}
-	}
-	anonId++;
-	
-	// update the chat and scoreboard
-	broadcastJoin(clientId);
-	everyone.now.updateScoreboard(usersHash);
-	
-	// show players start button
-	if (getNumPlayers() > 1 && !gameState["isPlaying"]){
-		var playerIds = getPlayerIds();
-		// show players the start button
-		playerIds.forEach(function(playerId){
-			nowjs.getClient(playerId, function(){
-				this.now.showStartButton();
-				this.now.removeWaitForGame();
-				this.now.removeGameOverButton();
+		assignUniqueColor(clientId);
+
+		// update the chat and scoreboard
+		broadcastJoin(clientId);
+		everyone.now.updateScoreboard(usersHash);
+
+		// show players start button
+		if (getNumPlayers() > 1 && !gameState["isPlaying"]){
+			var playerIds = getPlayerIds();
+			// show players the start button
+			playerIds.forEach(function(playerId){
+				nowjs.getClient(playerId, function(){
+					this.now.showStartButton();
+					this.now.removeWaitForGame();
+					this.now.removeGameOverButton();
+				});
 			});
-		});
-	}
-	else if (getNumPlayers() == 1){
-		// show players the wait for game
-		everyone.now.showWaitForGame();
+		}
+		else if (getNumPlayers() == 1){
+			// show players the wait for game
+			everyone.now.showWaitForGame();
+		}
 	}
 });
 
+function savePlayerScores(places){
+	places.forEach(function(clientId){
+		var facebookId = usersHash[clientId]["fbid"];
+		var newWins = parseInt(usersHash[clientId]["wins"]);
+		var newScore = parseInt(usersHash[clientId]["score"]);
+		var newNumGames = parseInt(usersHash[clientId]["numGames"]);
+		couchUsers.updateData(facebookId, newScore, newWins, newNumGames);
+	});
+}
+
 // when a client disconnects
 nowjs.on('disconnect', function() {
-	var clientId = this.user.clientId;
+	var clientId = this.user.clientId;		
+	connectedFbIds.splice(connectedFbIds.indexOf(usersHash[clientId]["fbid"]), 1);
 	
 	if (Object.size(usersHash) > 1){
-		// continue if there's still someone connected to the server		
+		// continue if there's still someone connected to the server
+		console.log("user is disconnecting, but there is still someone connected to server");
 		// update chat
 		broadcastLeave(clientId);
 
@@ -126,11 +190,9 @@ nowjs.on('disconnect', function() {
 			// update gameState vars
 			gameState["moveBits"][playerIndex] = -1
 			gameState["activePlayers"].splice(gameState["activePlayers"].indexOf(clientId), 1);
-			console.log(gameState);
 
 			if (gameState["currentPlayer"] == clientId){
 				alertNextPlayer();
-				// everyone.now.showCurrentPlayer(gameState["currentPlayer"]);
 			}
 
 			checkGameOver();
@@ -146,6 +208,11 @@ nowjs.on('disconnect', function() {
 			everyone.now.showWaitForGame();
 		}
 	}
+	else{
+		console.log("user is disconnecting, and no one else is connected to server");
+		delete usersHash[clientId];
+	}
+	
 });
 
 everyone.now.waitForGame = function(){
@@ -194,6 +261,7 @@ everyone.now.initGame = function(){
 		initDeck();							// initialize the deck
 	 	deck = shuffleCards(deck);			// shuffle the deck
 		
+		updateNumGamesPlayed();
 		assignHands();						// assigns each players hand on the backend
 		dealPlayerHands();					// deals each players hand on the frontend
 		
@@ -205,6 +273,13 @@ everyone.now.initGame = function(){
 		
 		beginPlaying();						// start taking turns
 	}
+}
+
+function updateNumGamesPlayed(){
+	var playerIds = getPlayerIds();
+	playerIds.forEach(function(playerId){
+		usersHash[playerId]["numGames"] += 1;
+	});
 }
 
 function broadcastJoin(clientId){
@@ -422,14 +497,10 @@ function beginPlaying(){
 }
 
 everyone.now.sendMove = function(hand){
-	console.log("The hand is "+hand);
 	if (gameState["passNum"] == 0 && gameState["discardNum"] == 0){
 		hand = sortHand(hand);
 		if (checkRules(hand)){
 			// valid hand, game state should've already been updated
-			console.log("===============valid hand==============");
-			console.log(gameState);
-
 			// set move bits to 1 (more details in function)
 			setMoveBitsToOne();
 
@@ -445,7 +516,6 @@ everyone.now.sendMove = function(hand){
 			// check for J's
 			checkForJacks(hand, clientId);
 			
-			console.log("player just made a move. his hand is now: "+usersHash[clientId]["hand"]);
 			// check if the player who just played now has an empty hand
 			checkEmptyHand(clientId);
 			
@@ -738,7 +808,6 @@ function checkForJacks(hand){
 			break;
 		}
 	}
-	console.log(gameState["jackCounter"]);
 }
 
 function containsEight(hand){
@@ -829,7 +898,6 @@ function checkEmptyHand(clientId){
 
 // game over functions
 function checkGameOver(){
-	console.log("we are checking if game is over");
 	if (gameState["activePlayers"].length == 1){
 		// if there's only one active player left, then the game is over, so call gameOver		
 		gameOver();
@@ -842,13 +910,16 @@ function gameOver(){
 	gameState["isPlaying"] = false;
 	// broadcast game over
 	broadcastGameOver();
-	// reset the game
-	// clearGame();
+	// update this users score:
+	savePlayerScores(gameState["places"]);
 }
 
 function updateScores(index){
 	var places = gameState["places"];
 	var clientId = places[index];
+	if (index == 0){
+		usersHash[clientId]["wins"] += 1;
+	}
 	var numCardsLeftInGame = getNumCardsLeft();
 	usersHash[clientId]["score"] += numCardsLeftInGame;
 	everyone.now.updateScoreboard(usersHash);
@@ -915,10 +986,37 @@ function getNextPlayer(){
 function alertNextPlayer(){
 	// finds the next player with moveBit != -1
 	var players = gameState["players"];
-	
 	if (players.length > 0){
-		var nextPlayerId = getNextPlayer();
-
+		var autoPassedPlayers = [];
+		while (true){
+			var nextPlayerId = getNextPlayer();
+			gameState["currentPlayer"] = nextPlayerId;
+			
+			if (gameState["currentPlaySize"] != null && usersHash[nextPlayerId]["hand"].length < gameState["currentPlaySize"]){
+				// highlight current player, then pass this player
+				everyone.now.showCurrentPlayer(nextPlayerId);
+				pass(nextPlayerId);
+				checkEveryonePassed();
+				
+				// add to queue to pass:
+				autoPassedPlayers.push(nextPlayerId);
+				
+				// show he autopasses (FRONTEND)
+				nowjs.getClient(nextPlayerId, function(){
+					this.now.showAutoPass();
+				});
+				setTimeout(function(){
+					var playerToPass = autoPassedPlayers.shift();
+					nowjs.getClient(playerToPass, function(){
+						this.now.removeAutoPass();
+					});
+				}, 1000);
+			}
+			else {
+				break;
+			}
+		}
+		
 		everyone.now.showCurrentPlayer(nextPlayerId);
 		nowjs.getClient(nextPlayerId, function(){
 			gameState["currentPlayer"] = nextPlayerId;
@@ -1023,25 +1121,28 @@ function handleEveryonePass(){
 	everyone.now.addToDiscardPile(currentRoundCards.length);
 }
 
-everyone.now.sendPassMove = function(){
-	// decrement the jack counter:
-	updateJackCounter();
-	
-	var clientId = this.user.clientId;
+function pass(clientId){
 	console.log("client "+ clientId + " is passing");
-	var playerIndex = gameState["players"].indexOf(clientId);
-	
-	var everyonePassed = false;
+	updateJackCounter();
+	var playerIndex = gameState["players"].indexOf(clientId);	
 	gameState["moveBits"][playerIndex] = 0;		// use 0 to indicate that the player has just passed
+}
+
+function checkEveryonePassed(){
+	var everyonePassed = false;
 	// check that all players (with cards) have passed. just check that there are no 1's
 	if (gameState["moveBits"].indexOf(1) == -1){
 		// everyone has passed
 		everyonePassed = true;
 	}
-	
 	if (everyonePassed){
 		handleEveryonePass();	// what to do when everyone passes
 	}
+}
+
+everyone.now.sendPassMove = function(){
+	pass(this.user.clientId);
+	checkEveryonePassed();
 	// alert the next player to make a move
 	alertNextPlayer();
 }
@@ -1202,7 +1303,6 @@ function getHandValue(hand){
 			sum = -1;
 			break;
 	}
-	console.log("the sum of this hand is "+sum);
 	return sum;
 }
 
@@ -1459,18 +1559,10 @@ everyone.now.submitChat = function(message) {
 	everyone.now.updateChat(messageHash, color);
 }
 everyone.now.submitNickname = function(name) {
-	// when someone submits new nickname, sanitize and check for uniqueness
-	// var cleanName = encodeHTML(name);
-	var cleanName = name;
-	for (var clientId in usersHash){
-		if (usersHash[clientId]["name"] == cleanName){
-			return;
-		}
-	}
-	// name is unique, update entry for client in usersHash
+	// update entry for client in usersHash
 	var clientId = this.user.clientId;
-	usersHash[clientId]["name"] = cleanName;
-	this.now.name = cleanName;
+	usersHash[clientId]["name"] = name;
+	this.now.name = name;
 	// call updateName
 	updateName();
 	// update the scoreboard (because scoreboard has names)

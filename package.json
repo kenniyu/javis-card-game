@@ -1,11 +1,13 @@
 {
-  "version": "0.7.6-57",
+  "version": "0.7.6-69",
   "private": true,
   "dependencies": {
     "express": "2.5.2",
     "jade": ">= 0.0.1",
     "now": "0.7.x",
-    "ejs": ""
+    "ejs": "",
+    "cradle": "0.5.x",
+    "everyauth": "0.2.x"
   },
   "scripts": {
     "start": "app.js"

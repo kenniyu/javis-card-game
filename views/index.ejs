@@ -8,14 +8,18 @@
 				document.location.href="game";
 			});
 			
+			$('#fb-login').live("click", function(e){
+				document.location.href="auth/facebook";
+			})
+			
 			$('#learn-game').live("click", function(e){
 				document.location.href="rules";
 			});
 			
-			$('#javis').fadeIn(1500);
-			$('#join-game').delay(2500).animate({"height": "show", "opacity": "show"});
-			$('#learn-game').delay(3000).animate({"height": "show", "opacity": "show"});
 			
+			$('#javis').fadeIn(1500);
+			$('#fb-login').delay(2500).animate({"height": "show", "opacity": "show"});
+			$('#learn-game').delay(3000).animate({"height": "show", "opacity": "show"});
 		});
 	</script>
 </head>
@@ -25,8 +29,9 @@
 		<div id="wrapper-inner">
 			
 			<div class="heading" id="javis" style="display:none;">Javis</div>
-			<div class="btn" id="join-game" style="display:none;">Play Me</div>
+			<div id="fb-login" style="display:none;"><img src="/images/icon-fb.gif" />Log In with Facebook</div>
 			<div class="btn" id="learn-game" style="display:none;">Rules</div>
+			
 		</div>
 	</div>
 </body>
