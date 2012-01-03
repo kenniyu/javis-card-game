@@ -69,14 +69,20 @@ app.get('/game', function(req, res){
 		res.redirect('/');
 	}
 	else if (connectedFbIds.indexOf(req.session.auth.userId) > -1) {
-		// already connected to a game, so can't join
+		// if the session is defined and they're already in a game and they try to access this path
 		res.redirect('/');
 	}
 	else{
+		// if the session is defined and they're not in a game:
+		// fetch user data if we don't already have it
+		
 		// can reach the case where they closed window, came back to game (session still defined)
 		// but they weren't in connectedFbIds, (ie. refresh), so must fetch user data from db again
 		
 		// loop through userData to see if user with fbId is in there, if not, must fetch again
+		console.log("current user data");
+		console.log(userData);
+		
 		var found = false;
 		for (var i = 0; i < userData.length; i++){
 			if (userData[i].facebookId == req.session.auth.userId){
@@ -84,8 +90,9 @@ app.get('/game', function(req, res){
 				break;
 			}
 		}
+
 		if (!found){
-			// not found, so much fetch
+			// not found, so must fetch
 			res.redirect("/auth/facebook");
 		}
 		else{
@@ -116,9 +123,17 @@ var waitingPlayers = [];
 // when a client connects
 nowjs.on('connect', function() {
 	var clientId = this.user.clientId;
-	
-	var myData = userData.shift();
+	var myData = userData.splice(0,1)[0];
+
 	if (myData != undefined){
+		// somehow we have more than one of this client's data in userData, so must remove all
+		for (var i = 0; i < userData.length; i++){
+			if (userData[i].facebookId == myData.facebookId){
+				userData.splice(i, 1);
+				i = 0;
+			}
+		}
+		
 		var score = myData.score;
 		var wins = myData.wins;
 		var name = myData.name.split(" ")[0];
@@ -132,6 +147,8 @@ nowjs.on('connect', function() {
 		console.log("********** A user has connected **********");
 		console.log(usersHash[clientId]);
 		console.log("******************************************");
+		// populate the nickname input
+		this.now.populateNickname(name);
 		
 		if (userType == "Observer"){
 			initObserverView(clientId);

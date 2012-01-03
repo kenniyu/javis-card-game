@@ -32,9 +32,9 @@ body {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	padding: 10px;
-	text-transform: uppercase;
+/*	text-transform: uppercase;*/
 	font-size: 14px;
-	color: #333333;
+	color: #000000;
 	font-weight: bold;
 	cursor: pointer;
 	text-align: center;
@@ -87,7 +87,8 @@ body {
 #fb-login {
 	width: 200px;
 	margin: auto;
-	margin-bottom: 20px;
+	margin-top: 30px;
+	margin-bottom: 30px;
 	text-align: center;
 	padding: 10px;
 	text-decoration: none;
@@ -96,26 +97,26 @@ body {
 	color: #eeeeee;
 	text-shadow: 0px -1px 0 #999999;
 	box-shadow: inset 0 1px 0 rgba(255,255,255,0.5),0 1px 0 rgba(0,0,0,0.25),0 0 0 1px #26466D,0 3px 2px rgba(0,0,0,0.25);
-	background: #104E8B;
-	background: -webkit-gradient(linear, left top, left bottom, from(#1874CD), to(#104E8B));
-	background: -moz-linear-gradient(top,  #1874CD,  #104E8B);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#1874CD', endColorstr='#104E8B');
+	background: #5E76AB;
+	background: -webkit-gradient(linear, left top, left bottom, from(#5E76AB), to(#2D4B8C));
+	background: -moz-linear-gradient(top,  #5E76AB,  #2D4B8C);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#5E76AB', endColorstr='#2D4B8C');
 	cursor: pointer;
 }
 
 #fb-login:hover {
-	color: #dddddd;
-	background: #05EDFF;
-	background: -webkit-gradient(linear, left top, left bottom, from(#1874CD), to(#104E8B));
-	background: -moz-linear-gradient(top,  #1874CD,  #104E8B);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#1874CD', endColorstr='#104E8B');
+	color: #bbbbbb;
+	background: #5E76AB;
+	background: -webkit-gradient(linear, left top, left bottom, from(#5E76AB), to(#2D4B8C));
+	background: -moz-linear-gradient(top,  #5E76AB,  #2D4B8C);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#5E76AB', endColorstr='#2D4B8C');
 }
 
 #fb-login:active {
-	background: #05EDFF;
-	background: -webkit-gradient(linear, left top, left bottom, from(#104E8B), to(#1874CD));
-	background: -moz-linear-gradient(top,  #104E8B,  #1874CD);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#104E8B', endColorstr='#1874CD');
+	background: #2D4B8C;
+	background: -webkit-gradient(linear, left top, left bottom, from(#2D4B8C), to(#5E76AB));
+	background: -moz-linear-gradient(top,  #2D4B8C,  #5E76AB);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#2D4B8C', endColorstr='#5E76AB');
 }
 
 img {

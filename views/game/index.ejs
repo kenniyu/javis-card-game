@@ -852,6 +852,10 @@
 			now.notifyDiscardCards = function(numCardsToPass){
 				$('#game-ten-message').text("Select "+numCardsToPass+" card"+(numCardsToPass == 1 ? '' : 's')+" to discard").show();
 			}
+			
+			now.populateNickname = function(name){
+				$('#nickname-submit').val(''+name);
+			}
 	
 			// notification of turn
 			now.notifyTurn = function(){
@@ -943,6 +947,8 @@
 					e.preventDefault();
 				}
 			});
+			
+			
 		});
 
 		jQuery.fn.swapWith = function(to) {
@@ -953,7 +959,7 @@
 		        $(this).replaceWith(copy_to);
 		    });
 		};
-		
+				
 	</script>
 </head>
 
