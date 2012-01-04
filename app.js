@@ -16,8 +16,13 @@ var app = module.exports = express.createServer();
 everyauth.helpExpress(app);
 
 everyauth.facebook
+// for production
   .appId("204725489614645")
   .appSecret("814fa2018da9c4ca3a42c3307d219a0b")
+// for staging
+	// .appId("300484233322863")
+	// .appSecret("dc1935e976ce2436eb274513a353b3be")
+	
   // .logoutPath('/logout')
   // .logoutRedirectPath('/')
   .handleAuthCallbackError( function (req, res) {
@@ -65,7 +70,7 @@ app.get('/', function(req, res){
 
 app.get('/game', function(req, res){
 	if (req.session.auth == undefined){
-		// no fb session, so redirect
+			// no fb session, so redirect
 		res.redirect('/');
 	}
 	else if (connectedFbIds.indexOf(req.session.auth.userId) > -1) {
@@ -80,9 +85,9 @@ app.get('/game', function(req, res){
 		// but they weren't in connectedFbIds, (ie. refresh), so must fetch user data from db again
 		
 		// loop through userData to see if user with fbId is in there, if not, must fetch again
-		console.log("current user data");
-		console.log(userData);
-		
+		// console.log("current user data");
+		// console.log(userData);
+		// 
 		var found = false;
 		for (var i = 0; i < userData.length; i++){
 			if (userData[i].facebookId == req.session.auth.userId){
@@ -90,7 +95,7 @@ app.get('/game', function(req, res){
 				break;
 			}
 		}
-
+		
 		if (!found){
 			// not found, so must fetch
 			res.redirect("/auth/facebook");
@@ -122,6 +127,7 @@ var waitingPlayers = [];
 
 // when a client connects
 nowjs.on('connect', function() {
+	
 	var clientId = this.user.clientId;
 	var myData = userData.splice(0,1)[0];
 
@@ -140,7 +146,7 @@ nowjs.on('connect', function() {
 		var facebookId = myData.facebookId;
 		var numGames = myData.numGames;
 		var userType = ((gameState["isPlaying"] || getNumPlayers() == 4) ? "Observer": "Player");
-		
+	
 		this.now.name = name;
 		usersHash[clientId] = {"id": clientId, "name": name, "type": userType, "score": score, "wins": wins, "hand": [], "color": "#000000", "fbid": facebookId, "numGames": numGames};
 		
@@ -179,14 +185,12 @@ nowjs.on('connect', function() {
 	}
 });
 
-function savePlayerScores(places){
-	places.forEach(function(clientId){
-		var facebookId = usersHash[clientId]["fbid"];
-		var newWins = parseInt(usersHash[clientId]["wins"]);
-		var newScore = parseInt(usersHash[clientId]["score"]);
-		var newNumGames = parseInt(usersHash[clientId]["numGames"]);
-		couchUsers.updateData(facebookId, newScore, newWins, newNumGames);
-	});
+function savePlayerStats(clientId){
+	var facebookId = usersHash[clientId]["fbid"];
+	var newWins = parseInt(usersHash[clientId]["wins"]);
+	var newScore = parseInt(usersHash[clientId]["score"]);
+	var newNumGames = parseInt(usersHash[clientId]["numGames"]);
+	couchUsers.updateData(facebookId, newScore, newWins, newNumGames);
 }
 
 // when a client disconnects
@@ -194,24 +198,46 @@ nowjs.on('disconnect', function() {
 	var clientId = this.user.clientId;		
 	connectedFbIds.splice(connectedFbIds.indexOf(usersHash[clientId]["fbid"]), 1);
 	
-	if (Object.size(usersHash) > 1){
+	if (Object.size(usersHash) > 1) {
 		// continue if there's still someone connected to the server
 		console.log("user is disconnecting, but there is still someone connected to server");
 		// update chat
 		broadcastLeave(clientId);
 
 		var playerIndex = gameState["players"].indexOf(clientId);
-		if (playerIndex > -1){
+		if (playerIndex > -1) {
 			console.log("removing player "+clientId+" and his index is "+playerIndex);
-			updatePlayerHand(usersHash[clientId]["hand"], clientId, "remove");	// hand is the hand to remove
-			// update gameState vars
+			// remove cards from the FRONTEND
+			updatePlayerHand(usersHash[clientId]["hand"], clientId, "remove");
+			// update moveBits
 			gameState["moveBits"][playerIndex] = -1
-			gameState["activePlayers"].splice(gameState["activePlayers"].indexOf(clientId), 1);
-
-			if (gameState["currentPlayer"] == clientId){
-				alertNextPlayer();
+			
+			
+			if (gameState["activePlayers"].indexOf(clientId) > -1) {
+				// player was active. splice him (and don't place him)
+				gameState["activePlayers"].splice(gameState["activePlayers"].indexOf(clientId), 1);
+				// update leaver score. since he was active, isWinner = false
+				preparePlayerStats(clientId, false, true);
+				
+				if (gameState["activePlayers"].length == 1){
+					// number of active players went from 2 to 1, so update the player that's left's score
+					// if no one has been placed, then he is the winner
+					var remainingActivePlayer = gameState["activePlayers"][0];
+					preparePlayerStats(remainingActivePlayer, gameState["places"].length == 0, false);
+				}
 			}
-
+			else{
+				// player is not active, already played all of his cards
+				// his score should've already been updated
+			}
+			
+			if (gameState["activePlayers"].length > 1){
+				if (gameState["currentPlayer"] == clientId) {
+					alertNextPlayer();
+				}
+			}
+			
+			// check game over to broadcast
 			checkGameOver();
 		}
 		// delete user from the server
@@ -219,7 +245,7 @@ nowjs.on('disconnect', function() {
 
 		// update scoreboard
 		everyone.now.updateScoreboard(usersHash);
-		if (gameState["isPlaying"] == false && Object.size(usersHash) < 2){
+		if (gameState["isPlaying"] == false && Object.size(usersHash) < 2) {
 			// hide the start button
 			everyone.now.removeStartButton();
 			everyone.now.showWaitForGame();
@@ -278,7 +304,7 @@ everyone.now.initGame = function(){
 		initDeck();							// initialize the deck
 	 	deck = shuffleCards(deck);			// shuffle the deck
 		
-		updateNumGamesPlayed();
+		updateNumGamesPlayed();				// increment all player's numGames
 		assignHands();						// assigns each players hand on the backend
 		dealPlayerHands();					// deals each players hand on the frontend
 		
@@ -902,7 +928,8 @@ function checkEmptyHand(clientId){
 		
 		gameState["activePlayers"].splice(activePlayerIndex, 1);
 		gameState["places"].push(clientId);
-		updateScores(gameState["places"].length - 1);
+		
+		preparePlayerStats(clientId, gameState["places"].indexOf(clientId) == 0, false);
 		
 		checkGameOver();
 	}
@@ -927,19 +954,25 @@ function gameOver(){
 	gameState["isPlaying"] = false;
 	// broadcast game over
 	broadcastGameOver();
-	// update this users score:
-	savePlayerScores(gameState["places"]);
 }
 
-function updateScores(index){
-	var places = gameState["places"];
-	var clientId = places[index];
-	if (index == 0){
-		usersHash[clientId]["wins"] += 1;
+function preparePlayerStats(clientId, isWinner, isLeaver){
+	if (isLeaver){
+		usersHash[clientId]["score"] -= 10;
 	}
-	var numCardsLeftInGame = getNumCardsLeft();
-	usersHash[clientId]["score"] += numCardsLeftInGame;
+	else{
+		// if player is winner, update wins
+		if (isWinner){
+			usersHash[clientId]["wins"] += 1;
+		}
+		// set this clients score to the number of cards other players have
+		var numOtherCards = getNumCardsLeft() - usersHash[clientId]["hand"].length;
+		usersHash[clientId]["score"] += numOtherCards;
+	}
+	// update the scoreboard (FRONTEND)
 	everyone.now.updateScoreboard(usersHash);
+	// update the database (BACKEND)
+	savePlayerStats(clientId);
 }
 
 function getNumCardsLeft(){
@@ -1275,6 +1308,7 @@ function compareToHand(prevHand, newHand){
 		return false;
 	}
 	// hands should be equal and valid length by here, just exploit getHandValue(hand)
+	
 	if (gameState["jackCounter"] == 0){
 		if (getHandValue(newHand) > getHandValue(prevHand)){
 			return 1;

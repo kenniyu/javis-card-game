@@ -4,8 +4,9 @@
 	
 	<link rel='stylesheet' href='../stylesheets/game.css' />
 	<link rel='stylesheet' href='../stylesheets/tipsy.css' />
-	<script src="/nowjs/now.js"></script>
+	
 	<script src="/javascripts/jquery-ui-1.8.16.custom.min.js"></script>
+	<script src="/nowjs/now.js"></script>
 	<script src="/javascripts/jquery.tipsy.js"></script>
 	
 	<script type="text/javascript">	// juicy stuff
@@ -835,11 +836,21 @@
 			}
 			
 			function getTipsyHTML(name, numGames, wins, score, color){
+				var winRatio = numGames == 0 ? 0 : (100*wins/numGames).toFixed(2);
+				var avgScorePerGame = numGames == 0 ? 0 : Math.floor(score/numGames);
 				return "<div class='tipsy-stats'>\
 					<div class='stats-heading' style='color: "+color+";'>"+name+"</div>\
-					<div class='stats-sub'><strong>Games played:</strong> "+numGames+"</div>\
-					<div class='stats-sub'><strong>Wins:</strong> "+wins+"</div>\
-					<div class='stats-sub'><strong>Score:</strong> "+score+"</div>\
+					<hr>\
+					<div class='stats-block stats-main'>\
+						<div class='stats-sub'><span class='stats-title'>Wins:</span> "+wins+"</div>\
+						<div class='stats-sub'><span class='stats-title'>Games:</span> "+numGames+"</div>\
+						<div class='stats-sub'><span class='stats-title'>Score:</span> "+score+"</div>\
+					</div>\
+					<hr>\
+					<div class='stats-block stats-extra'>\
+						<div class='stats-sub'><span class='stats-title'>Win Ratio:</span> "+winRatio+"%</div>\
+						<div class='stats-sub'><span class='stats-title'>Avg Score Per Game:</span> "+avgScorePerGame+"</div>\
+					</div>\
 				</div>";
 			}
 	
@@ -966,16 +977,20 @@
 <body>
 	<div id="wrapper">
 		<div id="game-board" tabindex=1>
+			<div id="slot-bot-container" class="slot-container"></div>
 			<div id="slot-bot-label" class="player-name"></div>
 			<div id="slot-bot" class="slot"></div>
 			<div id="slot-bot-sc"></div>
 			
+			<div id="slot-left-container" class="slot-container horizontal-left"></div>
 			<div id="slot-left-label" class="player-name horizontal-left"></div>
-			<div id="slot-left" class="slot horizontal"></div>
+			<div id="slot-left" class="slot horizontal-left"></div>
 			
+			<div id="slot-top-container" class="slot-container"></div>
 			<div id="slot-top-label" class="player-name"></div>
 			<div id="slot-top" class="slot"></div>
 			
+			<div id="slot-right-container" class="slot-container horizontal"></div>		
 			<div id="slot-right-label" class="player-name horizontal"></div>
 			<div id="slot-right" class="slot horizontal"></div>
 			
