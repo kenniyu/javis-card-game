@@ -742,6 +742,9 @@
 			$('#chat-submit').live("keypress", function(e){		
 				var message = $(this).val().trim();
 				if (e.keyCode == 13 && message != ""){
+					if (!$('#chat-messages').is(':visible')){
+						$('.chat-bar-button').click();
+					}
 					now.submitChat(message);
 					$(this).val("");
 				}
@@ -763,10 +766,10 @@
 				var name = encodeHTML(messageHash["userInfo"]["name"]);
 				var id = messageHash["userInfo"]["id"];
 				if (type == "emote"){
-					$('#chat-messages').append("<span class='chat-message passive'>"+name+" "+text+"<br/></span>");
+					$('#chat-messages').append("<div class='chat-message passive'>"+name+" "+text+"</div>");
 				}
 				else if (type == "chat"){
-					$('#chat-messages').append("<span class='chat-message active'><strong style='color: "+color+";'>"+name+":</strong> "+urlify(text)+"<br/></span>");
+					$('#chat-messages').append("<div class='chat-message active'><strong style='color: "+color+";'>"+name+":</strong> "+urlify(text)+"<br/></div>");
 				}
 				if ($("#chat-header").hasClass("min")){
 					if (type == "chat"){
@@ -781,14 +784,20 @@
 			$('#chat-header').live("click", function(e){
 				$(this).toggleClass("min");
 				$('#chat-messages').slideToggle(100);
-				$('#chat-input').slideToggle(100);
+				$('#chat-bar').slideToggle(100);
 				$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 1);
 				stopChatFlash();
 			});
-	
-			$('#scoreboard-header').live("click", function(e){
+			
+			$('#clients-header').live("click", function(e){
 				$(this).toggleClass("min");
-				$('#scoreboard-list').slideToggle(100);
+				$('#clients-list').slideToggle(100);
+				$('#chat-bar').slideToggle(100);
+			});
+			
+			$('.chat-bar-button').live("click", function(e){
+				$('.icon').toggle();
+				$('#clients-header, #clients-list, #chat-header, #chat-messages').toggle();
 			});
 	
 			$('#rules-header').live("click", function(e){
@@ -816,7 +825,7 @@
 	
 			// scoreboard
 			now.updateScoreboard = function(usersHash){
-				$('#scoreboard-list').empty();
+				$('#clients-list').empty();
 				for (var clientId in usersHash){
 					var name = encodeHTML(usersHash[clientId]["name"]);
 					var color = usersHash[clientId]["color"];
@@ -826,10 +835,10 @@
 					var tipsyHTML = getTipsyHTML(name, numGames, wins, score, color);
 					
 					if (usersHash[clientId]["type"] == "Observer"){
-						$('#scoreboard-list').append('<div class="user-'+clientId+' score passive" original-title="'+tipsyHTML+'"><strong style="color: '+color+';">'+name+':</strong> '+score+'</div>');
+						$('#clients-list').append('<div class="user-'+clientId+' score passive" original-title="'+tipsyHTML+'"><strong style="color: '+color+';">'+name+':</strong> '+score+'</div>');
 					}
 					else{
-						$('#scoreboard-list').append('<div class="user-'+clientId+' score" original-title="'+tipsyHTML+'"><strong style="color: '+color+';">'+name+':</strong> '+score+'</div>');
+						$('#clients-list').append('<div class="user-'+clientId+' score" original-title="'+tipsyHTML+'"><strong style="color: '+color+';">'+name+':</strong> '+score+'</div>');
 					}
 				}
 				$('.score').tipsy({gravity: 'e', fade: true, html: true, theme: "white"});
@@ -1023,15 +1032,29 @@
 			Where X is how many of that card was in the hand that you played<br/>
 		</div>
 		
-		<div id="scoreboard-header" class="sb-header">Scoreboard</div>
-		<div id="scoreboard-list"></div>
-		
-		<div id="chat-header" class="sb-header">Chat</div>
-		<div id="chat-messages"></div>
-		<div id="chat-input">
-			<input type="text" id="nickname-submit" placeholder="nickname" />
-			<input type="text" id="chat-submit" placeholder="type here to chat" x-webkit-speech/>
+		<div id="chat-header" class="sb-header">
+			<div class="chat-icon"><img src="/images/icon-chat.png" width="18px" /></div>
+			<div class="chat-header-text">Chat</div>
 		</div>
+		<div id="chat-messages"></div>
+		
+		<div id="clients-header" class="sb-header" style="display:none;">
+			<div class="clients-icon"><img src="/images/icon-client.png" width="18px" /></div>
+			<div class="clients-header-text">People</div>
+		</div>
+		<div id="clients-list" style="display:none;"></div>
+		
+		<div id="chat-bar">
+			<div class="chat-bar-button">
+				<div class="clients-icon icon"><img src="/images/icon-client.png" width="20px"/></div>
+				<div class="chat-icon icon" style="display:none;"><img src="/images/icon-chat.png" width="20px"/></div>
+			</div>
+			<!-- <input type="text" id="nickname-submit" placeholder="nickname" /> -->
+			<div class="input-box">
+				<input type="text" id="chat-submit" placeholder="type here to chat"/>
+			</div>
+		</div>
+		
 	</div>
 	
 	<audio id="ping" src="http://www.schillmania.com/projects/soundmanager2/demo/_mp3/mouseover.mp3" preload="auto"></audio>

@@ -73,10 +73,10 @@ app.get('/game', function(req, res){
 			// no fb session, so redirect
 		res.redirect('/');
 	}
-	else if (connectedFbIds.indexOf(req.session.auth.userId) > -1) {
+	// else if (connectedFbIds.indexOf(req.session.auth.userId) > -1) {
 		// if the session is defined and they're already in a game and they try to access this path
-		res.redirect('/');
-	}
+	// 	res.redirect('/');
+	// }
 	else{
 		// if the session is defined and they're not in a game:
 		// fetch user data if we don't already have it
@@ -88,23 +88,23 @@ app.get('/game', function(req, res){
 		// console.log("current user data");
 		// console.log(userData);
 		// 
-		var found = false;
-		for (var i = 0; i < userData.length; i++){
-			if (userData[i].facebookId == req.session.auth.userId){
-				found = true;
-				break;
-			}
-		}
-		
-		if (!found){
-			// not found, so must fetch
-			res.redirect("/auth/facebook");
-		}
-		else{
-			// get here if first time log in with fb, or if page refresh
-			connectedFbIds.push(req.session.auth.userId);
+		// var found = false;
+		// 	for (var i = 0; i < userData.length; i++){
+		// 		if (userData[i].facebookId == req.session.auth.userId){
+		// 			found = true;
+		// 			break;
+		// 		}
+		// 	}
+		// 	
+		// 	if (!found){
+		// 		// not found, so must fetch
+		// 		res.redirect("/auth/facebook");
+		// 	}
+		// 	else{
+		// 		// get here if first time log in with fb, or if page refresh
+		// 		connectedFbIds.push(req.session.auth.userId);
 			res.render('game');
-		}
+		// }
 	}	
 });
 

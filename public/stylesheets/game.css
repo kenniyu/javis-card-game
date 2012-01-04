@@ -466,9 +466,11 @@ li {
 }
 
 .sb-header {
+	color: #2B4F81;
+	text-shadow: 0px -1px 0px #bcbcbc;
 	cursor: pointer;
 	font-size: 14px;
-	padding: 5px;
+	padding: 10px;
 	font-weight: bold;
 	background-color: #B0DCA3;
 	background: -webkit-gradient(linear, left top, left bottom, from(#E0EEE0), to(#B0DCA3));
@@ -478,9 +480,6 @@ li {
 
 #rules-header {
 	border-top-left-radius: 10px;
-}
-
-#scoreboard-header {
 }
 
 #chat-header.alert {
@@ -494,7 +493,14 @@ li {
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAEBD7', endColorstr='#EE9A00');
 }
 
-#chat-messages, #scoreboard-list, #rules-list{
+
+#chat-messages, #clients-list {
+	height: 200px;
+	overflow: auto;
+	overflow-x: hidden
+}
+
+#rules-list{
 	padding: 10px;
 	height: expression( this.scrollHeight > 332 ? "333px" : "auto" ); /* sets max-height for IE */
 	max-height: 333px; /* sets max-height value for all standards-compliant browsers */
@@ -505,13 +511,18 @@ li {
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#dddddd');*/
 }
 
-#chat-message{
+/*#chat-message{
 	padding: 2px;
 	display: block;
+}*/
+
+.chat-message:nth-child(even), .score:nth-child(even) {
+	padding: 8px;
+	background-color: rgba(255,255,255,0.6);
 }
 
-#chat-input{
-	padding: 3px;
+.chat-message:nth-child(odd), .score:nth-child(odd) {
+	padding: 8px;
 }
 
 #nickname-submit {
@@ -521,12 +532,6 @@ li {
 	border-radius: 10px;
 }
 
-#chat-submit {
-	padding: 3px 5px 3px 5px;
-	width: 70%;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-}
 
 .player-name{
 	text-align: center;
@@ -578,5 +583,58 @@ li {
 /*	padding: 1px;*/
 }
 
-hr {
+.chat-bar-button {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 35px;
+	height: 35;
+	border-right: 1px solid #bbbbbb;
+	cursor: pointer;
+}
+
+.input-box {
+	position: absolute;
+	width: 214px;
+	left: 36px;
+}
+
+#chat-bar{
+	border-top: 1px solid #bbbbbb;
+	position: relative;
+	height: 35px;
+	width: 250px;
+	bottom: 0;
+	left: 0;
+/*	padding: 3px;*/
+}
+
+#chat-submit {
+	padding: 3px 3px 3px 6px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	margin: auto;
+	width: 95%;
+/*	height: 100%;*/
+}
+
+#chat-header .chat-icon {
+	position: absolute;
+	left: 48px;
+}
+
+#clients-header .clients-icon {
+	position: absolute;
+	left: 63px;
+}
+
+#chat-bar .clients-icon {
+	margin: 7 7 7 7;
+}
+
+#chat-bar .chat-icon {
+	margin: 7 7 7 7;
 }
