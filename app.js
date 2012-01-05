@@ -8,7 +8,8 @@ var express = require('express'),
 	everyauth = require('everyauth'),
 	util = require('util'),
 	Promise = everyauth.Promise,
-	couchUsers = require('./lib/users');
+	couchUsers = require('./lib/users'),
+	couchRooms = require('./lib/rooms');
 	
 var userData = [];
 
@@ -30,7 +31,7 @@ everyauth.facebook
   })
   .findOrCreateUser( function (session, accessToken, accessTokExtra, fbUserMetadata) {
 	var promise = new Promise();
-	couchUsers.findOrCreateByFacebookData(fbUserMetadata, promise, userData);
+	couchUsers.findOrCreateByFacebookData(fbUserMetadata, promise, userData, session);
 	return promise;
   })
   .redirectPath('/game');
@@ -64,49 +65,75 @@ everyauth.helpExpress(app);
 
 // Routes
 
+var sessionId = 0;
+var userSessions = [];
+
 app.get('/', function(req, res){
+	// if (req.session.sessionId == undefined){
+	// 	// user session not stored in userSesssions, so store
+	// 	req.session.sessionId = ++sessionId;
+	// 	userSessions.push(req.session);
+	// }
+	// console.log(userSessions);
+	
 	res.render('index');
 });
 
 app.get('/game', function(req, res){
 	if (req.session.auth == undefined){
-			// no fb session, so redirect
-		res.redirect('/');
+		// playing as anon
+		res.render('game');
 	}
-	// else if (connectedFbIds.indexOf(req.session.auth.userId) > -1) {
-		// if the session is defined and they're already in a game and they try to access this path
-	// 	res.redirect('/');
-	// }
 	else{
-		// if the session is defined and they're not in a game:
-		// fetch user data if we don't already have it
-		
-		// can reach the case where they closed window, came back to game (session still defined)
-		// but they weren't in connectedFbIds, (ie. refresh), so must fetch user data from db again
-		
-		// loop through userData to see if user with fbId is in there, if not, must fetch again
-		// console.log("current user data");
-		// console.log(userData);
-		// 
-		// var found = false;
-		// 	for (var i = 0; i < userData.length; i++){
-		// 		if (userData[i].facebookId == req.session.auth.userId){
-		// 			found = true;
-		// 			break;
-		// 		}
-		// 	}
-		// 	
-		// 	if (!found){
-		// 		// not found, so must fetch
-		// 		res.redirect("/auth/facebook");
-		// 	}
-		// 	else{
-		// 		// get here if first time log in with fb, or if page refresh
-		// 		connectedFbIds.push(req.session.auth.userId);
+		var found = false;
+		for (var i = 0; i < userData.length; i++){
+			if (userData[i].facebookId == req.session.auth.userId){
+				found = true;
+				break;
+			}
+		}
+		if (!found){
+			res.redirect("/auth/facebook");
+		}
+		else{
+			connectedFbIds.push(req.session.auth.userId);
+			// req.session.state = "game";
 			res.render('game');
-		// }
+		}
 	}	
 });
+
+// app.get('/game/:room_id', function(req, res){
+// 	
+// })
+// 
+// app.post('/lobby', function(req, res){
+// 	var room = req.body.room;
+// 	req.session.room = room;
+// 	res.redirect('/lobby');
+// })
+// 
+// app.get('/lobby', function(req, res){
+// 	console.log(req.session);
+// 	if (req.session.auth == undefined || req.session.state == undefined){
+// 		// need to be logged in to fb to be in lobby
+// 		console.log("redirecting to root");
+// 		res.redirect('/');
+// 	}
+// 	else if (req.session.state == "game"){
+// 		// he's already in a game, so don't modify session
+// 		console.log("session.state = game. redirecting to lobby.");
+// 		res.redirect('lobby');
+// 	}
+// 	else{
+// 		// he's logged in, and he's not in a game
+// 		console.log("rendering lobby");
+// 		req.session.state = "lobby";
+// 		// get rooms
+// 		var rooms = couchRooms.findAllRooms();
+// 		res.render('lobby');
+// 	}
+// });
 
 app.get('/rules', function(req, res){
 	res.render('rules');
@@ -125,8 +152,54 @@ var maxPlayers = 4;
 var gameState = {"isPlaying": false, "currentPlayer": 0, "players": [], "currentPlaySize": null, "currentPlayHistory": [], "discardPile": [], "moves": 0, "activePlayers": [], "places": [], "moveBits": [], "jackCounter": 0, "passNum": 0, "discardNum": 0};
 var waitingPlayers = [];
 
+var connections = {};
+
+function clientExists(address, port){
+	for (var keyAddr in connections){
+		if (address == keyAddr){
+			return true;
+		}
+	}
+	return false;
+}
+
+function storeClient(address, port, fbData){
+	connections["address"] = {"address": address, "port": port, "fbData": {}}
+}
+
+function checkAndSaveFbData(address){
+	if (connections["address"]["fbData"] == {}){
+		// no fb data yet, so store it
+		
+	}
+	return (connections["address"]["fbData"] != {});
+}
+
 // when a client connects
 nowjs.on('connect', function() {
+	// connect could get called when you join the lobby or a room
+	
+	// check if we've already stored this user's connection
+	
+	// nowjs.getClient(this.user.clientId, function(err){ 
+	// 	var ipAddr = this.socket.handshake.address.address;
+	// 	var port = this.socket.handshake.address.port;
+	// 	if (clientExists(address, port)) {
+	// 		console.log("Client exists! Let's check if he has logged in with FB...");
+	// 		// client already exists, does he have fb data?
+	// 		if (hasFbData(address)){
+	// 			console.log("Client has fb data!");
+	// 		}
+	// 		else{
+	// 			console.log("No fb data for client yet. ");
+	// 		}
+	// 	}
+	// 	else {
+	// 		console.log("Client does not exist. Storing address, port");
+	// 		var fbData = 
+	// 		storeClient(address, port);
+	// 	}
+	//     });
 	
 	var clientId = this.user.clientId;
 	var myData = userData.splice(0,1)[0];
@@ -145,8 +218,16 @@ nowjs.on('connect', function() {
 		var name = myData.name.split(" ")[0];
 		var facebookId = myData.facebookId;
 		var numGames = myData.numGames;
+	}
+	else{
+		var score = 0;
+		var wins = 0;
+		var name = "anon"+anonId;
+		var facebookId = 0;
+		var numGames = 0;
+		anonId++;
+	}
 		var userType = ((gameState["isPlaying"] || getNumPlayers() == 4) ? "Observer": "Player");
-	
 		this.now.name = name;
 		usersHash[clientId] = {"id": clientId, "name": name, "type": userType, "score": score, "wins": wins, "hand": [], "color": "#000000", "fbid": facebookId, "numGames": numGames};
 		
@@ -182,15 +263,17 @@ nowjs.on('connect', function() {
 			// show players the wait for game
 			everyone.now.showWaitForGame();
 		}
-	}
+	// }
 });
 
 function savePlayerStats(clientId){
 	var facebookId = usersHash[clientId]["fbid"];
-	var newWins = parseInt(usersHash[clientId]["wins"]);
-	var newScore = parseInt(usersHash[clientId]["score"]);
-	var newNumGames = parseInt(usersHash[clientId]["numGames"]);
-	couchUsers.updateData(facebookId, newScore, newWins, newNumGames);
+	if (facebookId > 0){
+		var newWins = parseInt(usersHash[clientId]["wins"]);
+		var newScore = parseInt(usersHash[clientId]["score"]);
+		var newNumGames = parseInt(usersHash[clientId]["numGames"]);
+		couchUsers.updateData(facebookId, newScore, newWins, newNumGames);
+	}
 }
 
 // when a client disconnects

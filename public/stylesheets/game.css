@@ -446,7 +446,7 @@ li {
 	right: 0px;
 	bottom: 0px;
 	
-	background-color: rgba(250, 238, 217, 0.5);
+	background-color: rgba(250, 238, 217, 0.7);
 }
 
 #scoreboard {
@@ -517,19 +517,12 @@ li {
 }*/
 
 .chat-message:nth-child(even), .score:nth-child(even) {
-	padding: 8px;
+	padding: 5 5 5 10;
 	background-color: rgba(255,255,255,0.6);
 }
 
 .chat-message:nth-child(odd), .score:nth-child(odd) {
-	padding: 8px;
-}
-
-#nickname-submit {
-	padding: 3px 5px 3px 5px;
-	width: 25%;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
+	padding: 5 5 5 10px;
 }
 
 
@@ -593,6 +586,10 @@ li {
 	cursor: pointer;
 }
 
+.chat-bar-button:hover {
+	background-color: rgba(255,255,255,1);	
+}
+
 .input-box {
 	position: absolute;
 	width: 214px;
@@ -620,6 +617,29 @@ li {
 	width: 95%;
 /*	height: 100%;*/
 }
+
+#clients-search {
+	padding: 3px 3px 3px 6px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	position: absolute;
+	top: 5px;
+	left: 90px;
+	margin: auto;
+	width: 120px;
+}
+
+#nickname-submit {
+	padding: 3px 3px 3px 6px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	margin: auto;
+	width: 80px;
+}
+
 
 #chat-header .chat-icon {
 	position: absolute;

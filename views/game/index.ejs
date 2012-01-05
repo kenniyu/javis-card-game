@@ -749,6 +749,21 @@
 					$(this).val("");
 				}
 			});
+			
+			$('#clients-search').live("keyup", function(e){
+				var query = $(this).val().trim().toLowerCase();
+				$('#clients-list').children().each(function(index, client){
+					$(client).find('.client-name').css("background-color", "transparent");
+				});
+				
+				$('#clients-list').children().each(function(index, client){
+					var nameAtIndex = $(client).find('.client-name').text().toLowerCase();
+					if (query == nameAtIndex){
+						$(client).find('.client-name').css("background-color", "#63D1F4");
+					}
+				});
+				
+			});
 	
 			$('#nickname-submit').live("keypress focusout", function(e){
 				if (e.keyCode == 13 || e.type == "focusout"){
@@ -797,7 +812,9 @@
 			
 			$('.chat-bar-button').live("click", function(e){
 				$('.icon').toggle();
+				$('.input-box').toggle();
 				$('#clients-header, #clients-list, #chat-header, #chat-messages').toggle();
+				$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 1);
 			});
 	
 			$('#rules-header').live("click", function(e){
@@ -835,10 +852,10 @@
 					var tipsyHTML = getTipsyHTML(name, numGames, wins, score, color);
 					
 					if (usersHash[clientId]["type"] == "Observer"){
-						$('#clients-list').append('<div class="user-'+clientId+' score passive" original-title="'+tipsyHTML+'"><strong style="color: '+color+';">'+name+':</strong> '+score+'</div>');
+						$('#clients-list').append('<div class="user-'+clientId+' score passive" original-title="'+tipsyHTML+'"><strong style="color: '+color+';"><span class="client-name">'+name+'</span>:</strong> '+score+'</div>');
 					}
 					else{
-						$('#clients-list').append('<div class="user-'+clientId+' score" original-title="'+tipsyHTML+'"><strong style="color: '+color+';">'+name+':</strong> '+score+'</div>');
+						$('#clients-list').append('<div class="user-'+clientId+' score" original-title="'+tipsyHTML+'"><strong style="color: '+color+';"><span class="client-name">'+name+'</span>:</strong> '+score+'</div>');
 					}
 				}
 				$('.score').tipsy({gravity: 'e', fade: true, html: true, theme: "white"});
@@ -967,8 +984,6 @@
 					e.preventDefault();
 				}
 			});
-			
-			
 		});
 
 		jQuery.fn.swapWith = function(to) {
@@ -1049,9 +1064,14 @@
 				<div class="clients-icon icon"><img src="/images/icon-client.png" width="20px"/></div>
 				<div class="chat-icon icon" style="display:none;"><img src="/images/icon-chat.png" width="20px"/></div>
 			</div>
-			<!-- <input type="text" id="nickname-submit" placeholder="nickname" /> -->
 			<div class="input-box">
 				<input type="text" id="chat-submit" placeholder="type here to chat"/>
+			</div>
+			<div class="input-box" style="display:none;">
+				<input type="text" id="clients-search" placeholder="search people"/>
+			</div>
+			<div class="input-box" style="display:none;">
+				<input type="text" id="nickname-submit" placeholder="nickname"/>
 			</div>
 		</div>
 		
