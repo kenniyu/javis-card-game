@@ -16,11 +16,11 @@ everyauth.helpExpress(app);
 
 everyauth.facebook
 // for production
-  // .appId("327404897281280")
-  // .appSecret("4065f1bfcdc07f8622a559673a5a1587")
+  .appId("327404897281280")
+  .appSecret("4065f1bfcdc07f8622a559673a5a1587")
 // for staging
-	.appId("284941081554522")
-	.appSecret("d071d228c117bd5f6c6cb18ff896d09d")
+	// .appId("284941081554522")
+	// .appSecret("d071d228c117bd5f6c6cb18ff896d09d")
 	
   // .logoutPath('/logout')
   // .logoutRedirectPath('/')
@@ -104,7 +104,9 @@ function beforeFilterSession(request){
 function setPath(request){
 	// update the path var for session
 	var path = request.route.path;
+	console.log("path = "+path);
 	sessionStore[request.sessionID].path = path;
+	console.log("session store for this session = ");
 	console.log(sessionStore[request.sessionID]);
 }
 
@@ -117,7 +119,7 @@ app.get('/', function(req, res){
 	}
 	else if (req.session.auth != undefined){
 		// logged in with fb already, so redirect to lobby
-		res.redirect('lobby', {myRooms: myRooms});
+		res.redirect('/lobby');
 	}
 });
 
