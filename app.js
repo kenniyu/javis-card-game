@@ -16,11 +16,11 @@ everyauth.helpExpress(app);
 
 everyauth.facebook
 // for production
-  .appId("204725489614645")
-  .appSecret("814fa2018da9c4ca3a42c3307d219a0b")
+  // .appId("327404897281280")
+  // .appSecret("4065f1bfcdc07f8622a559673a5a1587")
 // for staging
-	// .appId("300484233322863")
-	// .appSecret("dc1935e976ce2436eb274513a353b3be")
+	.appId("284941081554522")
+	.appSecret("d071d228c117bd5f6c6cb18ff896d09d")
 	
   // .logoutPath('/logout')
   // .logoutRedirectPath('/')
@@ -45,7 +45,7 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.methodOverride());
-  app.use(express.session({secret: "jabisibaj"}));
+  app.use(express.session({secret: "jabysybaj"}));
   app.use(everyauth.middleware());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
@@ -225,9 +225,9 @@ nowjs.on('connect', function() {
 	var clientSession = getClientSession(this.user);
 	
 	
-	console.log("At connect");
+	console.log("Connecting at " + (new Date()));
 	// check the path to figure out where they're connecting to, as well as their state
-	if (clientSession.path.substring(0,5) == "/game" && clientSession.state != "game"){
+	if (clientSession.path.substring(0,5) == "/game" && clientSession.state != "game" && clientSession.roomId != -1){
 		// if they're trying to access /game and their state is not "game", 
 		// then set their state to "game"
 		clientSession.state = "game";
@@ -419,6 +419,7 @@ nowjs.on('disconnect', function() {
 
 function updateLobbyClientCount(room){
 	var lobbyClientIds = getLobbyClients();
+	console.log("lobby clients = " + lobbyClientIds);
 	lobbyClientIds.forEach(function(clientId){
 		nowjs.getClient(clientId, function(){
 			this.now.updateClientCount(room);
@@ -1227,7 +1228,7 @@ function getLobbyClients(){
 	console.log(sessionStore);
 	for (var sessionId in sessionStore){
 		console.log(sessionStore[sessionId]);
-		if (sessionStore[sessionId].roomId == undefined || sessionStore[sessionId].roomId == -1){
+		if (sessionStore[sessionId].path == "/lobby"){
 			clientIds.push(sessionStore[sessionId].clientId);
 		}
 	}

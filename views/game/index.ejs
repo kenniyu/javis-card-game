@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>jabis - big2 on roids</title>
+	<title>jabys - big2 on roids</title>
 	
 	<link rel='stylesheet' href='../stylesheets/game.css' />
 	<link rel='stylesheet' href='../stylesheets/tipsy.css' />
@@ -901,10 +901,10 @@
 					ping();
 					windowTitleInterval = setInterval(function(){
 						if (counter % 2 == 0){
-							document.title = "jabis - YOUR MOVE";
+							document.title = "jabys - YOUR MOVE";
 						}
 						else{
-							document.title = "jabis - big2 on roids";
+							document.title = "jabys - big2 on roids";
 						}
 						counter++;
 					}, 1500);
@@ -917,7 +917,7 @@
 			window.onfocus = function(){
 				windowFocused = true;
 				clearInterval(windowTitleInterval);
-				document.title = "jabis - big2 on roids";
+				document.title = "jabys - big2 on roids";
 			}
 	
 			$('#game-board').live("keypress", function(e){

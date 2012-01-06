@@ -1,5 +1,5 @@
 {
-  "version": "0.7.6-95",
+  "version": "0.7.6-108",
   "private": true,
   "dependencies": {
     "express": "2.5.2",
@@ -7,11 +7,12 @@
     "now": "0.7.x",
     "ejs": "",
     "cradle": "0.5.x",
-    "everyauth": "0.2.x"
+    "everyauth": "0.2.x",
+    "zlib": ""
   },
   "scripts": {
     "start": "app.js"
   },
-  "subdomain": "javis",
-  "name": "javis"
+  "subdomain": "jabys",
+  "name": "jabys"
 }
