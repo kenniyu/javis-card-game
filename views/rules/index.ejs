@@ -18,22 +18,22 @@
 			<div class="content" id="rules-about">
 				<h2>About</h2>
 				<p><strong>Jabys</strong> is a highly strategic game based off of <a href="http://www.pagat.com/climbing/bigtwo.html" target="_blank">Big2</a>. In fact, the rules are similar to those of Big2. The order of the cards from lowest to highest is 3-4-5-6-7-8-9-10-J-Q-K-A-2. The main difference is that <strong>suits don't matter</strong>. You can't beat a 3 of clubs with a 3 of spades - you gotta play 4 or higher.</p>
-				<p>The valid hands are singles, pairs, and 5 card hands - straights < full houses < four of a kind (+1 random card). <strong>No triples!</strong> Also, straights are now simple: they start lowest from 3 and end highest at 2. </p>
+				<p>The valid hands are singles, pairs, and 5 card hands - straights < full houses < four of a kind + 1 extra card. <strong>No triples, and no bombs!</strong> Also, straights are simple: they start lowest from 3 and end highest at 2 (no wrapping around).</p>
 				<p>Whoever has the lowest card at the start of the game must play that card in their first hand (This is the only time suits do matter, and the order goes clubs < diamonds < hearts < spades)</p>
-				<p>When everyone passes on a hand, the round is "cleared", the cards are turned over and added to the <strong>discard pile</strong>, and the player who played that hand can play whatever valid hand he wants.</p>
+				<p>When everyone passes on a hand, the round is "cleared", the cards are turned over and added to the <strong>discard pile</strong>, and the player who played that hand can start again by playing whatever valid hand he wants.</p>
 				<p>The game ends when everyone but the last person gets rid of all of his cards.</p>
 			</div>
 			
 			<div class="content" id="rules-scoring">
 				<h2>Scoring</h2>
 				<p>
-					Scoring is cumulative. When a player gets rid of all of his cards, the number of cards left in the game at that instant gets added to his current score. 
+					Scoring is cumulative. When a player gets rid of all of his cards, the number of cards left in the game at that instant gets added to his current score. Connect with Facebook to track your scores! <br/>
 				</p>
 			</div>
 			
 			<div class="content" id="rules-cards">
 				<h2>Special Cards</h2>
-				<p>Besides the rules above, there are also 5 special cards that do special things...</p>
+				<p><strong>Besides the rules above, there are also 5 special cards that do special things...</strong></p>
 				<div id="special-cards">
 					<div class='card'><div class='front black'><div class='index' data-suit='c'>5<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotB3'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>
 					<div class='card' style="left: 150px;"><div class='front black'><div class='index' data-suit='c'>7<br />&clubs;</div><div class='spotA1'>&clubs;</div><div class='spotA3'>&clubs;</div><div class='spotA5'>&clubs;</div><div class='spotB2'>&clubs;</div><div class='spotC1'>&clubs;</div><div class='spotC3'>&clubs;</div><div class='spotC5'>&clubs;</div></div></div>
@@ -44,16 +44,15 @@
 			</div>
 			
 			<p>
-			<strong>5</strong> - For every 5 that you play, draw a card from the discard pile<br/>
-			<strong>7</strong> - For every 7 that you play, give the next player a card from your hand<br/>
-			<strong>8</strong> - Clear the round and go again<br/>
-			<strong>10</strong> - For every 10 that you play, discard a card from your hand<br/>
-			<strong>J</strong> - Play lower than the previous hand (until the turn comes back around to the player who most recently played a J)<br/>
-			For example, Player 1 plays a pair of 7's.  This means he gives 2 cards to the next player<br/>
+			<strong>5</strong> - For every 5 that you play, draw a card from the discard pile. The only exception to drawing is when 5's are played as part of your last hand. For example, if the last hand that you play is a pair of 5's, then you don't need to draw.<br/>
+			<strong>7</strong> - For every 7 that you play, give the next player a card from your hand.<br/>
+			<strong>8</strong> - Clear the round and go again.<br/>
+			<strong>10</strong> - For every 10 that you play, discard a card from your hand.<br/>
+			<strong>J</strong> - Play lower than the previous <strong>TYPE</strong> of hand (until the turn comes back around to the player who most recently played a J).  <strong>TYPE</strong> means singles, pairs, straights, full houses, or four of a kinds + 1 extra card<br/>
 			</p>
 			<p>
 			<strong>Don't worry about memorizing what each of these cards do. You'll have reference to this in game.</strong><br/>
-			Also, since J's may be confusing, you'll be notified when to play LOWER instead of higher.<br/>
+			Also, since J's may be confusing, you'll be notified when to play <strong>LOWER</strong>. Otherwise, play higher.<br/>
 			Finally, don't forget, <strong>suits don't matter!</strong></br>
 			</p>
 			
@@ -69,16 +68,19 @@
 				<p>
 					<strong>Full house: 5-5-5-7-7</strong><br/>
 					Draw three cards (5), pass two cards to the next player (7)<br/>
+					<br/>
+					<strong>Full house: J-J-3-3-3</strong><br/>
+					Play a lower full house (J). Note that this hand is unbeatable (no full house is lower than this one).<br/>
 				</p>
 				
 				<p>
 					<strong>Sample Play:</strong><br/>
 					3 players - P1, P2, P3<br/>
 					<br/>
-					P1 plays a pair J<br/>
-					P2 must play lower than P1's pair<br/>
-					P3 must play lower than P2's pair<br/>
-					P1 must play higher than P3's pair - <strong>since the turn returned to P1 (who was the most recent player who played a J), they start playing higher</strong><br/>
+					P1 plays a full house J-J-J-3-3<br/>
+					P2 must play lower than P1's full house, say 9-9-9-5-5 (drawing two cards as well due to the 5's)<br/>
+					P3 must play lower than P2's full house, say 4-4-4-10-10 (discarding two cads as well due to the 10's)<br/>
+					P1 must now play higher than P3's full house <strong>since the turn returned to P1 (who was the most recent player who played a J), they start playing higher</strong><br/>
 				</p>
 			</div>
 			

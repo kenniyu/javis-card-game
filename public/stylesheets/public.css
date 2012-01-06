@@ -132,3 +132,35 @@ img {
 	text-align: center;
 	padding-bottom: 20px;
 }
+
+#contact {
+	background: #666666;
+	background: -webkit-gradient(linear, left top, left bottom, from(#666666), to(#111111));
+	background: -moz-linear-gradient(top,  #666666,  #111111);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#666666', endColorstr='#111111');
+	cursor: pointer;
+	width: 60px;
+	font-size: 12px;
+	margin: auto;
+	color: #eeeeee;
+	text-shadow: 0px -1px 0 #999999;
+	text-align: center;
+	padding: 8px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+#contact:hover {
+	color: #aaaaaa;
+	background: #333333;
+	background: -webkit-gradient(linear, left top, left bottom, from(#333333), to(#666666));
+	background: -moz-linear-gradient(top,  #333333,  #666666);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#666666');
+}
+
+#contact:active {
+	background: #111111;
+	background: -webkit-gradient(linear, left top, left bottom, from(#111111), to(#333333));
+	background: -moz-linear-gradient(top,  #111111,  #333333);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#111111', endColorstr='#333333');
+}
