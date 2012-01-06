@@ -16,11 +16,11 @@ everyauth.helpExpress(app);
 
 everyauth.facebook
 // for production
-  // .appId("204725489614645")
-  // .appSecret("814fa2018da9c4ca3a42c3307d219a0b")
+  .appId("204725489614645")
+  .appSecret("814fa2018da9c4ca3a42c3307d219a0b")
 // for staging
-	.appId("300484233322863")
-	.appSecret("dc1935e976ce2436eb274513a353b3be")
+	// .appId("300484233322863")
+	// .appSecret("dc1935e976ce2436eb274513a353b3be")
 	
   // .logoutPath('/logout')
   // .logoutRedirectPath('/')
