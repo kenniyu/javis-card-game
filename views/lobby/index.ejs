@@ -22,10 +22,8 @@
 				document.location.href="game/"+roomId;
 			});
 			
-			now.updateClientCount = function(room){
-				var roomId = room.roomId;
-				var numPeople = Object.size(room.usersHash);
-				$('#room-'+roomId).find('.game-players').text(numPeople + " " + (numPeople == 1 ? "person" : "people"));
+			now.updateClientCount = function(roomId, numPlayers){
+				$('#room-'+roomId).find('.game-players').text(numPlayers + "/4 players");
 			}
 		});
 		
@@ -52,8 +50,8 @@
 				<div class="game-item" id="room-<%= room.roomId %>" data-room-id="<%= room.roomId %>">
 					<div class="game-id">Game <%= room.roomId %></div>
 					<div class="game-players">
-						<%= Object.size(room.usersHash) %>
-						<%= Object.size(room.usersHash) == 1 ? "person" : "people" %>
+						<%= Object.size(room.usersHash) %>/4
+						<%= Object.size(room.usersHash) == 1 ? "player" : "players" %>
 					</div>
 				</div>
 			<% }); %>

@@ -419,10 +419,12 @@ nowjs.on('disconnect', function() {
 
 function updateLobbyClientCount(room){
 	var lobbyClientIds = getLobbyClients();
+	var playerIds = getPlayerIds(room);
+	
 	console.log("lobby clients = " + lobbyClientIds);
 	lobbyClientIds.forEach(function(clientId){
 		nowjs.getClient(clientId, function(){
-			this.now.updateClientCount(room);
+			this.now.updateClientCount(room.roomId, playerIds.length);
 		});
 	});
 }
@@ -1606,11 +1608,22 @@ function compareToHand(prevHand, newHand, room){
 	}
 	else {
 		// there is a jack, so return 1 if the new hand is lower
-		if (getHandValue(newHand) < getHandValue(prevHand)){
-			return 1;
+		if (isFullHouse(prevHand)){
+			// must play a lower fullhouse
+			if (isFullHouse(newHand) && (getHandValue(newHand) < getHandValue(prevHand))){
+				return 1;
+			}
+			else{
+				return -1;
+			}
 		}
 		else{
-			return -1;
+			if (getHandValue(newHand) < getHandValue(prevHand)){
+				return 1;
+			}
+			else{
+				return -1;
+			}
 		}
 	}
 }
