@@ -12,15 +12,69 @@
 	
 	<script type="text/javascript">	// juicy stuff
 		$().ready(function(){
+			// $('#games-list').masonry();
+			$('#fb-login').live("click", function(e){
+				document.location.href="auth/facebook";
+			});
 			
+			$('.game-item').live("click", function(e){
+				var roomId = $(this).attr('data-room-id');
+				document.location.href="game/"+roomId;
+			});
+			
+			now.updateClientCount = function(room){
+				var roomId = room.roomId;
+				var numPeople = Object.size(room.usersHash);
+				$('#room-'+roomId).find('.game-players').text(numPeople + " " + (numPeople == 1 ? "person" : "people"));
+			}
 		});
+		
+		Object.size = function(obj) {
+		    var size = 0, key;
+		    for (key in obj) {
+		        if (obj.hasOwnProperty(key)) size++;
+		    }
+		    return size;
+		};
 	</script>
 </head>
 
 <body>
 	<div id="wrapper">
+		<div class="heading" id="lobby-title">Lobby</div>
 		<div id="games-list">
+			<div class="games-list-heading">
+				All games
+			</div>
 			
+			
+			<% myRooms.forEach(function(room, index){ %>
+				<div class="game-item" id="room-<%= room.roomId %>" data-room-id="<%= room.roomId %>">
+					<div class="game-id">Game <%= room.roomId %></div>
+					<div class="game-players">
+						<%= Object.size(room.usersHash) %>
+						<%= Object.size(room.usersHash) == 1 ? "person" : "people" %>
+					</div>
+				</div>
+			<% }); %>
+			
+		</div>
+		<div class="sidebar">
+			<% if (sess.doc == undefined) { %>
+				<div class="anon-info">
+					You are playing anonymously. Log in with FB to track your stats!
+					<div id="fb-login"><img src="/images/icon-fb.gif" />Log In with Facebook</div>
+				</div>
+			<% } else { %>
+				<div class="user-stats-wrap">
+					<div class="user-stats">
+						<div class="stats user-name"><%= sess.doc.name %></div>
+						<div class="stats user-score">Score: <%= sess.doc.score %></div>
+						<div class="stats user-wins">Wins: <%= sess.doc.wins %></div>
+						<div class="stats user-num-games">Games: <%= sess.doc.numGames %></div>
+					</div>
+				</div>
+			<% } %>
 		</div>
 	</div>
 </body>

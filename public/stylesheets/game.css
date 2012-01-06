@@ -97,8 +97,8 @@
 
 body {
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
-	color: black;
-	background-image: url("/images/bg1.png");
+	color: #cccccc;
+	background-image: url("/images/black-Linen.png");
 }
 
 .heading {
@@ -269,6 +269,7 @@ body {
 }
 
 .btn {
+	color: black;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	border-width: 1px;
@@ -283,6 +284,7 @@ body {
 	font-size: 12px;
 	font-weight: bold;
 	cursor: pointer;
+	background-color: #eeeeee;
 }
 
 /*E0EEE0*/
@@ -295,10 +297,12 @@ body {
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
 	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
 	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	background-color: #eeeeee;
 }
 
 .btn:active{
     padding: 11px 10px 9px 10px; /* push text down 1px */
+	background-color: #eeeeee;
 }
 
 #game-controls {
@@ -310,6 +314,7 @@ body {
 }
 
 #wait-for-game, #auto-pass {
+	color: black;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	border-width: 1px;
@@ -456,7 +461,6 @@ li {
 	position: fixed;
 	right: 0px;
 	top: 0px;
-	
 /*	border-left: 1px solid #333333;*/
 /*	border-top: 1px solid #333333;*/
 	background-color: #eeeeee;
@@ -497,10 +501,12 @@ li {
 #chat-messages, #clients-list {
 	height: 200px;
 	overflow: auto;
-	overflow-x: hidden
+	overflow-x: hidden;
+	color: black;
 }
 
 #rules-list{
+	color: black;
 	padding: 10px;
 	height: expression( this.scrollHeight > 332 ? "333px" : "auto" ); /* sets max-height for IE */
 	max-height: 333px; /* sets max-height value for all standards-compliant browsers */
@@ -536,7 +542,7 @@ li {
 }
 
 .passive{
-	color: #787878;
+	color: #555555;
 	font-style: italic;
 }
 
@@ -582,7 +588,7 @@ li {
 	top: 0px;
 	width: 35px;
 	height: 35;
-	border-right: 1px solid #bbbbbb;
+	border-right: 1px solid #dddddd;
 	cursor: pointer;
 }
 
@@ -597,7 +603,7 @@ li {
 }
 
 #chat-bar{
-	border-top: 1px solid #bbbbbb;
+	border-top: 1px solid #dddddd;
 	position: relative;
 	height: 35px;
 	width: 250px;
@@ -657,4 +663,28 @@ li {
 
 #chat-bar .chat-icon {
 	margin: 7 7 7 7;
+}
+
+#menu-bar {
+	position: absolute;
+	float: left;
+	bottom: 0px;
+	left: 0px;
+	font-size: 15px;
+	width: 130px;
+	color: #eeeeee;
+	text-align: center;
+	padding: 10px;
+	background-color: #333333;
+	background: -webkit-gradient(linear, left top, left bottom, from(#454545), to(#000000));
+	background: -moz-linear-gradient(top,  #454545,  #000000);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#454545', endColorstr='#000000');
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.5),0 1px 0 rgba(0,0,0,0.25),0 0 0 1px #000000,0 3px 2px rgba(0,0,0,0.25);
+	cursor: pointer;
+/*	box-shadow: inset 0 1px 0 rgba(255,255,255,0.5),0 1px 0 rgba(0,0,0,0.25),0 0 0 1px #cccccc,0 3px 2px rgba(0,0,0,0.25);*/
+	text-shadow: 0px -1px 0px #999999;
+}
+
+#menu-bar:hover {
+	color: #cccccc;
 }

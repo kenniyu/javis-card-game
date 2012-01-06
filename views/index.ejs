@@ -1,23 +1,23 @@
 <head>
 	<link rel='stylesheet' href='../stylesheets/public.css' />
-	<title>javis - the best card game</title>
+	<title>jabis - the best card game</title>
 	
 	<script type="text/javascript">
 		$().ready(function(){
 			$('#join-game').live("click", function(e){
-				document.location.href="game";
+				document.location.href="lobby";
 			});
 			
 			$('#fb-login').live("click", function(e){
 				document.location.href="auth/facebook";
-			})
+			});
 			
 			$('#learn-game').live("click", function(e){
 				document.location.href="rules";
 			});
 			
 			
-			$('#javis').fadeIn(1500);
+			$('#jabis').fadeIn(1500);
 			$('#join-game').delay(2000).animate({"height": "show", "opacity": "show"});
 			$('#learn-game').delay(2500).animate({"height": "show", "opacity": "show"});
 			$('#fb-login').delay(3000).animate({"height": "show", "opacity": "show"});
@@ -29,7 +29,7 @@
 	<div id="wrapper">
 		<div id="wrapper-inner">
 			
-			<div class="heading" id="javis" style="display:none;">Javis</div>
+			<div class="heading" id="jabis" style="display:none;">Jabis</div>
 			
 			<div class="btn" id="join-game" style="display:none;">Play Me!</div>
 			<div class="btn" id="learn-game" style="display:none;">How to Play</div>
