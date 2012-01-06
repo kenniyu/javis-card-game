@@ -150,7 +150,7 @@ app.get('/game/:id', function(req, res){
 		}
 		else if (connectedFbIds.indexOf(req.session.auth.userId) > -1){
 			// player is already connected, redirect to index
-			res.redirect('index');
+			res.redirect('/');
 		}
 		else{
 			// playing as fb user
@@ -1610,17 +1610,25 @@ function compareToHand(prevHand, newHand, room){
 	}
 	else {
 		// there is a jack, so return 1 if the new hand is lower
-		if (isFullHouse(prevHand)){
+		if (isFullHouse(prevHand)) {
 			// must play a lower fullhouse
-			if (isFullHouse(newHand) && (getHandValue(newHand) < getHandValue(prevHand))){
+			if (isFullHouse(newHand) && (getHandValue(newHand) < getHandValue(prevHand))) {
 				return 1;
 			}
 			else{
 				return -1;
 			}
 		}
+		else if (isFourKind(prevHand)){
+			if (isFourKind(newHand) && (getHandValue(newHand) < getHandValue(prevHand))) {
+				return 1;
+			}
+			else {
+				return -1;
+			}
+		}
 		else{
-			if (getHandValue(newHand) < getHandValue(prevHand)){
+			if (getHandValue(newHand) < getHandValue(prevHand)) {
 				return 1;
 			}
 			else{
