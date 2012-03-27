@@ -1,5 +1,5 @@
 {
-  "version": "0.7.6-200",
+  "version": "0.7.6-201",
   "domains": [
     "www.jabys.us",
     "blah.jabys.us"
@@ -9,7 +9,7 @@
     "jade": ">= 0.0.1",
     "now": "0.7.x",
     "ejs": "",
-	"socket.io": "",
+    "socket.io": "0.8.5",
     "zlib": ""
   },
   "scripts": {

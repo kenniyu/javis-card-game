@@ -142,12 +142,12 @@ app.get('/rules', function(req, res){
 	res.render('rules');
 });
 
-// app.listen(3000);
+app.listen(3000);
 
-var port = process.env.PORT || 3000;
-app.listen(port, function() {
-	console.log("Listening on " + port);
-});
+// var port = process.env.PORT || 3000;
+// app.listen(port, function() {
+// 	console.log("Listening on " + port);
+// });
 
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 var everyone = nowjs.initialize(app);
