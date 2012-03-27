@@ -1,39 +1,8 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express'),
 	routes = require('./routes'),
-	// everyauth = require('everyauth'),
 	util = require('util');
-	// Promise = everyauth.Promise;
-	// couchUsers = require('./lib/user.js'),
-	
 	
 var app = module.exports = express.createServer();
-
-// everyauth.helpExpress(app);
-
-// everyauth.facebook
-// // for production
-//   .appId("327404897281280")
-//   .appSecret("4065f1bfcdc07f8622a559673a5a1587")
-// // for staging
-// 	// .appId("284941081554522")
-// 	// .appSecret("d071d228c117bd5f6c6cb18ff896d09d")
-// 	
-//   // .logoutPath('/logout')
-//   // .logoutRedirectPath('/')
-//   .handleAuthCallbackError( function (req, res) {
-//     //Define here for routing in case user decline app     
-//   })
-//   .findOrCreateUser( function (session, accessToken, accessTokExtra, fbUserMetadata) {
-// 	var promise = new Promise();
-// 	couchUsers.findOrCreateByFacebookData(fbUserMetadata, promise, sessionStore, session);
-// 	return promise;
-//   })
-//   .redirectPath('/lobby');
 
 var nowjs = require('now');
 var connectedFbIds = [];
@@ -47,7 +16,6 @@ app.configure(function(){
   app.use(express.cookieParser());
   app.use(express.methodOverride());
   app.use(express.session({secret: "jabysybaj"}));
-  // app.use(everyauth.middleware());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
@@ -59,8 +27,6 @@ app.configure('development', function(){
 app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
-
-// everyauth.helpExpress(app);
 
 // Routes
 
@@ -176,7 +142,12 @@ app.get('/rules', function(req, res){
 	res.render('rules');
 });
 
-app.listen(3000);
+// app.listen(3000);
+
+var port = process.env.PORT || 3000;
+app.listen(port, function() {
+	console.log("Listening on " + port);
+});
 
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 var everyone = nowjs.initialize(app);

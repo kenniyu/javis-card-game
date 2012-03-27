@@ -1,5 +1,5 @@
 {
-  "version": "0.7.6-197",
+  "version": "0.7.6-200",
   "domains": [
     "www.jabys.us",
     "blah.jabys.us"
@@ -9,10 +9,7 @@
     "jade": ">= 0.0.1",
     "now": "0.7.x",
     "ejs": "",
-    "cradle": "0.5.x",
-    "everyauth": "0.2.x",
-    "zlib": "",
-    "twss": "0.1.x"
+    "zlib": ""
   },
   "scripts": {
     "start": "app.js"
