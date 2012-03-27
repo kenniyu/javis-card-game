@@ -10,6 +10,7 @@
     "now": "0.7.x",
     "ejs": "",
     "socket.io": "0.8.5",
+	"socket.io-client": "",
     "zlib": ""
   },
   "scripts": {
