@@ -9,6 +9,7 @@
     "jade": ">= 0.0.1",
     "now": "0.7.x",
     "ejs": "",
+	"socket.io": "",
     "zlib": ""
   },
   "scripts": {
