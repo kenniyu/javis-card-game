@@ -1,6 +1,9 @@
 {
-  "version": "0.7.6-111",
-  "private": true,
+  "version": "0.7.6-197",
+  "domains": [
+    "www.jabys.us",
+    "blah.jabys.us"
+  ],
   "dependencies": {
     "express": "2.5.2",
     "jade": ">= 0.0.1",
@@ -8,11 +11,15 @@
     "ejs": "",
     "cradle": "0.5.x",
     "everyauth": "0.2.x",
-    "zlib": ""
+    "zlib": "",
+    "twss": "0.1.x"
   },
   "scripts": {
     "start": "app.js"
   },
   "subdomain": "jabys",
-  "name": "jabys"
+  "name": "jabys",
+  "engines": {
+    "node": "0.6.x"
+  }
 }

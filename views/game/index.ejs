@@ -6,7 +6,6 @@
 	<link rel='stylesheet' href='../stylesheets/tipsy.css' />
 	
 	<script src="/javascripts/jquery-ui-1.8.16.custom.min.js"></script>
-	<!-- // <script src="/nowjs/now.js"></script> -->
 	<script src="/javascripts/jquery.tipsy.js"></script>
 	
 	<script type="text/javascript">	// juicy stuff
@@ -504,7 +503,7 @@
 				hand.forEach(function(card, index){
 					var cardHtml = getCardHtml(card, true);
 					var leftOffset = index * 30 + randomLeftOffset;			
-					var cardDiv = $(''+cardHtml).css("left", leftOffset).css("top", currentCombosPlayed%5*25);
+					var cardDiv = $(''+cardHtml).css("left", leftOffset).css("top", currentCombosPlayed%4*23);
 					$('#slot-middle').append(cardDiv);
 				});
 				currentCombosPlayed ++;
@@ -711,7 +710,7 @@
 				for (var i = 0; i < numCards; i++){
 					var cardHtml = getCardHtml("", false);
 					var left = Math.random()/3*100;
-					var top = Math.random()/2.3*100;
+					var top = Math.random()/3*100;
 			
 					var cardDiv = $(''+cardHtml).css("left", left+"%").css("top", top+"%");
 			
@@ -784,7 +783,16 @@
 					$('#chat-messages').append("<div class='chat-message passive'>"+name+" "+text+"</div>");
 				}
 				else if (type == "chat"){
-					$('#chat-messages').append("<div class='chat-message active'><strong style='color: "+color+";'>"+name+":</strong> "+urlify(text)+"<br/></div>");
+					if (text == "/tableflip"){
+						text = "(╯°□°)╯︵ ┻━┻";
+					}
+					else if (text == "/tablefix"){
+						text = "┬─┬ノ( º _ ºノ)";
+					}
+					else if (text == "/whatever"){
+						text = "¯\\_(ツ)_/¯"
+					}
+					$('#chat-messages').append("<div class='chat-message active'><span class='name' style='color: "+color+";'>"+name+":</span> "+urlify(text)+"<br/></div>");
 				}
 				if ($("#chat-header").hasClass("min")){
 					if (type == "chat"){
@@ -796,19 +804,19 @@
 				}
 			}
 	
-			$('#chat-header').live("click", function(e){
-				$(this).toggleClass("min");
-				$('#chat-messages').slideToggle(100);
-				$('#chat-bar').slideToggle(100);
-				$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 1);
-				stopChatFlash();
-			});
+			// $('#chat-header').live("click", function(e){
+			// 	$(this).toggleClass("min");
+			// 	$('#chat-messages').slideToggle(100);
+			// 	$('#chat-bar').slideToggle(100);
+			// 	$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 1);
+			// 	stopChatFlash();
+			// });
 			
-			$('#clients-header').live("click", function(e){
-				$(this).toggleClass("min");
-				$('#clients-list').slideToggle(100);
-				$('#chat-bar').slideToggle(100);
-			});
+			// $('#clients-header').live("click", function(e){
+			// 	$(this).toggleClass("min");
+			// 	$('#clients-list').slideToggle(100);
+			// 	$('#chat-bar').slideToggle(100);
+			// });
 			
 			$('.chat-bar-button').live("click", function(e){
 				$('.icon').toggle();
@@ -817,10 +825,10 @@
 				$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 1);
 			});
 	
-			$('#rules-header').live("click", function(e){
-				$(this).toggleClass("min");
-				$('#rules-list').slideToggle(100);
-			})
+			// $('#rules-header').live("click", function(e){
+			// 	$(this).toggleClass("min");
+			// 	$('#rules-list').slideToggle(100);
+			// })
 	
 			function startChatFlash(){
 				if (chatFlashInterval == null){
@@ -985,9 +993,31 @@
 				}
 			});
 			
-			$('.lobby').live("click", function(e){
+			$('.lobby-icon').live("click", function(e){
 				document.location.href="/lobby";
 			});
+			
+			now.redirectToLobby = function(message) {
+				$('.lobby-icon').click();
+			}
+			
+			$('.lobby-icon').tipsy({gravity: 'w', fade: true, html: true, theme: "white"});			
+			$('.rules-icon').tipsy({gravity: 'e', fade: true, html: true, theme: "white"});			
+			
+			$('.rules-icon').live("click", function(e){
+				$(this).attr('data-loads', parseInt($(this).attr('data-loads')) + 1);
+				$('#rules').animate({"height": "toggle"}, 1);
+				if ($(this).attr('data-loads') % 2 == 1){
+					var height = "-=170px";
+				}
+				else{
+					var height = "+=170px";
+				}
+				$('#chat-messages').animate({"height": height}, 1);
+				$('#clients-list').animate({"height": height}, 1);
+
+			});
+			
 		});
 
 		jQuery.fn.swapWith = function(to) {
@@ -1004,7 +1034,7 @@
 
 <body>
 	<div id="wrapper">
-		<div id="game-board" tabindex=1>
+		<div id="game-board" tabindex=1>			
 			<div id="slot-bot-container" class="slot-container"></div>
 			<div id="slot-bot-label" class="player-name"></div>
 			<div id="slot-bot" class="slot"></div>
@@ -1037,52 +1067,66 @@
 				<div class="game-feedback" id="game-error-message" style="display:none;"></div>
 			</div>
 		</div>		
+		
+		
+		<div id="sidebar">
+			<!-- <div id="rules-header" class="sb-header">What were the cards again?</div>
+			<div id="rules-list">
+				<strong>5</strong> - Draw X cards from the discard pile<br/>
+				<strong>7</strong> - Pass X cards to the next player<br/>
+				<strong>8</strong> - Clear the round and go again<br/>
+				<strong>10</strong> - Discard X cards<br/>
+				<strong>J</strong> - Play lower than the previous hand (until turn comes back around to the player who most recently played a J)<br/>
+				<br/>
+				Where X is how many of that card was in the hand that you played<br/>
+			</div> -->
+
+			<div id="chat-header" class="sb-header">
+				<span class="chat-icon"><img src="/images/icon-chat.png" width="18px" /></span>
+				<span class="chat-header-text">Chat</span>				
+				<span class="rules-icon" data-loads="0" title="Rules" original-title="Rules"><img src="/images/icon-rules.png" width="18px"/></span>
+				<span class="lobby-icon" title="Back to Lobby" original-title="Back to Lobby"><img src="/images/icon-lobby.png" width="18px"/></span> 
+			</div>
+			<div id="rules" style="display:none;">
+				<strong>5</strong> - Draw X cards from the discard pile<br/>
+				<strong>7</strong> - Pass X cards to the next player<br/>
+				<strong>8</strong> - Clear the round and go again<br/>
+				<strong>10</strong> - Discard X cards<br/>
+				<strong>J</strong> - Play lower than the previous hand (until turn comes back around to the player who most recently played a J)<br/>
+				<br/>
+				Where X is how many of that card was in the hand that you played<br/>
+			</div>
+			<div id="chat-messages">
+			</div>
+
+			<div id="clients-header" class="sb-header" style="display:none;">
+				<span class="clients-icon"><img src="/images/icon-client.png" width="18px" /></span>
+				<span class="clients-header-text">People</span>
+				<span class="lobby-icon" title="Back to Lobby" original-title="Back to Lobby"><img src="/images/icon-lobby.png" width="18px"/></span> 
+			</div>
+			<div id="clients-list" style="display:none;"></div>
+
+			<div id="chat-bar">
+				<div class="chat-bar-button">
+					<div class="clients-icon icon"><img src="/images/icon-client.png" width="20px"/></div>
+					<div class="chat-icon icon" style="display:none;"><img src="/images/icon-chat.png" width="20px"/></div>
+				</div>
+				<div class="input-box">
+					<input type="text" id="chat-submit" placeholder="type here to chat"/>
+				</div>
+				<div class="input-box" style="display:none;">
+					<input type="text" id="clients-search" placeholder="search people"/>
+				</div>
+				<div class="input-box" style="display:none;">
+					<input type="text" id="nickname-submit" placeholder="nickname"/>
+				</div>	
+			</div>
+		</div>
+		
 	</div>	
 	
-	<div id="sidebar">
-		<div id="rules-header" class="sb-header">What were the cards again?</div>
-		<div id="rules-list">
-			<strong>5</strong> - Draw X cards from the discard pile<br/>
-			<strong>7</strong> - Pass X cards to the next player<br/>
-			<strong>8</strong> - Clear the round and go again<br/>
-			<strong>10</strong> - Discard X cards<br/>
-			<strong>J</strong> - Play lower than the previous hand (until turn comes back around to the player who most recently played a J)<br/>
-			<br/>
-			Where X is how many of that card was in the hand that you played<br/>
-		</div>
-		
-		<div id="chat-header" class="sb-header">
-			<div class="chat-icon"><img src="/images/icon-chat.png" width="18px" /></div>
-			<div class="chat-header-text">Chat</div>
-		</div>
-		<div id="chat-messages"></div>
-		
-		<div id="clients-header" class="sb-header" style="display:none;">
-			<div class="clients-icon"><img src="/images/icon-client.png" width="18px" /></div>
-			<div class="clients-header-text">People</div>
-		</div>
-		<div id="clients-list" style="display:none;"></div>
-		
-		<div id="chat-bar">
-			<div class="chat-bar-button">
-				<div class="clients-icon icon"><img src="/images/icon-client.png" width="20px"/></div>
-				<div class="chat-icon icon" style="display:none;"><img src="/images/icon-chat.png" width="20px"/></div>
-			</div>
-			<div class="input-box">
-				<input type="text" id="chat-submit" placeholder="type here to chat"/>
-			</div>
-			<div class="input-box" style="display:none;">
-				<input type="text" id="clients-search" placeholder="search people"/>
-			</div>
-			<div class="input-box" style="display:none;">
-				<input type="text" id="nickname-submit" placeholder="nickname"/>
-			</div>
-		</div>
-	</div>
 	
-	<div id="menu-bar">
-		<div class="lobby">Back to Lobby</div>
-	</div>
+		
 	
 	<audio id="ping" src="http://www.schillmania.com/projects/soundmanager2/demo/_mp3/mouseover.mp3" preload="auto"></audio>
 </body>

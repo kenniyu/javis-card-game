@@ -1,0 +1,2253 @@
+info it worked if it ends with ok
+verbose cli [ 'node', '/usr/bin/npm', 'update', '-g' ]
+info using npm@1.0.17
+info using node@v0.4.11
+verbose config file /Users/kenniyu/.npmrc
+verbose config file /usr/etc/npmrc
+silly exec /usr/bin/node "/usr/lib/node_modules/npm/bin/npm-get-uid-gid.js" "nobody" 20
+silly output from getuid/gid {"uid":-2,"gid":20}
+silly output from getuid/gid 
+silly testEngine { name: 'cloudnode-cli',
+silly testEngine   description: 'A CLI tool to allow interaction with the http://cloudno.de/ platform.',
+silly testEngine   version: '0.2.20',
+silly testEngine   homepage: 'http://cloudno.de/',
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/dvbportal/cloudnode-cli.git' },
+silly testEngine   author: { name: 'Hans J Schroeder', email: 'hs@cloudno.de' },
+silly testEngine   contributors: 
+silly testEngine    [ { name: 'Dav Glass', email: 'davglass@gmail.com' },
+silly testEngine      { name: 'Chris Matthieu', email: 'chris@matthieu.us' },
+silly testEngine      { name: 'Daniel Bartlett',
+silly testEngine        email: 'dan@f-box.org',
+silly testEngine        url: 'http://danb-uk.net/' },
+silly testEngine      { name: 'Abraham Williams',
+silly testEngine        email: '4braham@gmail.com' } ],
+silly testEngine   preferGlobal: 'true',
+silly testEngine   bin: { cloudnode: 'bin/cloudnode.js' },
+silly testEngine   main: './lib/commands.js',
+silly testEngine   engines: { node: '*' },
+silly testEngine   dependencies: 
+silly testEngine    { 'nodester-api': '0.1.9',
+silly testEngine      colors: '0.3.0',
+silly testEngine      iniparser: '1.0.1' },
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/usr/lib/node_modules/cloudnode-cli/package.json',
+silly testEngine      wscript: false,
+silly testEngine      contributors: false,
+silly testEngine      serverjs: false },
+silly testEngine   _id: 'cloudnode-cli@0.2.20',
+silly testEngine   devDependencies: {},
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true,
+silly testEngine   scripts: {} }
+verbose caching /usr/lib/node_modules/cloudnode-cli/package.json
+verbose loadDefaults cloudnode-cli@0.2.20
+silly testEngine { name: 'ejs',
+silly testEngine   description: 'Embedded JavaScript templates',
+silly testEngine   version: '0.6.1',
+silly testEngine   author: 
+silly testEngine    { name: 'TJ Holowaychuk',
+silly testEngine      email: 'tj@vision-media.ca' },
+silly testEngine   keywords: [ 'template', 'engine', 'ejs' ],
+silly testEngine   devDependencies: { mocha: '*' },
+silly testEngine   main: './lib/ejs.js',
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/usr/lib/node_modules/ejs/package.json',
+silly testEngine      wscript: false,
+silly testEngine      contributors: false,
+silly testEngine      serverjs: false },
+silly testEngine   _id: 'ejs@0.6.1',
+silly testEngine   dependencies: {},
+silly testEngine   engines: { node: '*' },
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true }
+verbose caching /usr/lib/node_modules/ejs/package.json
+verbose loadDefaults ejs@0.6.1
+silly testEngine { name: 'express',
+silly testEngine   description: 'Sinatra inspired web development framework',
+silly testEngine   version: '2.5.2',
+silly testEngine   author: 
+silly testEngine    { name: 'TJ Holowaychuk',
+silly testEngine      email: 'tj@vision-media.ca' },
+silly testEngine   contributors: 
+silly testEngine    [ { name: 'TJ Holowaychuk',
+silly testEngine        email: 'tj@vision-media.ca' },
+silly testEngine      { name: 'Aaron Heckmann',
+silly testEngine        email: 'aaron.heckmann+github@gmail.com' },
+silly testEngine      { name: 'Ciaran Jessup', email: 'ciaranj@gmail.com' },
+silly testEngine      { name: 'Guillermo Rauch', email: 'rauchg@gmail.com' } ],
+silly testEngine   dependencies: 
+silly testEngine    { connect: '1.8.x',
+silly testEngine      mime: '>= 0.0.1',
+silly testEngine      qs: '>= 0.3.1',
+silly testEngine      mkdirp: '0.0.7' },
+silly testEngine   devDependencies: 
+silly testEngine    { 'connect-form': '0.2.1',
+silly testEngine      ejs: '0.4.2',
+silly testEngine      expresso: '0.9.2',
+silly testEngine      hamljs: '0.5.1',
+silly testEngine      jade: '0.16.2',
+silly testEngine      stylus: '0.13.0',
+silly testEngine      should: '0.3.2',
+silly testEngine      'express-messages': '0.0.2',
+silly testEngine      'node-markdown': '>= 0.0.1',
+silly testEngine      'connect-redis': '>= 0.0.1' },
+silly testEngine   keywords: [ 'framework', 'sinatra', 'web', 'rest', 'restful' ],
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/visionmedia/express.git' },
+silly testEngine   main: 'index',
+silly testEngine   bin: { express: './bin/express' },
+silly testEngine   scripts: { test: 'make test', prepublish: 'npm prune' },
+silly testEngine   engines: { node: '>= 0.4.1 < 0.7.0' },
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/usr/lib/node_modules/express/package.json',
+silly testEngine      wscript: false,
+silly testEngine      contributors: false,
+silly testEngine      serverjs: false },
+silly testEngine   _id: 'express@2.5.2',
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true }
+verbose caching /usr/lib/node_modules/express/package.json
+verbose loadDefaults express@2.5.2
+silly testEngine { name: 'nodester-cli',
+silly testEngine   description: 'A CLI tool to allow interaction with the http://nodester.com/ platform.',
+silly testEngine   version: '0.2.34',
+silly testEngine   homepage: 'http://nodester.com/',
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/nodester/nodester-cli.git' },
+silly testEngine   author: 
+silly testEngine    { name: 'Daniel Bartlett',
+silly testEngine      email: 'dan@f-box.org',
+silly testEngine      url: 'http://danb-uk.net/' },
+silly testEngine   contributors: 
+silly testEngine    [ { name: 'Dav Glass', email: 'davglass@gmail.com' },
+silly testEngine      { name: 'Chris Matthieu', email: 'chris@matthieu.us' },
+silly testEngine      { name: 'Abraham Williams',
+silly testEngine        email: '4braham@gmail.com' },
+silly testEngine      { name: 'Contra', email: 'contra@australia.edu' },
+silly testEngine      { name: 'Marcos Oliveira' } ],
+silly testEngine   preferGlobal: 'true',
+silly testEngine   bin: { nodester: 'bin/nodester.js' },
+silly testEngine   main: './lib/commands.js',
+silly testEngine   engines: { node: '*' },
+silly testEngine   dependencies: 
+silly testEngine    { 'nodester-api': '>= 0.1.14',
+silly testEngine      colors: '0.3.0',
+silly testEngine      iniparser: '1.0.1' },
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/usr/lib/node_modules/nodester-cli/package.json',
+silly testEngine      wscript: false,
+silly testEngine      contributors: false,
+silly testEngine      serverjs: false },
+silly testEngine   _id: 'nodester-cli@0.2.34',
+silly testEngine   devDependencies: {},
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true,
+silly testEngine   scripts: {} }
+verbose caching /usr/lib/node_modules/nodester-cli/package.json
+verbose loadDefaults nodester-cli@0.2.34
+silly testEngine { name: 'railway',
+silly testEngine   version: '0.1.8',
+silly testEngine   author: { name: 'Anatoliy Chakkaev' },
+silly testEngine   description: 'RailwayJS - Ruby-on-Rails inspired MVC web framework, fully ExpressJS compatible',
+silly testEngine   keywords: 
+silly testEngine    [ 'mvc',
+silly testEngine      'web-framework',
+silly testEngine      'rails',
+silly testEngine      'ruby-on-rails',
+silly testEngine      'express',
+silly testEngine      'railway' ],
+silly testEngine   homepage: 'http://railwayjs.com',
+silly testEngine   engines: [ 'node >= 0.4.0', node: ' >= 0.4.0' ],
+silly testEngine   main: 'lib/onrailway',
+silly testEngine   bin: { railway: 'bin/railway', rw: 'bin/railway' },
+silly testEngine   dependencies: 
+silly testEngine    { connect: '>= 0',
+silly testEngine      'socket.io': '>= 0',
+silly testEngine      express: '>= 2.2.2',
+silly testEngine      yaml: '>= 0.1.2',
+silly testEngine      'coffee-script': '>= 1.1.1',
+silly testEngine      qs: '>= 0',
+silly testEngine      mime: '>= 0',
+silly testEngine      'ejs-ext': '>= 0.0.4',
+silly testEngine      'jade-ext': '>= 0.0.2' },
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/1602/express-on-railway.git' },
+silly testEngine   devDependencies: {},
+silly testEngine   scripts: { test: 'nodeunit test' },
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/usr/lib/node_modules/railway/package.json',
+silly testEngine      wscript: false,
+silly testEngine      contributors: false,
+silly testEngine      serverjs: false },
+silly testEngine   _id: 'railway@0.1.8',
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true }
+verbose caching /usr/lib/node_modules/railway/package.json
+verbose loadDefaults railway@0.1.8
+silly testEngine { name: 'twss',
+silly testEngine   version: '0.1.4',
+silly testEngine   description: 'That\'s what she said classifier',
+silly testEngine   keywords: [ 'machine learning', 'classifier', 'twss', 'ai' ],
+silly testEngine   author: 
+silly testEngine    { name: 'Daniel Rapp',
+silly testEngine      email: 'danielrappt@gmail.com' },
+silly testEngine   bin: { twss: './bin/twss' },
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/DanielRapp/twss.js.git' },
+silly testEngine   main: 'index',
+silly testEngine   dependencies: { optimist: '0.3', colors: '*' },
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/usr/lib/node_modules/twss/package.json',
+silly testEngine      wscript: false,
+silly testEngine      contributors: false,
+silly testEngine      serverjs: false },
+silly testEngine   _id: 'twss@0.1.4',
+silly testEngine   devDependencies: {},
+silly testEngine   engines: { node: '*' },
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true,
+silly testEngine   scripts: {} }
+verbose caching /usr/lib/node_modules/twss/package.json
+verbose loadDefaults twss@0.1.4
+silly testEngine { name: 'npm',
+silly testEngine   description: 'A package manager for node',
+silly testEngine   keywords: 
+silly testEngine    [ 'package manager',
+silly testEngine      'modules',
+silly testEngine      'install',
+silly testEngine      'package.json' ],
+silly testEngine   version: '1.0.17',
+silly testEngine   preferGlobal: true,
+silly testEngine   config: { publishtest: false },
+silly testEngine   homepage: 'http://npmjs.org/',
+silly testEngine   author: 
+silly testEngine    { name: 'Isaac Z. Schlueter',
+silly testEngine      email: 'i@izs.me',
+silly testEngine      url: 'http://blog.izs.me' },
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/isaacs/npm.git' },
+silly testEngine   bugs: 
+silly testEngine    { email: 'npm-@googlegroups.com',
+silly testEngine      url: 'http://github.com/isaacs/npm/issues' },
+silly testEngine   directories: 
+silly testEngine    { doc: './doc',
+silly testEngine      man: './man1',
+silly testEngine      lib: './lib',
+silly testEngine      bin: './bin' },
+silly testEngine   main: 'npm',
+silly testEngine   bin: 
+silly testEngine    { npm: './bin/npm.js',
+silly testEngine      npm_g: './bin/npm.js',
+silly testEngine      'npm-g': './bin/npm.js' },
+silly testEngine   dependencies: 
+silly testEngine    { semver: '1',
+silly testEngine      abbrev: '1',
+silly testEngine      minimatch: '0',
+silly testEngine      nopt: '1',
+silly testEngine      'node-uuid': '1.2' },
+silly testEngine   bundleDependencies: [ 'semver', 'abbrev', 'minimatch', 'nopt', 'node-uuid' ],
+silly testEngine   devDependencies: { ronn: '' },
+silly testEngine   engines: { node: '0.4 || 0.5', npm: '1' },
+silly testEngine   scripts: { test: './test/run.sh', prepublish: 'make doc' },
+silly testEngine   licenses: 
+silly testEngine    [ { type: 'MIT',
+silly testEngine        url: 'http://github.com/isaacs/npm/raw/master/LICENSE' } ],
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/usr/lib/node_modules/npm/package.json',
+silly testEngine      wscript: false,
+silly testEngine      serverjs: false,
+silly testEngine      contributors: 
+silly testEngine       [ 'Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)',
+silly testEngine         'Steve Steiner <ssteinerX@gmail.com> (http://websaucesoftware.com/blog/)',
+silly testEngine         'Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com/)',
+silly testEngine         'Aaron Blohowiak <aaron.blohowiak@gmail.com> (http://aaronblohowiak.com/)',
+silly testEngine         'Martyn Smith <martyn@dollyfish.net.nz> (http://dollyfish.net.nz/)',
+silly testEngine         'Mathias Pettersson <mape@mape.me> (http://mape.me/)',
+silly testEngine         'Brian Hammond <brian@fictorial.com> (http://fictorial.com/)',
+silly testEngine         'Charlie Robbins <charlie.robbins@gmail.com> (http://www.charlierobbins.com/)',
+silly testEngine         'Francisco Treacy <francisco.treacy@gmail.com> (http://franciscotreacy.com/)',
+silly testEngine         'Cliffano Subagio <cliffano@gmail.com> (http://blog.cliffano.com/)',
+silly testEngine         'Christian Eager <christian.eager@nokia.com> (http://perpenduum.com)',
+silly testEngine         'Dav Glass <davglass@gmail.com> (http://blog.davglass.com)',
+silly testEngine         'Alex K. Wolfe <alexkwolfe@gmail.com>',
+silly testEngine         'James Sanders <jimmyjazz14@gmail.com> (http://james-sanders.com/)',
+silly testEngine         'Reid Burke <me@reidburke.com> (http://reidburke.com/)',
+silly testEngine         'Arlo Breault <arlolra@gmail.com> (http://thoughtherder.com/)',
+silly testEngine         'Timo Derstappen <teemow@gmail.com> (http://teemow.com)',
+silly testEngine         'Bradley Meck <bradley.meck@gmail.com>',
+silly testEngine         'Bart Teeuwisse <bart.teeuwisse@thecodemill.biz> (http://thecodemill.biz/)',
+silly testEngine         'Ben Noordhuis <info@bnoordhuis.nl> (http://bnoordhuis.nl/)',
+silly testEngine         'Tor Valamo <tor.valamo@gmail.com> (http://www.magnimedia.no/)',
+silly testEngine         'Whyme.Lyu <5longluna@gmail.com> (http://whyme.kuantu.com/)',
+silly testEngine         'Olivier Melcher <olivier.melcher@gmail.com>',
+silly testEngine         'Tomaž Muraus <kami@k5-storitve.net> (http://www.tomaz-muraus.info)',
+silly testEngine         'Evan Meagher <evan.meagher@gmail.com> (http://evanmeagher.net/)',
+silly testEngine         'Orlando Vazquez <ovazquez@gmail.com> (http://2wycked.net/)',
+silly testEngine         'George Miroshnykov <gmiroshnykov@lohika.com>',
+silly testEngine         'Geoff Flarity (http://ca.linkedin.com/pub/geoff-flarity/a/536/43a)',
+silly testEngine         'Pete Kruckenberg <pete@kruckenberg.com>',
+silly testEngine         'Laurie Harper <laurie@holoweb.net> (http://laurie.holoweb.net/)',
+silly testEngine         'Chris Wong <chris@chriswongstudio.com>',
+silly testEngine         'Max Goodman <c@chromacode.com> (http://chromacode.com/)',
+silly testEngine         'Scott Bronson <brons_github@rinspin.com>',
+silly testEngine         'Federico Romero <federomero@gmail.com>',
+silly testEngine         'Visnu Pitiyanuvath <visnupx@gmail.com> (http://visnup.com)',
+silly testEngine         'Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com/)',
+silly testEngine         'Mark Cahill <mark@tiemonster.info> (http://www.tiemonster.info/)',
+silly testEngine         'Zearin <zearin@gonk.net>',
+silly testEngine         'Iain Sproat <iainsproat@gmail.com>' ] },
+silly testEngine   _id: 'npm@1.0.17',
+silly testEngine   contributors: 
+silly testEngine    [ { name: 'Isaac Z. Schlueter',
+silly testEngine        email: 'i@izs.me',
+silly testEngine        url: 'http://blog.izs.me/' },
+silly testEngine      { name: 'Steve Steiner',
+silly testEngine        email: 'ssteinerX@gmail.com',
+silly testEngine        url: 'http://websaucesoftware.com/blog/' },
+silly testEngine      { name: 'Mikeal Rogers',
+silly testEngine        email: 'mikeal.rogers@gmail.com',
+silly testEngine        url: 'http://www.mikealrogers.com/' },
+silly testEngine      { name: 'Aaron Blohowiak',
+silly testEngine        email: 'aaron.blohowiak@gmail.com',
+silly testEngine        url: 'http://aaronblohowiak.com/' },
+silly testEngine      { name: 'Martyn Smith',
+silly testEngine        email: 'martyn@dollyfish.net.nz',
+silly testEngine        url: 'http://dollyfish.net.nz/' },
+silly testEngine      { name: 'Mathias Pettersson',
+silly testEngine        email: 'mape@mape.me',
+silly testEngine        url: 'http://mape.me/' },
+silly testEngine      { name: 'Brian Hammond',
+silly testEngine        email: 'brian@fictorial.com',
+silly testEngine        url: 'http://fictorial.com/' },
+silly testEngine      { name: 'Charlie Robbins',
+silly testEngine        email: 'charlie.robbins@gmail.com',
+silly testEngine        url: 'http://www.charlierobbins.com/' },
+silly testEngine      { name: 'Francisco Treacy',
+silly testEngine        email: 'francisco.treacy@gmail.com',
+silly testEngine        url: 'http://franciscotreacy.com/' },
+silly testEngine      { name: 'Cliffano Subagio',
+silly testEngine        email: 'cliffano@gmail.com',
+silly testEngine        url: 'http://blog.cliffano.com/' },
+silly testEngine      { name: 'Christian Eager',
+silly testEngine        email: 'christian.eager@nokia.com',
+silly testEngine        url: 'http://perpenduum.com' },
+silly testEngine      { name: 'Dav Glass',
+silly testEngine        email: 'davglass@gmail.com',
+silly testEngine        url: 'http://blog.davglass.com' },
+silly testEngine      { name: 'Alex K. Wolfe',
+silly testEngine        email: 'alexkwolfe@gmail.com' },
+silly testEngine      { name: 'James Sanders',
+silly testEngine        email: 'jimmyjazz14@gmail.com',
+silly testEngine        url: 'http://james-sanders.com/' },
+silly testEngine      { name: 'Reid Burke',
+silly testEngine        email: 'me@reidburke.com',
+silly testEngine        url: 'http://reidburke.com/' },
+silly testEngine      { name: 'Arlo Breault',
+silly testEngine        email: 'arlolra@gmail.com',
+silly testEngine        url: 'http://thoughtherder.com/' },
+silly testEngine      { name: 'Timo Derstappen',
+silly testEngine        email: 'teemow@gmail.com',
+silly testEngine        url: 'http://teemow.com' },
+silly testEngine      { name: 'Bradley Meck',
+silly testEngine        email: 'bradley.meck@gmail.com' },
+silly testEngine      { name: 'Bart Teeuwisse',
+silly testEngine        email: 'bart.teeuwisse@thecodemill.biz',
+silly testEngine        url: 'http://thecodemill.biz/' },
+silly testEngine      { name: 'Ben Noordhuis',
+silly testEngine        email: 'info@bnoordhuis.nl',
+silly testEngine        url: 'http://bnoordhuis.nl/' },
+silly testEngine      { name: 'Tor Valamo',
+silly testEngine        email: 'tor.valamo@gmail.com',
+silly testEngine        url: 'http://www.magnimedia.no/' },
+silly testEngine      { name: 'Whyme.Lyu',
+silly testEngine        email: '5longluna@gmail.com',
+silly testEngine        url: 'http://whyme.kuantu.com/' },
+silly testEngine      { name: 'Olivier Melcher',
+silly testEngine        email: 'olivier.melcher@gmail.com' },
+silly testEngine      { name: 'Tomaž Muraus',
+silly testEngine        email: 'kami@k5-storitve.net',
+silly testEngine        url: 'http://www.tomaz-muraus.info' },
+silly testEngine      { name: 'Evan Meagher',
+silly testEngine        email: 'evan.meagher@gmail.com',
+silly testEngine        url: 'http://evanmeagher.net/' },
+silly testEngine      { name: 'Orlando Vazquez',
+silly testEngine        email: 'ovazquez@gmail.com',
+silly testEngine        url: 'http://2wycked.net/' },
+silly testEngine      { name: 'George Miroshnykov',
+silly testEngine        email: 'gmiroshnykov@lohika.com' },
+silly testEngine      { name: 'Geoff Flarity',
+silly testEngine        url: 'http://ca.linkedin.com/pub/geoff-flarity/a/536/43a' },
+silly testEngine      { name: 'Pete Kruckenberg',
+silly testEngine        email: 'pete@kruckenberg.com' },
+silly testEngine      { name: 'Laurie Harper',
+silly testEngine        email: 'laurie@holoweb.net',
+silly testEngine        url: 'http://laurie.holoweb.net/' },
+silly testEngine      { name: 'Chris Wong',
+silly testEngine        email: 'chris@chriswongstudio.com' },
+silly testEngine      { name: 'Max Goodman',
+silly testEngine        email: 'c@chromacode.com',
+silly testEngine        url: 'http://chromacode.com/' },
+silly testEngine      { name: 'Scott Bronson',
+silly testEngine        email: 'brons_github@rinspin.com' },
+silly testEngine      { name: 'Federico Romero',
+silly testEngine        email: 'federomero@gmail.com' },
+silly testEngine      { name: 'Visnu Pitiyanuvath',
+silly testEngine        email: 'visnupx@gmail.com',
+silly testEngine        url: 'http://visnup.com' },
+silly testEngine      { name: 'Irakli Gozalishvili',
+silly testEngine        email: 'rfobic@gmail.com',
+silly testEngine        url: 'http://jeditoolkit.com/' },
+silly testEngine      { name: 'Mark Cahill',
+silly testEngine        email: 'mark@tiemonster.info',
+silly testEngine        url: 'http://www.tiemonster.info/' },
+silly testEngine      { name: 'Zearin', email: 'zearin@gonk.net' },
+silly testEngine      { name: 'Iain Sproat', email: 'iainsproat@gmail.com' } ],
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true,
+silly testEngine   man: 
+silly testEngine    [ 'man1/adduser.1',
+silly testEngine      'man1/author.1',
+silly testEngine      'man1/bin.1',
+silly testEngine      'man1/build.1',
+silly testEngine      'man1/bundle.1',
+silly testEngine      'man1/cache.1',
+silly testEngine      'man1/changelog.1',
+silly testEngine      'man1/coding-style.1',
+silly testEngine      'man1/completion.1',
+silly testEngine      'man1/config.1',
+silly testEngine      'man1/deprecate.1',
+silly testEngine      'man1/developers.1',
+silly testEngine      'man1/docs.1',
+silly testEngine      'man1/edit.1',
+silly testEngine      'man1/explore.1',
+silly testEngine      'man1/faq.1',
+silly testEngine      'man1/find.1',
+silly testEngine      'man1/folders.1',
+silly testEngine      'man1/get.1',
+silly testEngine      'man1/global.1',
+silly testEngine      'man1/help-search.1',
+silly testEngine      'man1/home.1',
+silly testEngine      'man1/init.1',
+silly testEngine      'man1/install.1',
+silly testEngine      'man1/json.1',
+silly testEngine      'man1/link.1',
+silly testEngine      'man1/list.1',
+silly testEngine      'man1/ln.1',
+silly testEngine      'man1/ls.1',
+silly testEngine      'man1/npm.1',
+silly testEngine      'man1/outdated.1',
+silly testEngine      'man1/owner.1',
+silly testEngine      'man1/pack.1',
+silly testEngine      'man1/prefix.1',
+silly testEngine      'man1/prune.1',
+silly testEngine      'man1/publish.1',
+silly testEngine      'man1/rebuild.1',
+silly testEngine      'man1/registry.1',
+silly testEngine      'man1/removing-npm.1',
+silly testEngine      'man1/restart.1',
+silly testEngine      'man1/rm.1',
+silly testEngine      'man1/root.1',
+silly testEngine      'man1/run-script.1',
+silly testEngine      'man1/scripts.1',
+silly testEngine      'man1/search.1',
+silly testEngine      'man1/semver.1',
+silly testEngine      'man1/set.1',
+silly testEngine      'man1/start.1',
+silly testEngine      'man1/stop.1',
+silly testEngine      'man1/submodule.1',
+silly testEngine      'man1/tag.1',
+silly testEngine      'man1/test.1',
+silly testEngine      'man1/uninstall.1',
+silly testEngine      'man1/unpublish.1',
+silly testEngine      'man1/update.1',
+silly testEngine      'man1/version.1',
+silly testEngine      'man1/view.1',
+silly testEngine      'man1/whoami.1' ] }
+verbose caching /usr/lib/node_modules/npm/package.json
+verbose loadDefaults npm@1.0.17
+verbose cache add [ 'cloudnode-cli', '*' ]
+info addNamed [ 'cloudnode-cli', '*' ]
+verbose addNamed [ null, '' ]
+verbose cache add [ 'ejs', '*' ]
+info addNamed [ 'ejs', '*' ]
+verbose addNamed [ null, '' ]
+verbose cache add [ 'express', '*' ]
+info addNamed [ 'express', '*' ]
+verbose addNamed [ null, '' ]
+verbose cache add [ 'nodester-cli', '*' ]
+info addNamed [ 'nodester-cli', '*' ]
+verbose addNamed [ null, '' ]
+verbose cache add [ 'railway', '*' ]
+info addNamed [ 'railway', '*' ]
+verbose addNamed [ null, '' ]
+verbose cache add [ 'twss', '*' ]
+info addNamed [ 'twss', '*' ]
+verbose addNamed [ null, '' ]
+verbose cache add [ 'npm', '*' ]
+info addNamed [ 'npm', '*' ]
+verbose addNamed [ null, '' ]
+verbose GET cloudnode-cli
+verbose raw, before any munging cloudnode-cli
+verbose url resolving [ 'http://registry.npmjs.org/', './cloudnode-cli' ]
+verbose url resolved http://registry.npmjs.org/cloudnode-cli
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/cloudnode-cli',
+verbose url parsed   pathname: '/cloudnode-cli' }
+verbose etag "2VF9WTL02AINPOS73LWDKU7BX"
+verbose GET ejs
+verbose raw, before any munging ejs
+verbose url resolving [ 'http://registry.npmjs.org/', './ejs' ]
+verbose url resolved http://registry.npmjs.org/ejs
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/ejs',
+verbose url parsed   pathname: '/ejs' }
+verbose etag "14SJH7UYUXOR6EILEFW2DPRKV"
+verbose GET twss
+verbose raw, before any munging twss
+verbose url resolving [ 'http://registry.npmjs.org/', './twss' ]
+verbose url resolved http://registry.npmjs.org/twss
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/twss',
+verbose url parsed   pathname: '/twss' }
+verbose etag "A2GYYR5ZJ2SF8F005MR1ECPOQ"
+verbose GET nodester-cli
+verbose raw, before any munging nodester-cli
+verbose url resolving [ 'http://registry.npmjs.org/', './nodester-cli' ]
+verbose url resolved http://registry.npmjs.org/nodester-cli
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/nodester-cli',
+verbose url parsed   pathname: '/nodester-cli' }
+verbose etag "C967P32EVVIODF3VO7BRTV4JM"
+verbose GET express
+verbose raw, before any munging express
+verbose url resolving [ 'http://registry.npmjs.org/', './express' ]
+verbose url resolved http://registry.npmjs.org/express
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/express',
+verbose url parsed   pathname: '/express' }
+verbose etag "5VSXNB976KX9KAZUUOV90EK0I"
+verbose GET railway
+verbose raw, before any munging railway
+verbose url resolving [ 'http://registry.npmjs.org/', './railway' ]
+verbose url resolved http://registry.npmjs.org/railway
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/railway',
+verbose url parsed   pathname: '/railway' }
+verbose etag "96BO7KHZ5CJCNBO4PZ5TQ5ZRC"
+verbose GET npm
+verbose raw, before any munging npm
+verbose url resolving [ 'http://registry.npmjs.org/', './npm' ]
+verbose url resolved http://registry.npmjs.org/npm
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/npm',
+verbose url parsed   pathname: '/npm' }
+verbose etag "9A7XH3G6BOFDWGGERK804S4U2"
+verbose response http://registry.npmjs.org/ejs
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"14SJH7UYUXOR6EILEFW2DPRKV"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:46 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag ejs from cache
+verbose GET ejs/0.6.1
+verbose raw, before any munging ejs/0.6.1
+verbose url resolving [ 'http://registry.npmjs.org/', './ejs/0.6.1' ]
+verbose url resolved http://registry.npmjs.org/ejs/0.6.1
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/ejs/0.6.1',
+verbose url parsed   pathname: '/ejs/0.6.1' }
+verbose etag "14SJH7UYUXOR6EILEFW2DPRKV"
+verbose response http://registry.npmjs.org/cloudnode-cli
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"2VF9WTL02AINPOS73LWDKU7BX"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:46 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag cloudnode-cli from cache
+verbose GET cloudnode-cli/0.2.22
+verbose raw, before any munging cloudnode-cli/0.2.22
+verbose url resolving [ 'http://registry.npmjs.org/',
+verbose url resolving   './cloudnode-cli/0.2.22' ]
+verbose url resolved http://registry.npmjs.org/cloudnode-cli/0.2.22
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/cloudnode-cli/0.2.22',
+verbose url parsed   pathname: '/cloudnode-cli/0.2.22' }
+verbose etag "2VF9WTL02AINPOS73LWDKU7BX"
+verbose response http://registry.npmjs.org/twss
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"A2GYYR5ZJ2SF8F005MR1ECPOQ"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:46 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag twss from cache
+verbose response http://registry.npmjs.org/nodester-cli
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"C967P32EVVIODF3VO7BRTV4JM"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:46 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag nodester-cli from cache
+verbose response http://registry.npmjs.org/express
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"5VSXNB976KX9KAZUUOV90EK0I"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:46 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag express from cache
+verbose GET twss/0.1.5
+verbose raw, before any munging twss/0.1.5
+verbose url resolving [ 'http://registry.npmjs.org/', './twss/0.1.5' ]
+verbose url resolved http://registry.npmjs.org/twss/0.1.5
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/twss/0.1.5',
+verbose url parsed   pathname: '/twss/0.1.5' }
+verbose etag "A2GYYR5ZJ2SF8F005MR1ECPOQ"
+verbose GET nodester-cli/0.2.42
+verbose raw, before any munging nodester-cli/0.2.42
+verbose url resolving [ 'http://registry.npmjs.org/',
+verbose url resolving   './nodester-cli/0.2.42' ]
+verbose url resolved http://registry.npmjs.org/nodester-cli/0.2.42
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/nodester-cli/0.2.42',
+verbose url parsed   pathname: '/nodester-cli/0.2.42' }
+verbose etag "C967P32EVVIODF3VO7BRTV4JM"
+verbose GET express/2.5.8
+verbose raw, before any munging express/2.5.8
+verbose url resolving [ 'http://registry.npmjs.org/', './express/2.5.8' ]
+verbose url resolved http://registry.npmjs.org/express/2.5.8
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/express/2.5.8',
+verbose url parsed   pathname: '/express/2.5.8' }
+verbose etag "5VSXNB976KX9KAZUUOV90EK0I"
+verbose response http://registry.npmjs.org/railway
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"96BO7KHZ5CJCNBO4PZ5TQ5ZRC"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:46 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag railway from cache
+verbose GET railway/0.2.11
+verbose raw, before any munging railway/0.2.11
+verbose url resolving [ 'http://registry.npmjs.org/', './railway/0.2.11' ]
+verbose url resolved http://registry.npmjs.org/railway/0.2.11
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/railway/0.2.11',
+verbose url parsed   pathname: '/railway/0.2.11' }
+verbose etag "96BO7KHZ5CJCNBO4PZ5TQ5ZRC"
+verbose response http://registry.npmjs.org/npm
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"9A7XH3G6BOFDWGGERK804S4U2"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:46 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag npm from cache
+verbose response http://registry.npmjs.org/ejs/0.6.1
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"14SJH7UYUXOR6EILEFW2DPRKV"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:46 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag ejs/0.6.1 from cache
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: '16ccc98eeeac166982927fa67eb3fca8865f6871',
+verbose bin dist     tarball: 'http://registry.npmjs.org/ejs/-/ejs-0.6.1.tgz' } ]
+silly testEngine { name: 'ejs',
+silly testEngine   description: 'Embedded JavaScript templates',
+silly testEngine   version: '0.6.1',
+silly testEngine   author: 
+silly testEngine    { name: 'TJ Holowaychuk',
+silly testEngine      email: 'tj@vision-media.ca' },
+silly testEngine   keywords: [ 'template', 'engine', 'ejs' ],
+silly testEngine   devDependencies: { mocha: '*' },
+silly testEngine   main: './lib/ejs.js',
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/Users/kenniyu/.npm/ejs/0.6.1/package/package.json',
+silly testEngine      wscript: false,
+silly testEngine      contributors: false,
+silly testEngine      serverjs: false },
+silly testEngine   _id: 'ejs@0.6.1',
+silly testEngine   dependencies: {},
+silly testEngine   engines: { node: '*' },
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true }
+verbose caching /Users/kenniyu/.npm/ejs/0.6.1/package/package.json
+verbose loadDefaults ejs@0.6.1
+verbose from cache /usr/lib/node_modules/ejs/package.json
+verbose GET npm/1.1.12
+verbose raw, before any munging npm/1.1.12
+verbose url resolving [ 'http://registry.npmjs.org/', './npm/1.1.12' ]
+verbose url resolved http://registry.npmjs.org/npm/1.1.12
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/npm/1.1.12',
+verbose url parsed   pathname: '/npm/1.1.12' }
+verbose etag "9A7XH3G6BOFDWGGERK804S4U2"
+verbose response http://registry.npmjs.org/cloudnode-cli/0.2.22
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"2VF9WTL02AINPOS73LWDKU7BX"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:46 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag cloudnode-cli/0.2.22 from cache
+verbose response http://registry.npmjs.org/twss/0.1.5
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"A2GYYR5ZJ2SF8F005MR1ECPOQ"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:46 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag twss/0.1.5 from cache
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: 'a44339e3cb0ba7fc70554a250e6213cbe27b338a',
+verbose bin dist     tarball: 'http://registry.npmjs.org/cloudnode-cli/-/cloudnode-cli-0.2.22.tgz' } ]
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: 'd4d0d547060056110e4d20bab4ae8b725ccfc1ee',
+verbose bin dist     tarball: 'http://registry.npmjs.org/twss/-/twss-0.1.5.tgz' } ]
+silly testEngine { name: 'cloudnode-cli',
+silly testEngine   description: 'A CLI tool to allow interaction with the http://cloudno.de/ platform.',
+silly testEngine   version: '0.2.22',
+silly testEngine   homepage: 'http://cloudno.de/',
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/dvbportal/cloudnode-cli.git' },
+silly testEngine   author: { name: 'Hans J Schroeder', email: 'hs@cloudno.de' },
+silly testEngine   contributors: 
+silly testEngine    [ { name: 'Dav Glass', email: 'davglass@gmail.com' },
+silly testEngine      { name: 'Chris Matthieu', email: 'chris@matthieu.us' },
+silly testEngine      { name: 'Daniel Bartlett',
+silly testEngine        email: 'dan@f-box.org',
+silly testEngine        url: 'http://danb-uk.net/' },
+silly testEngine      { name: 'Abraham Williams',
+silly testEngine        email: '4braham@gmail.com' } ],
+silly testEngine   bin: { cloudnode: 'bin/cloudnode.js' },
+silly testEngine   main: './lib/commands.js',
+silly testEngine   engines: { node: '>= 0.4.1 < 0.7.0' },
+silly testEngine   dependencies: 
+silly testEngine    { 'cloudnode-api': '0.2.22',
+silly testEngine      colors: '0.3.0',
+silly testEngine      iniparser: '1.0.1' },
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/Users/kenniyu/.npm/cloudnode-cli/0.2.22/package/package.json',
+silly testEngine      wscript: false,
+silly testEngine      contributors: false,
+silly testEngine      serverjs: false },
+silly testEngine   _id: 'cloudnode-cli@0.2.22',
+silly testEngine   devDependencies: {},
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true }
+verbose caching /Users/kenniyu/.npm/cloudnode-cli/0.2.22/package/package.json
+verbose loadDefaults cloudnode-cli@0.2.22
+silly testEngine { name: 'twss',
+silly testEngine   version: '0.1.5',
+silly testEngine   description: 'That\'s what she said classifier',
+silly testEngine   keywords: [ 'machine learning', 'classifier', 'twss', 'ai' ],
+silly testEngine   author: 
+silly testEngine    { name: 'Daniel Rapp',
+silly testEngine      email: 'danielrappt@gmail.com' },
+silly testEngine   bin: { twss: './bin/twss' },
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/DanielRapp/twss.js.git' },
+silly testEngine   main: 'index',
+silly testEngine   dependencies: { optimist: '0.3', colors: '*' },
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/Users/kenniyu/.npm/twss/0.1.5/package/package.json',
+silly testEngine      wscript: false,
+silly testEngine      contributors: false,
+silly testEngine      serverjs: false },
+silly testEngine   _id: 'twss@0.1.5',
+silly testEngine   devDependencies: {},
+silly testEngine   engines: { node: '*' },
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true }
+verbose caching /Users/kenniyu/.npm/twss/0.1.5/package/package.json
+verbose loadDefaults twss@0.1.5
+verbose response http://registry.npmjs.org/nodester-cli/0.2.42
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"C967P32EVVIODF3VO7BRTV4JM"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:47 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag nodester-cli/0.2.42 from cache
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: '268289ff0938e1b1cc89338ba83f326dddaf8f9d',
+verbose bin dist     tarball: 'http://registry.npmjs.org/nodester-cli/-/nodester-cli-0.2.42.tgz' } ]
+silly testEngine { name: 'nodester-cli',
+silly testEngine   description: 'A CLI tool to allow interaction with the http://nodester.com/ platform.',
+silly testEngine   version: '0.2.42',
+silly testEngine   homepage: 'http://nodester.com/',
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/nodester/nodester-cli.git' },
+silly testEngine   author: 
+silly testEngine    { name: 'Daniel Bartlett',
+silly testEngine      email: 'dan@f-box.org',
+silly testEngine      url: 'http://danb-uk.net/' },
+silly testEngine   contributors: 
+silly testEngine    [ { name: 'Dav Glass', email: 'davglass@gmail.com' },
+silly testEngine      { name: 'Chris Matthieu', email: 'chris@matthieu.us' },
+silly testEngine      { name: 'Abraham Williams',
+silly testEngine        email: '4braham@gmail.com' },
+silly testEngine      { name: 'Contra', email: 'contra@australia.edu' },
+silly testEngine      { name: 'Marcos Oliveira',
+silly testEngine        email: 'marcosvm@gmail.com' } ],
+silly testEngine   preferGlobal: 'true',
+silly testEngine   bin: { nodester: 'bin/nodester.js' },
+silly testEngine   main: './lib/commands.js',
+silly testEngine   engines: { node: '*' },
+silly testEngine   dependencies: 
+silly testEngine    { 'nodester-api': '>= 0.1.23',
+silly testEngine      colors: '0.3.0',
+silly testEngine      iniparser: '1.0.1' },
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/Users/kenniyu/.npm/nodester-cli/0.2.42/package/package.json',
+silly testEngine      wscript: false,
+silly testEngine      contributors: false,
+silly testEngine      serverjs: false },
+silly testEngine   _id: 'nodester-cli@0.2.42',
+silly testEngine   devDependencies: {},
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true }
+verbose caching /Users/kenniyu/.npm/nodester-cli/0.2.42/package/package.json
+verbose loadDefaults nodester-cli@0.2.42
+verbose response http://registry.npmjs.org/railway/0.2.11
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"96BO7KHZ5CJCNBO4PZ5TQ5ZRC"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:47 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag railway/0.2.11 from cache
+verbose response http://registry.npmjs.org/express/2.5.8
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"5VSXNB976KX9KAZUUOV90EK0I"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:47 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag express/2.5.8 from cache
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: 'f166b55d4e8c6d2307ef88ad1768209613f7452a',
+verbose bin dist     tarball: 'http://registry.npmjs.org/express/-/express-2.5.8.tgz' } ]
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: '2f08d3252ffe5f6a8e324ed5ef61eb7d2ce21141',
+verbose bin dist     tarball: 'http://registry.npmjs.org/railway/-/railway-0.2.11.tgz' } ]
+silly testEngine { name: 'express',
+silly testEngine   description: 'Sinatra inspired web development framework',
+silly testEngine   version: '2.5.8',
+silly testEngine   author: 
+silly testEngine    { name: 'TJ Holowaychuk',
+silly testEngine      email: 'tj@vision-media.ca' },
+silly testEngine   contributors: 
+silly testEngine    [ { name: 'TJ Holowaychuk',
+silly testEngine        email: 'tj@vision-media.ca' },
+silly testEngine      { name: 'Aaron Heckmann',
+silly testEngine        email: 'aaron.heckmann+github@gmail.com' },
+silly testEngine      { name: 'Ciaran Jessup', email: 'ciaranj@gmail.com' },
+silly testEngine      { name: 'Guillermo Rauch', email: 'rauchg@gmail.com' } ],
+silly testEngine   dependencies: 
+silly testEngine    { connect: '1.x',
+silly testEngine      mime: '1.2.4',
+silly testEngine      qs: '0.4.x',
+silly testEngine      mkdirp: '0.3.0' },
+silly testEngine   devDependencies: 
+silly testEngine    { 'connect-form': '0.2.1',
+silly testEngine      ejs: '0.4.2',
+silly testEngine      expresso: '0.9.2',
+silly testEngine      hamljs: '0.6.x',
+silly testEngine      jade: '0.16.2',
+silly testEngine      stylus: '0.13.0',
+silly testEngine      should: '0.3.2',
+silly testEngine      'express-messages': '0.0.2',
+silly testEngine      'node-markdown': '>= 0.0.1',
+silly testEngine      'connect-redis': '>= 0.0.1' },
+silly testEngine   keywords: [ 'framework', 'sinatra', 'web', 'rest', 'restful' ],
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/visionmedia/express.git' },
+silly testEngine   main: 'index',
+silly testEngine   bin: { express: './bin/express' },
+silly testEngine   scripts: { test: 'make test', prepublish: 'npm prune' },
+silly testEngine   engines: { node: '>= 0.4.1 < 0.7.0' },
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/Users/kenniyu/.npm/express/2.5.8/package/package.json',
+silly testEngine      wscript: false,
+silly testEngine      contributors: false,
+silly testEngine      serverjs: false },
+silly testEngine   _id: 'express@2.5.8',
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true }
+verbose caching /Users/kenniyu/.npm/express/2.5.8/package/package.json
+verbose loadDefaults express@2.5.8
+silly testEngine { name: 'railway',
+silly testEngine   version: '0.2.11',
+silly testEngine   author: { name: 'Anatoliy Chakkaev' },
+silly testEngine   description: 'RailwayJS - Ruby-on-Rails inspired MVC web framework, fully ExpressJS compatible',
+silly testEngine   keywords: 
+silly testEngine    [ 'mvc',
+silly testEngine      'web-framework',
+silly testEngine      'rails',
+silly testEngine      'ruby-on-rails',
+silly testEngine      'express',
+silly testEngine      'railway' ],
+silly testEngine   homepage: 'http://railwayjs.com',
+silly testEngine   engines: [ 'node >= 0.4.0', node: ' >= 0.4.0' ],
+silly testEngine   main: 'lib/onrailway',
+silly testEngine   bin: { railway: 'bin/railway', rw: 'bin/railway' },
+silly testEngine   dependencies: 
+silly testEngine    { jugglingdb: '>= 0.1.3',
+silly testEngine      yaml: '>= 0.1.2',
+silly testEngine      'coffee-script': '>= 1.1.1',
+silly testEngine      'ejs-ext': '>= 0.0.8',
+silly testEngine      'jade-ext': '>= 0.0.5',
+silly testEngine      'railway-routes': '>= 0.0.4',
+silly testEngine      express: '>= 2.2.2' },
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/1602/express-on-railway.git' },
+silly testEngine   devDependencies: { nodeunit: '*' },
+silly testEngine   scripts: { test: './support/nodeunit/bin/nodeunit test' },
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/Users/kenniyu/.npm/railway/0.2.11/package/package.json',
+silly testEngine      wscript: false,
+silly testEngine      contributors: false,
+silly testEngine      serverjs: false },
+silly testEngine   _id: 'railway@0.2.11',
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true }
+verbose caching /Users/kenniyu/.npm/railway/0.2.11/package/package.json
+verbose loadDefaults railway@0.2.11
+verbose response http://registry.npmjs.org/npm/1.1.12
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"9A7XH3G6BOFDWGGERK804S4U2"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:47 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag npm/1.1.12 from cache
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: '01f392bb606045de99078e1efe37acdde05101aa',
+verbose bin dist     tarball: 'http://registry.npmjs.org/npm/-/npm-1.1.12.tgz' } ]
+silly testEngine { name: 'npm',
+silly testEngine   publishConfig: { 'proprietary-attribs': false },
+silly testEngine   description: 'A package manager for node',
+silly testEngine   keywords: 
+silly testEngine    [ 'package manager',
+silly testEngine      'modules',
+silly testEngine      'install',
+silly testEngine      'package.json' ],
+silly testEngine   version: '1.1.12',
+silly testEngine   preferGlobal: true,
+silly testEngine   config: { publishtest: false },
+silly testEngine   homepage: 'http://npmjs.org/',
+silly testEngine   author: 
+silly testEngine    { name: 'Isaac Z. Schlueter',
+silly testEngine      email: 'i@izs.me',
+silly testEngine      url: 'http://blog.izs.me' },
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/isaacs/npm.git' },
+silly testEngine   bugs: 
+silly testEngine    { email: 'npm-@googlegroups.com',
+silly testEngine      url: 'http://github.com/isaacs/npm/issues' },
+silly testEngine   directories: 
+silly testEngine    { doc: './doc',
+silly testEngine      man: './man',
+silly testEngine      lib: './lib',
+silly testEngine      bin: './bin' },
+silly testEngine   main: './lib/npm.js',
+silly testEngine   bin: { npm: './bin/npm-cli.js' },
+silly testEngine   dependencies: 
+silly testEngine    { semver: '1',
+silly testEngine      ini: '1',
+silly testEngine      slide: '1',
+silly testEngine      abbrev: '1',
+silly testEngine      'graceful-fs': '~1.1.1',
+silly testEngine      minimatch: '0',
+silly testEngine      nopt: '1',
+silly testEngine      'node-uuid': '~1.3',
+silly testEngine      'proto-list': '1',
+silly testEngine      rimraf: '2',
+silly testEngine      request: '~2.9',
+silly testEngine      which: '1',
+silly testEngine      tar: '~0.1.12',
+silly testEngine      fstream: '~0.1.13',
+silly testEngine      'block-stream': '*',
+silly testEngine      inherits: '1',
+silly testEngine      mkdirp: '0.3',
+silly testEngine      read: '0',
+silly testEngine      'lru-cache': '1',
+silly testEngine      'node-gyp': '~0.3.4' },
+silly testEngine   bundleDependencies: 
+silly testEngine    [ 'slide',
+silly testEngine      'ini',
+silly testEngine      'semver',
+silly testEngine      'abbrev',
+silly testEngine      'graceful-fs',
+silly testEngine      'minimatch',
+silly testEngine      'nopt',
+silly testEngine      'node-uuid',
+silly testEngine      'rimraf',
+silly testEngine      'request',
+silly testEngine      'proto-list',
+silly testEngine      'which',
+silly testEngine      'tar',
+silly testEngine      'fstream',
+silly testEngine      'block-stream',
+silly testEngine      'inherits',
+silly testEngine      'mkdirp',
+silly testEngine      'fast-list',
+silly testEngine      'read',
+silly testEngine      'lru-cache',
+silly testEngine      'node-gyp' ],
+silly testEngine   devDependencies: { ronn: 'https://github.com/isaacs/ronnjs/tarball/master' },
+silly testEngine   engines: { node: '0.6 || 0.7 || 0.8', npm: '1' },
+silly testEngine   scripts: 
+silly testEngine    { test: 'node ./test/run.js',
+silly testEngine      prepublish: 'npm prune; rm -rf node_modules/*/{test,example,bench}*; make -j4 doc',
+silly testEngine      dumpconf: 'env | grep npm | sort | uniq' },
+silly testEngine   licenses: 
+silly testEngine    [ { type: 'MIT +no-false-attribs',
+silly testEngine        url: 'http://github.com/isaacs/npm/raw/master/LICENSE' } ],
+silly testEngine   _npmJsonOpts: 
+silly testEngine    { file: '/Users/kenniyu/.npm/npm/1.1.12/package/package.json',
+silly testEngine      wscript: false,
+silly testEngine      serverjs: false,
+silly testEngine      contributors: 
+silly testEngine       [ 'Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)',
+silly testEngine         'Steve Steiner <ssteinerX@gmail.com> (http://websaucesoftware.com/blog/)',
+silly testEngine         'Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com/)',
+silly testEngine         'Aaron Blohowiak <aaron.blohowiak@gmail.com> (http://aaronblohowiak.com/)',
+silly testEngine         'Martyn Smith <martyn@dollyfish.net.nz> (http://dollyfish.net.nz/)',
+silly testEngine         'Mathias Pettersson <mape@mape.me> (http://mape.me/)',
+silly testEngine         'Brian Hammond <brian@fictorial.com> (http://fictorial.com/)',
+silly testEngine         'Charlie Robbins <charlie.robbins@gmail.com> (http://www.charlierobbins.com/)',
+silly testEngine         'Francisco Treacy <francisco.treacy@gmail.com> (http://franciscotreacy.com/)',
+silly testEngine         'Cliffano Subagio <cliffano@gmail.com> (http://blog.cliffano.com/)',
+silly testEngine         'Christian Eager <christian.eager@nokia.com> (http://perpenduum.com)',
+silly testEngine         'Dav Glass <davglass@gmail.com> (http://blog.davglass.com)',
+silly testEngine         'Alex K. Wolfe <alexkwolfe@gmail.com>',
+silly testEngine         'James Sanders <jimmyjazz14@gmail.com> (http://james-sanders.com/)',
+silly testEngine         'Reid Burke <me@reidburke.com> (http://reidburke.com/)',
+silly testEngine         'Arlo Breault <arlolra@gmail.com> (http://thoughtherder.com/)',
+silly testEngine         'Timo Derstappen <teemow@gmail.com> (http://teemow.com)',
+silly testEngine         'Bradley Meck <bradley.meck@gmail.com>',
+silly testEngine         'Bart Teeuwisse <bart.teeuwisse@thecodemill.biz> (http://thecodemill.biz/)',
+silly testEngine         'Ben Noordhuis <info@bnoordhuis.nl> (http://bnoordhuis.nl/)',
+silly testEngine         'Tor Valamo <tor.valamo@gmail.com> (http://www.magnimedia.no/)',
+silly testEngine         'Whyme.Lyu <5longluna@gmail.com> (http://whyme.kuantu.com/)',
+silly testEngine         'Olivier Melcher <olivier.melcher@gmail.com>',
+silly testEngine         'Tomaž Muraus <kami@k5-storitve.net> (http://www.tomaz-muraus.info)',
+silly testEngine         'Evan Meagher <evan.meagher@gmail.com> (http://evanmeagher.net/)',
+silly testEngine         'Orlando Vazquez <ovazquez@gmail.com> (http://2wycked.net/)',
+silly testEngine         'George Miroshnykov <gmiroshnykov@lohika.com>',
+silly testEngine         'Geoff Flarity (http://ca.linkedin.com/pub/geoff-flarity/a/536/43a)',
+silly testEngine         'Pete Kruckenberg <pete@kruckenberg.com>',
+silly testEngine         'Laurie Harper <laurie@holoweb.net> (http://laurie.holoweb.net/)',
+silly testEngine         'Chris Wong <chris@chriswongstudio.com>',
+silly testEngine         'Max Goodman <c@chromacode.com> (http://chromacode.com/)',
+silly testEngine         'Scott Bronson <brons_github@rinspin.com>',
+silly testEngine         'Federico Romero <federomero@gmail.com>',
+silly testEngine         'Visnu Pitiyanuvath <visnupx@gmail.com> (http://visnup.com)',
+silly testEngine         'Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com/)',
+silly testEngine         'Mark Cahill <mark@tiemonster.info> (http://www.tiemonster.info/)',
+silly testEngine         'Zearin <zearin@gonk.net>',
+silly testEngine         'Iain Sproat <iainsproat@gmail.com>',
+silly testEngine         'Trent Mick <trentm@gmail.com> (http://trentm.com/)',
+silly testEngine         'Felix Geisendörfer <felix@debuggable.com> (http://www.debuggable.com/)',
+silly testEngine         'Conny Brunnkvist <cbrunnkvist@gmail.com> (http://twitter.com/connyb)',
+silly testEngine         'Will Elwood <w.elwood08@gmail.com> (https://github.com/welwood08)',
+silly testEngine         'Oleg Efimov <efimovov@gmail.com> (http://sannis.ru)',
+silly testEngine         'Martin Cooper <mfncooper@gmail.com>',
+silly testEngine         'Jameson Little <t.jameson.little@gmail.com>',
+silly testEngine         'cspotcode <cspotcode@gmail.com>',
+silly testEngine         'Maciej Małecki <maciej.malecki@notimplemented.org>',
+silly testEngine         'Stephen Sugden <glurgle@gmail.com>',
+silly testEngine         'Gautham Pai <buzypi@gmail.com>',
+silly testEngine         'David Trejo <david.daniel.trejo@gmail.com>',
+silly testEngine         'Paul Vorbach <paul@vorb.de>',
+silly testEngine         'George Ornbo <george@shapeshed.com>',
+silly testEngine         'Tim Oxley <secoif@gmail.com>',
+silly testEngine         'Tyler Green <tyler.green2@gmail.com>',
+silly testEngine         'atomizer <danila.gerasimov@gmail.com>',
+silly testEngine         'Rod Vagg <rod@vagg.org>',
+silly testEngine         'Christian Howe <coderarity@gmail.com>',
+silly testEngine         'Andrew Lunny <alunny@gmail.com>',
+silly testEngine         'Henrik Hodne <dvyjones@binaryhex.com>',
+silly testEngine         'Adam Blackburn <regality@gmail.com>',
+silly testEngine         'Kris Windham <kriswindham@gmail.com>' ] },
+silly testEngine   _id: 'npm@1.1.12',
+silly testEngine   contributors: 
+silly testEngine    [ { name: 'Isaac Z. Schlueter',
+silly testEngine        email: 'i@izs.me',
+silly testEngine        url: 'http://blog.izs.me/' },
+silly testEngine      { name: 'Steve Steiner',
+silly testEngine        email: 'ssteinerX@gmail.com',
+silly testEngine        url: 'http://websaucesoftware.com/blog/' },
+silly testEngine      { name: 'Mikeal Rogers',
+silly testEngine        email: 'mikeal.rogers@gmail.com',
+silly testEngine        url: 'http://www.mikealrogers.com/' },
+silly testEngine      { name: 'Aaron Blohowiak',
+silly testEngine        email: 'aaron.blohowiak@gmail.com',
+silly testEngine        url: 'http://aaronblohowiak.com/' },
+silly testEngine      { name: 'Martyn Smith',
+silly testEngine        email: 'martyn@dollyfish.net.nz',
+silly testEngine        url: 'http://dollyfish.net.nz/' },
+silly testEngine      { name: 'Mathias Pettersson',
+silly testEngine        email: 'mape@mape.me',
+silly testEngine        url: 'http://mape.me/' },
+silly testEngine      { name: 'Brian Hammond',
+silly testEngine        email: 'brian@fictorial.com',
+silly testEngine        url: 'http://fictorial.com/' },
+silly testEngine      { name: 'Charlie Robbins',
+silly testEngine        email: 'charlie.robbins@gmail.com',
+silly testEngine        url: 'http://www.charlierobbins.com/' },
+silly testEngine      { name: 'Francisco Treacy',
+silly testEngine        email: 'francisco.treacy@gmail.com',
+silly testEngine        url: 'http://franciscotreacy.com/' },
+silly testEngine      { name: 'Cliffano Subagio',
+silly testEngine        email: 'cliffano@gmail.com',
+silly testEngine        url: 'http://blog.cliffano.com/' },
+silly testEngine      { name: 'Christian Eager',
+silly testEngine        email: 'christian.eager@nokia.com',
+silly testEngine        url: 'http://perpenduum.com' },
+silly testEngine      { name: 'Dav Glass',
+silly testEngine        email: 'davglass@gmail.com',
+silly testEngine        url: 'http://blog.davglass.com' },
+silly testEngine      { name: 'Alex K. Wolfe',
+silly testEngine        email: 'alexkwolfe@gmail.com' },
+silly testEngine      { name: 'James Sanders',
+silly testEngine        email: 'jimmyjazz14@gmail.com',
+silly testEngine        url: 'http://james-sanders.com/' },
+silly testEngine      { name: 'Reid Burke',
+silly testEngine        email: 'me@reidburke.com',
+silly testEngine        url: 'http://reidburke.com/' },
+silly testEngine      { name: 'Arlo Breault',
+silly testEngine        email: 'arlolra@gmail.com',
+silly testEngine        url: 'http://thoughtherder.com/' },
+silly testEngine      { name: 'Timo Derstappen',
+silly testEngine        email: 'teemow@gmail.com',
+silly testEngine        url: 'http://teemow.com' },
+silly testEngine      { name: 'Bradley Meck',
+silly testEngine        email: 'bradley.meck@gmail.com' },
+silly testEngine      { name: 'Bart Teeuwisse',
+silly testEngine        email: 'bart.teeuwisse@thecodemill.biz',
+silly testEngine        url: 'http://thecodemill.biz/' },
+silly testEngine      { name: 'Ben Noordhuis',
+silly testEngine        email: 'info@bnoordhuis.nl',
+silly testEngine        url: 'http://bnoordhuis.nl/' },
+silly testEngine      { name: 'Tor Valamo',
+silly testEngine        email: 'tor.valamo@gmail.com',
+silly testEngine        url: 'http://www.magnimedia.no/' },
+silly testEngine      { name: 'Whyme.Lyu',
+silly testEngine        email: '5longluna@gmail.com',
+silly testEngine        url: 'http://whyme.kuantu.com/' },
+silly testEngine      { name: 'Olivier Melcher',
+silly testEngine        email: 'olivier.melcher@gmail.com' },
+silly testEngine      { name: 'Tomaž Muraus',
+silly testEngine        email: 'kami@k5-storitve.net',
+silly testEngine        url: 'http://www.tomaz-muraus.info' },
+silly testEngine      { name: 'Evan Meagher',
+silly testEngine        email: 'evan.meagher@gmail.com',
+silly testEngine        url: 'http://evanmeagher.net/' },
+silly testEngine      { name: 'Orlando Vazquez',
+silly testEngine        email: 'ovazquez@gmail.com',
+silly testEngine        url: 'http://2wycked.net/' },
+silly testEngine      { name: 'George Miroshnykov',
+silly testEngine        email: 'gmiroshnykov@lohika.com' },
+silly testEngine      { name: 'Geoff Flarity',
+silly testEngine        url: 'http://ca.linkedin.com/pub/geoff-flarity/a/536/43a' },
+silly testEngine      { name: 'Pete Kruckenberg',
+silly testEngine        email: 'pete@kruckenberg.com' },
+silly testEngine      { name: 'Laurie Harper',
+silly testEngine        email: 'laurie@holoweb.net',
+silly testEngine        url: 'http://laurie.holoweb.net/' },
+silly testEngine      { name: 'Chris Wong',
+silly testEngine        email: 'chris@chriswongstudio.com' },
+silly testEngine      { name: 'Max Goodman',
+silly testEngine        email: 'c@chromacode.com',
+silly testEngine        url: 'http://chromacode.com/' },
+silly testEngine      { name: 'Scott Bronson',
+silly testEngine        email: 'brons_github@rinspin.com' },
+silly testEngine      { name: 'Federico Romero',
+silly testEngine        email: 'federomero@gmail.com' },
+silly testEngine      { name: 'Visnu Pitiyanuvath',
+silly testEngine        email: 'visnupx@gmail.com',
+silly testEngine        url: 'http://visnup.com' },
+silly testEngine      { name: 'Irakli Gozalishvili',
+silly testEngine        email: 'rfobic@gmail.com',
+silly testEngine        url: 'http://jeditoolkit.com/' },
+silly testEngine      { name: 'Mark Cahill',
+silly testEngine        email: 'mark@tiemonster.info',
+silly testEngine        url: 'http://www.tiemonster.info/' },
+silly testEngine      { name: 'Zearin', email: 'zearin@gonk.net' },
+silly testEngine      { name: 'Iain Sproat', email: 'iainsproat@gmail.com' },
+silly testEngine      { name: 'Trent Mick',
+silly testEngine        email: 'trentm@gmail.com',
+silly testEngine        url: 'http://trentm.com/' },
+silly testEngine      { name: 'Felix Geisendörfer',
+silly testEngine        email: 'felix@debuggable.com',
+silly testEngine        url: 'http://www.debuggable.com/' },
+silly testEngine      { name: 'Conny Brunnkvist',
+silly testEngine        email: 'cbrunnkvist@gmail.com',
+silly testEngine        url: 'http://twitter.com/connyb' },
+silly testEngine      { name: 'Will Elwood',
+silly testEngine        email: 'w.elwood08@gmail.com',
+silly testEngine        url: 'https://github.com/welwood08' },
+silly testEngine      { name: 'Oleg Efimov',
+silly testEngine        email: 'efimovov@gmail.com',
+silly testEngine        url: 'http://sannis.ru' },
+silly testEngine      { name: 'Martin Cooper',
+silly testEngine        email: 'mfncooper@gmail.com' },
+silly testEngine      { name: 'Jameson Little',
+silly testEngine        email: 't.jameson.little@gmail.com' },
+silly testEngine      { name: 'cspotcode', email: 'cspotcode@gmail.com' },
+silly testEngine      { name: 'Maciej Małecki',
+silly testEngine        email: 'maciej.malecki@notimplemented.org' },
+silly testEngine      { name: 'Stephen Sugden', email: 'glurgle@gmail.com' },
+silly testEngine      { name: 'Gautham Pai', email: 'buzypi@gmail.com' },
+silly testEngine      { name: 'David Trejo',
+silly testEngine        email: 'david.daniel.trejo@gmail.com' },
+silly testEngine      { name: 'Paul Vorbach', email: 'paul@vorb.de' },
+silly testEngine      { name: 'George Ornbo',
+silly testEngine        email: 'george@shapeshed.com' },
+silly testEngine      { name: 'Tim Oxley', email: 'secoif@gmail.com' },
+silly testEngine      { name: 'Tyler Green',
+silly testEngine        email: 'tyler.green2@gmail.com' },
+silly testEngine      { name: 'atomizer',
+silly testEngine        email: 'danila.gerasimov@gmail.com' },
+silly testEngine      { name: 'Rod Vagg', email: 'rod@vagg.org' },
+silly testEngine      { name: 'Christian Howe',
+silly testEngine        email: 'coderarity@gmail.com' },
+silly testEngine      { name: 'Andrew Lunny', email: 'alunny@gmail.com' },
+silly testEngine      { name: 'Henrik Hodne',
+silly testEngine        email: 'dvyjones@binaryhex.com' },
+silly testEngine      { name: 'Adam Blackburn',
+silly testEngine        email: 'regality@gmail.com' },
+silly testEngine      { name: 'Kris Windham',
+silly testEngine        email: 'kriswindham@gmail.com' } ],
+silly testEngine   _engineSupported: false,
+silly testEngine   _npmVersion: '1.0.17',
+silly testEngine   _nodeVersion: 'v0.4.11',
+silly testEngine   _defaultsLoaded: true,
+silly testEngine   man: 
+silly testEngine    [ 'man/man1/adduser.1',
+silly testEngine      'man/man1/author.1',
+silly testEngine      'man/man1/bin.1',
+silly testEngine      'man/man1/bugs.1',
+silly testEngine      'man/man1/build.1',
+silly testEngine      'man/man1/bundle.1',
+silly testEngine      'man/man1/cache.1',
+silly testEngine      'man/man1/changelog.1',
+silly testEngine      'man/man1/coding-style.1',
+silly testEngine      'man/man1/completion.1',
+silly testEngine      'man/man1/config.1',
+silly testEngine      'man/man1/deprecate.1',
+silly testEngine      'man/man1/developers.1',
+silly testEngine      'man/man1/disputes.1',
+silly testEngine      'man/man1/docs.1',
+silly testEngine      'man/man1/edit.1',
+silly testEngine      'man/man1/explore.1',
+silly testEngine      'man/man1/faq.1',
+silly testEngine      'man/man1/find.1',
+silly testEngine      'man/man1/folders.1',
+silly testEngine      'man/man1/get.1',
+silly testEngine      'man/man1/global.1',
+silly testEngine      'man/man1/help-search.1',
+silly testEngine      'man/man1/help.1',
+silly testEngine      'man/man1/home.1',
+silly testEngine      'man/man1/index.1',
+silly testEngine      'man/man1/init.1',
+silly testEngine      'man/man1/install.1',
+silly testEngine      'man/man1/json.1',
+silly testEngine      'man/man1/link.1',
+silly testEngine      'man/man1/list.1',
+silly testEngine      'man/man1/ln.1',
+silly testEngine      'man/man1/ls.1',
+silly testEngine      'man/man1/npm.1',
+silly testEngine      'man/man1/outdated.1',
+silly testEngine      'man/man1/owner.1',
+silly testEngine      'man/man1/pack.1',
+silly testEngine      'man/man1/prefix.1',
+silly testEngine      'man/man1/prune.1',
+silly testEngine      'man/man1/publish.1',
+silly testEngine      'man/man1/README.1',
+silly testEngine      'man/man1/rebuild.1',
+silly testEngine      'man/man1/registry.1',
+silly testEngine      'man/man1/removing-npm.1',
+silly testEngine      'man/man1/restart.1',
+silly testEngine      'man/man1/rm.1',
+silly testEngine      'man/man1/root.1',
+silly testEngine      'man/man1/run-script.1',
+silly testEngine      'man/man1/scripts.1',
+silly testEngine      'man/man1/search.1',
+silly testEngine      'man/man1/semver.1',
+silly testEngine      'man/man1/set.1',
+silly testEngine      'man/man1/shrinkwrap.1',
+silly testEngine      'man/man1/star.1',
+silly testEngine      'man/man1/start.1',
+silly testEngine      'man/man1/stop.1',
+silly testEngine      'man/man1/submodule.1',
+silly testEngine      'man/man1/tag.1',
+silly testEngine      'man/man1/test.1',
+silly testEngine      'man/man1/uninstall.1',
+silly testEngine      'man/man1/unpublish.1',
+silly testEngine      'man/man1/update.1',
+silly testEngine      'man/man1/version.1',
+silly testEngine      'man/man1/view.1',
+silly testEngine      'man/man1/whoami.1',
+silly testEngine      'man/man3/author.3',
+silly testEngine      'man/man3/bin.3',
+silly testEngine      'man/man3/bugs.3',
+silly testEngine      'man/man3/commands.3',
+silly testEngine      'man/man3/config.3',
+silly testEngine      'man/man3/deprecate.3',
+silly testEngine      'man/man3/docs.3',
+silly testEngine      'man/man3/edit.3',
+silly testEngine      'man/man3/explore.3',
+silly testEngine      'man/man3/find.3',
+silly testEngine      'man/man3/get.3',
+silly testEngine      'man/man3/help-search.3',
+silly testEngine      'man/man3/home.3',
+silly testEngine      'man/man3/init.3',
+silly testEngine      'man/man3/install.3',
+silly testEngine      'man/man3/link.3',
+silly testEngine      'man/man3/list.3',
+silly testEngine      'man/man3/ln.3',
+silly testEngine      'man/man3/load.3',
+silly testEngine      'man/man3/ls.3',
+silly testEngine      'man/man3/npm.3',
+silly testEngine      'man/man3/outdated.3',
+silly testEngine      'man/man3/owner.3',
+silly testEngine      'man/man3/pack.3',
+silly testEngine      'man/man3/prefix.3',
+silly testEngine      'man/man3/prune.3',
+silly testEngine      'man/man3/publish.3',
+silly testEngine      'man/man3/rebuild.3',
+silly testEngine      'man/man3/restart.3',
+silly testEngine      'man/man3/rm.3',
+silly testEngine      'man/man3/root.3',
+silly testEngine      'man/man3/run-script.3',
+silly testEngine      'man/man3/search.3',
+silly testEngine      'man/man3/set.3',
+silly testEngine      'man/man3/shrinkwrap.3',
+silly testEngine      'man/man3/start.3',
+silly testEngine      'man/man3/stop.3',
+silly testEngine      'man/man3/submodule.3',
+silly testEngine      'man/man3/tag.3',
+silly testEngine      'man/man3/test.3',
+silly testEngine      'man/man3/uninstall.3',
+silly testEngine      'man/man3/unpublish.3',
+silly testEngine      'man/man3/update.3',
+silly testEngine      'man/man3/version.3',
+silly testEngine      'man/man3/view.3',
+silly testEngine      'man/man3/whoami.3' ] }
+verbose caching /Users/kenniyu/.npm/npm/1.1.12/package/package.json
+verbose loadDefaults npm@1.1.12
+info outdated updating [ [ '/usr/lib', 'cloudnode-cli', '0.2.20', '0.2.22' ],
+info outdated updating   [ '/usr/lib', 'twss', '0.1.4', '0.1.5' ],
+info outdated updating   [ '/usr/lib', 'nodester-cli', '0.2.34', '0.2.42' ],
+info outdated updating   [ '/usr/lib', 'express', '2.5.2', '2.5.8' ],
+info outdated updating   [ '/usr/lib', 'railway', '0.1.8', '0.2.11' ],
+info outdated updating   [ '/usr/lib', 'npm', '1.0.17', '1.1.12' ] ]
+verbose install(where, what) [ '/usr/lib', [ 'cloudnode-cli@0.2.22' ] ]
+verbose install(where, what) [ '/usr/lib', [ 'twss@0.1.5' ] ]
+verbose install(where, what) [ '/usr/lib', [ 'nodester-cli@0.2.42' ] ]
+verbose install(where, what) [ '/usr/lib', [ 'express@2.5.8' ] ]
+verbose install(where, what) [ '/usr/lib', [ 'railway@0.2.11' ] ]
+verbose install(where, what) [ '/usr/lib', [ 'npm@1.1.12' ] ]
+verbose into /usr/lib [ 'cloudnode-cli@0.2.22' ]
+verbose cache add [ 'cloudnode-cli@0.2.22', null ]
+info addNamed [ 'cloudnode-cli', '0.2.22' ]
+verbose addNamed [ '0.2.22', '0.2.22' ]
+verbose into /usr/lib [ 'twss@0.1.5' ]
+verbose cache add [ 'twss@0.1.5', null ]
+info addNamed [ 'twss', '0.1.5' ]
+verbose addNamed [ '0.1.5', '0.1.5' ]
+verbose into /usr/lib [ 'nodester-cli@0.2.42' ]
+verbose cache add [ 'nodester-cli@0.2.42', null ]
+info addNamed [ 'nodester-cli', '0.2.42' ]
+verbose addNamed [ '0.2.42', '0.2.42' ]
+verbose into /usr/lib [ 'express@2.5.8' ]
+verbose cache add [ 'express@2.5.8', null ]
+info addNamed [ 'express', '2.5.8' ]
+verbose addNamed [ '2.5.8', '2.5.8' ]
+verbose into /usr/lib [ 'railway@0.2.11' ]
+verbose cache add [ 'railway@0.2.11', null ]
+info addNamed [ 'railway', '0.2.11' ]
+verbose addNamed [ '0.2.11', '0.2.11' ]
+verbose into /usr/lib [ 'npm@1.1.12' ]
+verbose cache add [ 'npm@1.1.12', null ]
+info addNamed [ 'npm', '1.1.12' ]
+verbose addNamed [ '1.1.12', '1.1.12' ]
+verbose GET cloudnode-cli/0.2.22
+verbose raw, before any munging cloudnode-cli/0.2.22
+verbose url resolving [ 'http://registry.npmjs.org/',
+verbose url resolving   './cloudnode-cli/0.2.22' ]
+verbose url resolved http://registry.npmjs.org/cloudnode-cli/0.2.22
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/cloudnode-cli/0.2.22',
+verbose url parsed   pathname: '/cloudnode-cli/0.2.22' }
+verbose etag "2VF9WTL02AINPOS73LWDKU7BX"
+verbose GET twss/0.1.5
+verbose raw, before any munging twss/0.1.5
+verbose url resolving [ 'http://registry.npmjs.org/', './twss/0.1.5' ]
+verbose url resolved http://registry.npmjs.org/twss/0.1.5
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/twss/0.1.5',
+verbose url parsed   pathname: '/twss/0.1.5' }
+verbose etag "A2GYYR5ZJ2SF8F005MR1ECPOQ"
+verbose GET nodester-cli/0.2.42
+verbose raw, before any munging nodester-cli/0.2.42
+verbose url resolving [ 'http://registry.npmjs.org/',
+verbose url resolving   './nodester-cli/0.2.42' ]
+verbose url resolved http://registry.npmjs.org/nodester-cli/0.2.42
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/nodester-cli/0.2.42',
+verbose url parsed   pathname: '/nodester-cli/0.2.42' }
+verbose etag "C967P32EVVIODF3VO7BRTV4JM"
+verbose GET express/2.5.8
+verbose raw, before any munging express/2.5.8
+verbose url resolving [ 'http://registry.npmjs.org/', './express/2.5.8' ]
+verbose url resolved http://registry.npmjs.org/express/2.5.8
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/express/2.5.8',
+verbose url parsed   pathname: '/express/2.5.8' }
+verbose etag "5VSXNB976KX9KAZUUOV90EK0I"
+verbose GET railway/0.2.11
+verbose raw, before any munging railway/0.2.11
+verbose url resolving [ 'http://registry.npmjs.org/', './railway/0.2.11' ]
+verbose url resolved http://registry.npmjs.org/railway/0.2.11
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/railway/0.2.11',
+verbose url parsed   pathname: '/railway/0.2.11' }
+verbose etag "96BO7KHZ5CJCNBO4PZ5TQ5ZRC"
+verbose GET npm/1.1.12
+verbose raw, before any munging npm/1.1.12
+verbose url resolving [ 'http://registry.npmjs.org/', './npm/1.1.12' ]
+verbose url resolved http://registry.npmjs.org/npm/1.1.12
+verbose url parsed { protocol: 'http:',
+verbose url parsed   slashes: true,
+verbose url parsed   host: 'registry.npmjs.org',
+verbose url parsed   hostname: 'registry.npmjs.org',
+verbose url parsed   href: 'http://registry.npmjs.org/npm/1.1.12',
+verbose url parsed   pathname: '/npm/1.1.12' }
+verbose etag "9A7XH3G6BOFDWGGERK804S4U2"
+verbose response http://registry.npmjs.org/nodester-cli/0.2.42
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"C967P32EVVIODF3VO7BRTV4JM"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:47 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag nodester-cli/0.2.42 from cache
+verbose response http://registry.npmjs.org/railway/0.2.11
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"96BO7KHZ5CJCNBO4PZ5TQ5ZRC"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:47 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag railway/0.2.11 from cache
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: '268289ff0938e1b1cc89338ba83f326dddaf8f9d',
+verbose bin dist     tarball: 'http://registry.npmjs.org/nodester-cli/-/nodester-cli-0.2.42.tgz' } ]
+verbose from cache /Users/kenniyu/.npm/nodester-cli/0.2.42/package/package.json
+silly resolved [ { name: 'nodester-cli',
+silly resolved     description: 'A CLI tool to allow interaction with the http://nodester.com/ platform.',
+silly resolved     version: '0.2.42',
+silly resolved     homepage: 'http://nodester.com/',
+silly resolved     repository: 
+silly resolved      { type: 'git',
+silly resolved        url: 'git://github.com/nodester/nodester-cli.git' },
+silly resolved     author: 
+silly resolved      { name: 'Daniel Bartlett',
+silly resolved        email: 'dan@f-box.org',
+silly resolved        url: 'http://danb-uk.net/' },
+silly resolved     contributors: 
+silly resolved      [ { name: 'Dav Glass', email: 'davglass@gmail.com' },
+silly resolved        { name: 'Chris Matthieu', email: 'chris@matthieu.us' },
+silly resolved        { name: 'Abraham Williams',
+silly resolved          email: '4braham@gmail.com' },
+silly resolved        { name: 'Contra', email: 'contra@australia.edu' },
+silly resolved        { name: 'Marcos Oliveira',
+silly resolved          email: 'marcosvm@gmail.com' } ],
+silly resolved     preferGlobal: 'true',
+silly resolved     bin: { nodester: 'bin/nodester.js' },
+silly resolved     main: './lib/commands.js',
+silly resolved     engines: { node: '*' },
+silly resolved     dependencies: 
+silly resolved      { 'nodester-api': '>= 0.1.23',
+silly resolved        colors: '0.3.0',
+silly resolved        iniparser: '1.0.1' },
+silly resolved     _npmJsonOpts: 
+silly resolved      { file: '/Users/kenniyu/.npm/nodester-cli/0.2.42/package/package.json',
+silly resolved        wscript: false,
+silly resolved        contributors: false,
+silly resolved        serverjs: false },
+silly resolved     _id: 'nodester-cli@0.2.42',
+silly resolved     devDependencies: {},
+silly resolved     _engineSupported: true,
+silly resolved     _npmVersion: '1.0.17',
+silly resolved     _nodeVersion: 'v0.4.11',
+silly resolved     _defaultsLoaded: true } ]
+info into /usr/lib nodester-cli@0.2.42
+info installOne nodester-cli@0.2.42
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: '2f08d3252ffe5f6a8e324ed5ef61eb7d2ce21141',
+verbose bin dist     tarball: 'http://registry.npmjs.org/railway/-/railway-0.2.11.tgz' } ]
+verbose from cache /Users/kenniyu/.npm/railway/0.2.11/package/package.json
+silly resolved [ { name: 'railway',
+silly resolved     version: '0.2.11',
+silly resolved     author: { name: 'Anatoliy Chakkaev' },
+silly resolved     description: 'RailwayJS - Ruby-on-Rails inspired MVC web framework, fully ExpressJS compatible',
+silly resolved     keywords: 
+silly resolved      [ 'mvc',
+silly resolved        'web-framework',
+silly resolved        'rails',
+silly resolved        'ruby-on-rails',
+silly resolved        'express',
+silly resolved        'railway' ],
+silly resolved     homepage: 'http://railwayjs.com',
+silly resolved     engines: [ 'node >= 0.4.0', node: ' >= 0.4.0' ],
+silly resolved     main: 'lib/onrailway',
+silly resolved     bin: { railway: 'bin/railway', rw: 'bin/railway' },
+silly resolved     dependencies: 
+silly resolved      { jugglingdb: '>= 0.1.3',
+silly resolved        yaml: '>= 0.1.2',
+silly resolved        'coffee-script': '>= 1.1.1',
+silly resolved        'ejs-ext': '>= 0.0.8',
+silly resolved        'jade-ext': '>= 0.0.5',
+silly resolved        'railway-routes': '>= 0.0.4',
+silly resolved        express: '>= 2.2.2' },
+silly resolved     repository: 
+silly resolved      { type: 'git',
+silly resolved        url: 'git://github.com/1602/express-on-railway.git' },
+silly resolved     devDependencies: { nodeunit: '*' },
+silly resolved     scripts: { test: './support/nodeunit/bin/nodeunit test' },
+silly resolved     _npmJsonOpts: 
+silly resolved      { file: '/Users/kenniyu/.npm/railway/0.2.11/package/package.json',
+silly resolved        wscript: false,
+silly resolved        contributors: false,
+silly resolved        serverjs: false },
+silly resolved     _id: 'railway@0.2.11',
+silly resolved     _engineSupported: true,
+silly resolved     _npmVersion: '1.0.17',
+silly resolved     _nodeVersion: 'v0.4.11',
+silly resolved     _defaultsLoaded: true } ]
+info into /usr/lib railway@0.2.11
+info installOne railway@0.2.11
+info unbuild /usr/lib/node_modules/nodester-cli
+verbose from cache /usr/lib/node_modules/nodester-cli/package.json
+info preuninstall nodester-cli@0.2.34
+info unbuild /usr/lib/node_modules/railway
+verbose from cache /usr/lib/node_modules/railway/package.json
+info preuninstall railway@0.1.8
+info uninstall nodester-cli@0.2.34
+info uninstall railway@0.1.8
+verbose unbuild nodester-cli@0.2.34 [ true,
+verbose unbuild nodester-cli@0.2.34   '/usr/lib/node_modules',
+verbose unbuild nodester-cli@0.2.34   '/usr/lib/node_modules' ]
+verbose binRoot [ '/usr/bin', { nodester: 'bin/nodester.js' } ]
+verbose unbuild railway@0.1.8 [ true,
+verbose unbuild railway@0.1.8   '/usr/lib/node_modules',
+verbose unbuild railway@0.1.8   '/usr/lib/node_modules' ]
+verbose binRoot [ '/usr/bin',
+verbose binRoot   { railway: 'bin/railway', rw: 'bin/railway' } ]
+verbose response http://registry.npmjs.org/cloudnode-cli/0.2.22
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"2VF9WTL02AINPOS73LWDKU7BX"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:47 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag cloudnode-cli/0.2.22 from cache
+verbose response http://registry.npmjs.org/twss/0.1.5
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"A2GYYR5ZJ2SF8F005MR1ECPOQ"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:47 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag twss/0.1.5 from cache
+verbose response http://registry.npmjs.org/express/2.5.8
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"5VSXNB976KX9KAZUUOV90EK0I"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:47 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag express/2.5.8 from cache
+info postuninstall nodester-cli@0.2.34
+info postuninstall railway@0.1.8
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: 'a44339e3cb0ba7fc70554a250e6213cbe27b338a',
+verbose bin dist     tarball: 'http://registry.npmjs.org/cloudnode-cli/-/cloudnode-cli-0.2.22.tgz' } ]
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: 'f166b55d4e8c6d2307ef88ad1768209613f7452a',
+verbose bin dist     tarball: 'http://registry.npmjs.org/express/-/express-2.5.8.tgz' } ]
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: 'd4d0d547060056110e4d20bab4ae8b725ccfc1ee',
+verbose bin dist     tarball: 'http://registry.npmjs.org/twss/-/twss-0.1.5.tgz' } ]
+verbose from cache /Users/kenniyu/.npm/cloudnode-cli/0.2.22/package/package.json
+silly resolved [ { name: 'cloudnode-cli',
+silly resolved     description: 'A CLI tool to allow interaction with the http://cloudno.de/ platform.',
+silly resolved     version: '0.2.22',
+silly resolved     homepage: 'http://cloudno.de/',
+silly resolved     repository: 
+silly resolved      { type: 'git',
+silly resolved        url: 'git://github.com/dvbportal/cloudnode-cli.git' },
+silly resolved     author: { name: 'Hans J Schroeder', email: 'hs@cloudno.de' },
+silly resolved     contributors: 
+silly resolved      [ { name: 'Dav Glass', email: 'davglass@gmail.com' },
+silly resolved        { name: 'Chris Matthieu', email: 'chris@matthieu.us' },
+silly resolved        { name: 'Daniel Bartlett',
+silly resolved          email: 'dan@f-box.org',
+silly resolved          url: 'http://danb-uk.net/' },
+silly resolved        { name: 'Abraham Williams',
+silly resolved          email: '4braham@gmail.com' } ],
+silly resolved     bin: { cloudnode: 'bin/cloudnode.js' },
+silly resolved     main: './lib/commands.js',
+silly resolved     engines: { node: '>= 0.4.1 < 0.7.0' },
+silly resolved     dependencies: 
+silly resolved      { 'cloudnode-api': '0.2.22',
+silly resolved        colors: '0.3.0',
+silly resolved        iniparser: '1.0.1' },
+silly resolved     _npmJsonOpts: 
+silly resolved      { file: '/Users/kenniyu/.npm/cloudnode-cli/0.2.22/package/package.json',
+silly resolved        wscript: false,
+silly resolved        contributors: false,
+silly resolved        serverjs: false },
+silly resolved     _id: 'cloudnode-cli@0.2.22',
+silly resolved     devDependencies: {},
+silly resolved     _engineSupported: true,
+silly resolved     _npmVersion: '1.0.17',
+silly resolved     _nodeVersion: 'v0.4.11',
+silly resolved     _defaultsLoaded: true } ]
+info into /usr/lib cloudnode-cli@0.2.22
+info installOne cloudnode-cli@0.2.22
+verbose from cache /Users/kenniyu/.npm/express/2.5.8/package/package.json
+silly resolved [ { name: 'express',
+silly resolved     description: 'Sinatra inspired web development framework',
+silly resolved     version: '2.5.8',
+silly resolved     author: 
+silly resolved      { name: 'TJ Holowaychuk',
+silly resolved        email: 'tj@vision-media.ca' },
+silly resolved     contributors: 
+silly resolved      [ { name: 'TJ Holowaychuk',
+silly resolved          email: 'tj@vision-media.ca' },
+silly resolved        { name: 'Aaron Heckmann',
+silly resolved          email: 'aaron.heckmann+github@gmail.com' },
+silly resolved        { name: 'Ciaran Jessup', email: 'ciaranj@gmail.com' },
+silly resolved        { name: 'Guillermo Rauch', email: 'rauchg@gmail.com' } ],
+silly resolved     dependencies: 
+silly resolved      { connect: '1.x',
+silly resolved        mime: '1.2.4',
+silly resolved        qs: '0.4.x',
+silly resolved        mkdirp: '0.3.0' },
+silly resolved     devDependencies: 
+silly resolved      { 'connect-form': '0.2.1',
+silly resolved        ejs: '0.4.2',
+silly resolved        expresso: '0.9.2',
+silly resolved        hamljs: '0.6.x',
+silly resolved        jade: '0.16.2',
+silly resolved        stylus: '0.13.0',
+silly resolved        should: '0.3.2',
+silly resolved        'express-messages': '0.0.2',
+silly resolved        'node-markdown': '>= 0.0.1',
+silly resolved        'connect-redis': '>= 0.0.1' },
+silly resolved     keywords: [ 'framework', 'sinatra', 'web', 'rest', 'restful' ],
+silly resolved     repository: 
+silly resolved      { type: 'git',
+silly resolved        url: 'git://github.com/visionmedia/express.git' },
+silly resolved     main: 'index',
+silly resolved     bin: { express: './bin/express' },
+silly resolved     scripts: { test: 'make test', prepublish: 'npm prune' },
+silly resolved     engines: { node: '>= 0.4.1 < 0.7.0' },
+silly resolved     _npmJsonOpts: 
+silly resolved      { file: '/Users/kenniyu/.npm/express/2.5.8/package/package.json',
+silly resolved        wscript: false,
+silly resolved        contributors: false,
+silly resolved        serverjs: false },
+silly resolved     _id: 'express@2.5.8',
+silly resolved     _engineSupported: true,
+silly resolved     _npmVersion: '1.0.17',
+silly resolved     _nodeVersion: 'v0.4.11',
+silly resolved     _defaultsLoaded: true } ]
+info into /usr/lib express@2.5.8
+info installOne express@2.5.8
+verbose from cache /Users/kenniyu/.npm/twss/0.1.5/package/package.json
+silly resolved [ { name: 'twss',
+silly resolved     version: '0.1.5',
+silly resolved     description: 'That\'s what she said classifier',
+silly resolved     keywords: [ 'machine learning', 'classifier', 'twss', 'ai' ],
+silly resolved     author: 
+silly resolved      { name: 'Daniel Rapp',
+silly resolved        email: 'danielrappt@gmail.com' },
+silly resolved     bin: { twss: './bin/twss' },
+silly resolved     repository: 
+silly resolved      { type: 'git',
+silly resolved        url: 'git://github.com/DanielRapp/twss.js.git' },
+silly resolved     main: 'index',
+silly resolved     dependencies: { optimist: '0.3', colors: '*' },
+silly resolved     _npmJsonOpts: 
+silly resolved      { file: '/Users/kenniyu/.npm/twss/0.1.5/package/package.json',
+silly resolved        wscript: false,
+silly resolved        contributors: false,
+silly resolved        serverjs: false },
+silly resolved     _id: 'twss@0.1.5',
+silly resolved     devDependencies: {},
+silly resolved     engines: { node: '*' },
+silly resolved     _engineSupported: true,
+silly resolved     _npmVersion: '1.0.17',
+silly resolved     _nodeVersion: 'v0.4.11',
+silly resolved     _defaultsLoaded: true } ]
+info into /usr/lib twss@0.1.5
+info installOne twss@0.1.5
+info unbuild /usr/lib/node_modules/cloudnode-cli
+verbose from cache /usr/lib/node_modules/cloudnode-cli/package.json
+info preuninstall cloudnode-cli@0.2.20
+info unbuild /usr/lib/node_modules/express
+verbose from cache /usr/lib/node_modules/express/package.json
+info preuninstall express@2.5.2
+info unbuild /usr/lib/node_modules/twss
+verbose from cache /usr/lib/node_modules/twss/package.json
+info preuninstall twss@0.1.4
+info uninstall cloudnode-cli@0.2.20
+info uninstall express@2.5.2
+info uninstall twss@0.1.4
+verbose unbuild cloudnode-cli@0.2.20 [ true,
+verbose unbuild cloudnode-cli@0.2.20   '/usr/lib/node_modules',
+verbose unbuild cloudnode-cli@0.2.20   '/usr/lib/node_modules' ]
+verbose binRoot [ '/usr/bin', { cloudnode: 'bin/cloudnode.js' } ]
+verbose unbuild express@2.5.2 [ true,
+verbose unbuild express@2.5.2   '/usr/lib/node_modules',
+verbose unbuild express@2.5.2   '/usr/lib/node_modules' ]
+verbose binRoot [ '/usr/bin', { express: './bin/express' } ]
+verbose unbuild twss@0.1.4 [ true,
+verbose unbuild twss@0.1.4   '/usr/lib/node_modules',
+verbose unbuild twss@0.1.4   '/usr/lib/node_modules' ]
+verbose binRoot [ '/usr/bin', { twss: './bin/twss' } ]
+info postuninstall express@2.5.2
+info postuninstall twss@0.1.4
+info postuninstall cloudnode-cli@0.2.20
+verbose response http://registry.npmjs.org/npm/1.1.12
+silly get cb [ 304,
+silly get cb   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+silly get cb     etag: '"9A7XH3G6BOFDWGGERK804S4U2"',
+silly get cb     date: 'Fri, 23 Mar 2012 10:32:47 GMT',
+silly get cb     'content-length': '0' } ]
+verbose etag npm/1.1.12 from cache
+verbose from cache /Users/kenniyu/.npm/cloudnode-cli/0.2.22/package/package.json
+verbose bin dist [ '0.4-ares1.7.4-ev4.4-openssl0.9.8r-v83.1.8.26-darwin-10.8.0',
+verbose bin dist   { shasum: '01f392bb606045de99078e1efe37acdde05101aa',
+verbose bin dist     tarball: 'http://registry.npmjs.org/npm/-/npm-1.1.12.tgz' } ]
+verbose from cache /Users/kenniyu/.npm/npm/1.1.12/package/package.json
+silly resolved [ { name: 'npm',
+silly resolved     publishConfig: { 'proprietary-attribs': false },
+silly resolved     description: 'A package manager for node',
+silly resolved     keywords: 
+silly resolved      [ 'package manager',
+silly resolved        'modules',
+silly resolved        'install',
+silly resolved        'package.json' ],
+silly resolved     version: '1.1.12',
+silly resolved     preferGlobal: true,
+silly resolved     config: { publishtest: false },
+silly resolved     homepage: 'http://npmjs.org/',
+silly resolved     author: 
+silly resolved      { name: 'Isaac Z. Schlueter',
+silly resolved        email: 'i@izs.me',
+silly resolved        url: 'http://blog.izs.me' },
+silly resolved     repository: 
+silly resolved      { type: 'git',
+silly resolved        url: 'git://github.com/isaacs/npm.git' },
+silly resolved     bugs: 
+silly resolved      { email: 'npm-@googlegroups.com',
+silly resolved        url: 'http://github.com/isaacs/npm/issues' },
+silly resolved     directories: 
+silly resolved      { doc: './doc',
+silly resolved        man: './man',
+silly resolved        lib: './lib',
+silly resolved        bin: './bin' },
+silly resolved     main: './lib/npm.js',
+silly resolved     bin: { npm: './bin/npm-cli.js' },
+silly resolved     dependencies: 
+silly resolved      { semver: '1',
+silly resolved        ini: '1',
+silly resolved        slide: '1',
+silly resolved        abbrev: '1',
+silly resolved        'graceful-fs': '~1.1.1',
+silly resolved        minimatch: '0',
+silly resolved        nopt: '1',
+silly resolved        'node-uuid': '~1.3',
+silly resolved        'proto-list': '1',
+silly resolved        rimraf: '2',
+silly resolved        request: '~2.9',
+silly resolved        which: '1',
+silly resolved        tar: '~0.1.12',
+silly resolved        fstream: '~0.1.13',
+silly resolved        'block-stream': '*',
+silly resolved        inherits: '1',
+silly resolved        mkdirp: '0.3',
+silly resolved        read: '0',
+silly resolved        'lru-cache': '1',
+silly resolved        'node-gyp': '~0.3.4' },
+silly resolved     bundleDependencies: 
+silly resolved      [ 'slide',
+silly resolved        'ini',
+silly resolved        'semver',
+silly resolved        'abbrev',
+silly resolved        'graceful-fs',
+silly resolved        'minimatch',
+silly resolved        'nopt',
+silly resolved        'node-uuid',
+silly resolved        'rimraf',
+silly resolved        'request',
+silly resolved        'proto-list',
+silly resolved        'which',
+silly resolved        'tar',
+silly resolved        'fstream',
+silly resolved        'block-stream',
+silly resolved        'inherits',
+silly resolved        'mkdirp',
+silly resolved        'fast-list',
+silly resolved        'read',
+silly resolved        'lru-cache',
+silly resolved        'node-gyp' ],
+silly resolved     devDependencies: { ronn: 'https://github.com/isaacs/ronnjs/tarball/master' },
+silly resolved     engines: { node: '0.6 || 0.7 || 0.8', npm: '1' },
+silly resolved     scripts: 
+silly resolved      { test: 'node ./test/run.js',
+silly resolved        prepublish: 'npm prune; rm -rf node_modules/*/{test,example,bench}*; make -j4 doc',
+silly resolved        dumpconf: 'env | grep npm | sort | uniq' },
+silly resolved     licenses: 
+silly resolved      [ { type: 'MIT +no-false-attribs',
+silly resolved          url: 'http://github.com/isaacs/npm/raw/master/LICENSE' } ],
+silly resolved     _npmJsonOpts: 
+silly resolved      { file: '/Users/kenniyu/.npm/npm/1.1.12/package/package.json',
+silly resolved        wscript: false,
+silly resolved        serverjs: false,
+silly resolved        contributors: 
+silly resolved         [ 'Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)',
+silly resolved           'Steve Steiner <ssteinerX@gmail.com> (http://websaucesoftware.com/blog/)',
+silly resolved           'Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.mikealrogers.com/)',
+silly resolved           'Aaron Blohowiak <aaron.blohowiak@gmail.com> (http://aaronblohowiak.com/)',
+silly resolved           'Martyn Smith <martyn@dollyfish.net.nz> (http://dollyfish.net.nz/)',
+silly resolved           'Mathias Pettersson <mape@mape.me> (http://mape.me/)',
+silly resolved           'Brian Hammond <brian@fictorial.com> (http://fictorial.com/)',
+silly resolved           'Charlie Robbins <charlie.robbins@gmail.com> (http://www.charlierobbins.com/)',
+silly resolved           'Francisco Treacy <francisco.treacy@gmail.com> (http://franciscotreacy.com/)',
+silly resolved           'Cliffano Subagio <cliffano@gmail.com> (http://blog.cliffano.com/)',
+silly resolved           'Christian Eager <christian.eager@nokia.com> (http://perpenduum.com)',
+silly resolved           'Dav Glass <davglass@gmail.com> (http://blog.davglass.com)',
+silly resolved           'Alex K. Wolfe <alexkwolfe@gmail.com>',
+silly resolved           'James Sanders <jimmyjazz14@gmail.com> (http://james-sanders.com/)',
+silly resolved           'Reid Burke <me@reidburke.com> (http://reidburke.com/)',
+silly resolved           'Arlo Breault <arlolra@gmail.com> (http://thoughtherder.com/)',
+silly resolved           'Timo Derstappen <teemow@gmail.com> (http://teemow.com)',
+silly resolved           'Bradley Meck <bradley.meck@gmail.com>',
+silly resolved           'Bart Teeuwisse <bart.teeuwisse@thecodemill.biz> (http://thecodemill.biz/)',
+silly resolved           'Ben Noordhuis <info@bnoordhuis.nl> (http://bnoordhuis.nl/)',
+silly resolved           'Tor Valamo <tor.valamo@gmail.com> (http://www.magnimedia.no/)',
+silly resolved           'Whyme.Lyu <5longluna@gmail.com> (http://whyme.kuantu.com/)',
+silly resolved           'Olivier Melcher <olivier.melcher@gmail.com>',
+silly resolved           'Tomaž Muraus <kami@k5-storitve.net> (http://www.tomaz-muraus.info)',
+silly resolved           'Evan Meagher <evan.meagher@gmail.com> (http://evanmeagher.net/)',
+silly resolved           'Orlando Vazquez <ovazquez@gmail.com> (http://2wycked.net/)',
+silly resolved           'George Miroshnykov <gmiroshnykov@lohika.com>',
+silly resolved           'Geoff Flarity (http://ca.linkedin.com/pub/geoff-flarity/a/536/43a)',
+silly resolved           'Pete Kruckenberg <pete@kruckenberg.com>',
+silly resolved           'Laurie Harper <laurie@holoweb.net> (http://laurie.holoweb.net/)',
+silly resolved           'Chris Wong <chris@chriswongstudio.com>',
+silly resolved           'Max Goodman <c@chromacode.com> (http://chromacode.com/)',
+silly resolved           'Scott Bronson <brons_github@rinspin.com>',
+silly resolved           'Federico Romero <federomero@gmail.com>',
+silly resolved           'Visnu Pitiyanuvath <visnupx@gmail.com> (http://visnup.com)',
+silly resolved           'Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com/)',
+silly resolved           'Mark Cahill <mark@tiemonster.info> (http://www.tiemonster.info/)',
+silly resolved           'Zearin <zearin@gonk.net>',
+silly resolved           'Iain Sproat <iainsproat@gmail.com>',
+silly resolved           'Trent Mick <trentm@gmail.com> (http://trentm.com/)',
+silly resolved           'Felix Geisendörfer <felix@debuggable.com> (http://www.debuggable.com/)',
+silly resolved           'Conny Brunnkvist <cbrunnkvist@gmail.com> (http://twitter.com/connyb)',
+silly resolved           'Will Elwood <w.elwood08@gmail.com> (https://github.com/welwood08)',
+silly resolved           'Oleg Efimov <efimovov@gmail.com> (http://sannis.ru)',
+silly resolved           'Martin Cooper <mfncooper@gmail.com>',
+silly resolved           'Jameson Little <t.jameson.little@gmail.com>',
+silly resolved           'cspotcode <cspotcode@gmail.com>',
+silly resolved           'Maciej Małecki <maciej.malecki@notimplemented.org>',
+silly resolved           'Stephen Sugden <glurgle@gmail.com>',
+silly resolved           'Gautham Pai <buzypi@gmail.com>',
+silly resolved           'David Trejo <david.daniel.trejo@gmail.com>',
+silly resolved           'Paul Vorbach <paul@vorb.de>',
+silly resolved           'George Ornbo <george@shapeshed.com>',
+silly resolved           'Tim Oxley <secoif@gmail.com>',
+silly resolved           'Tyler Green <tyler.green2@gmail.com>',
+silly resolved           'atomizer <danila.gerasimov@gmail.com>',
+silly resolved           'Rod Vagg <rod@vagg.org>',
+silly resolved           'Christian Howe <coderarity@gmail.com>',
+silly resolved           'Andrew Lunny <alunny@gmail.com>',
+silly resolved           'Henrik Hodne <dvyjones@binaryhex.com>',
+silly resolved           'Adam Blackburn <regality@gmail.com>',
+silly resolved           'Kris Windham <kriswindham@gmail.com>' ] },
+silly resolved     _id: 'npm@1.1.12',
+silly resolved     contributors: 
+silly resolved      [ { name: 'Isaac Z. Schlueter',
+silly resolved          email: 'i@izs.me',
+silly resolved          url: 'http://blog.izs.me/' },
+silly resolved        { name: 'Steve Steiner',
+silly resolved          email: 'ssteinerX@gmail.com',
+silly resolved          url: 'http://websaucesoftware.com/blog/' },
+silly resolved        { name: 'Mikeal Rogers',
+silly resolved          email: 'mikeal.rogers@gmail.com',
+silly resolved          url: 'http://www.mikealrogers.com/' },
+silly resolved        { name: 'Aaron Blohowiak',
+silly resolved          email: 'aaron.blohowiak@gmail.com',
+silly resolved          url: 'http://aaronblohowiak.com/' },
+silly resolved        { name: 'Martyn Smith',
+silly resolved          email: 'martyn@dollyfish.net.nz',
+silly resolved          url: 'http://dollyfish.net.nz/' },
+silly resolved        { name: 'Mathias Pettersson',
+silly resolved          email: 'mape@mape.me',
+silly resolved          url: 'http://mape.me/' },
+silly resolved        { name: 'Brian Hammond',
+silly resolved          email: 'brian@fictorial.com',
+silly resolved          url: 'http://fictorial.com/' },
+silly resolved        { name: 'Charlie Robbins',
+silly resolved          email: 'charlie.robbins@gmail.com',
+silly resolved          url: 'http://www.charlierobbins.com/' },
+silly resolved        { name: 'Francisco Treacy',
+silly resolved          email: 'francisco.treacy@gmail.com',
+silly resolved          url: 'http://franciscotreacy.com/' },
+silly resolved        { name: 'Cliffano Subagio',
+silly resolved          email: 'cliffano@gmail.com',
+silly resolved          url: 'http://blog.cliffano.com/' },
+silly resolved        { name: 'Christian Eager',
+silly resolved          email: 'christian.eager@nokia.com',
+silly resolved          url: 'http://perpenduum.com' },
+silly resolved        { name: 'Dav Glass',
+silly resolved          email: 'davglass@gmail.com',
+silly resolved          url: 'http://blog.davglass.com' },
+silly resolved        { name: 'Alex K. Wolfe',
+silly resolved          email: 'alexkwolfe@gmail.com' },
+silly resolved        { name: 'James Sanders',
+silly resolved          email: 'jimmyjazz14@gmail.com',
+silly resolved          url: 'http://james-sanders.com/' },
+silly resolved        { name: 'Reid Burke',
+silly resolved          email: 'me@reidburke.com',
+silly resolved          url: 'http://reidburke.com/' },
+silly resolved        { name: 'Arlo Breault',
+silly resolved          email: 'arlolra@gmail.com',
+silly resolved          url: 'http://thoughtherder.com/' },
+silly resolved        { name: 'Timo Derstappen',
+silly resolved          email: 'teemow@gmail.com',
+silly resolved          url: 'http://teemow.com' },
+silly resolved        { name: 'Bradley Meck',
+silly resolved          email: 'bradley.meck@gmail.com' },
+silly resolved        { name: 'Bart Teeuwisse',
+silly resolved          email: 'bart.teeuwisse@thecodemill.biz',
+silly resolved          url: 'http://thecodemill.biz/' },
+silly resolved        { name: 'Ben Noordhuis',
+silly resolved          email: 'info@bnoordhuis.nl',
+silly resolved          url: 'http://bnoordhuis.nl/' },
+silly resolved        { name: 'Tor Valamo',
+silly resolved          email: 'tor.valamo@gmail.com',
+silly resolved          url: 'http://www.magnimedia.no/' },
+silly resolved        { name: 'Whyme.Lyu',
+silly resolved          email: '5longluna@gmail.com',
+silly resolved          url: 'http://whyme.kuantu.com/' },
+silly resolved        { name: 'Olivier Melcher',
+silly resolved          email: 'olivier.melcher@gmail.com' },
+silly resolved        { name: 'Tomaž Muraus',
+silly resolved          email: 'kami@k5-storitve.net',
+silly resolved          url: 'http://www.tomaz-muraus.info' },
+silly resolved        { name: 'Evan Meagher',
+silly resolved          email: 'evan.meagher@gmail.com',
+silly resolved          url: 'http://evanmeagher.net/' },
+silly resolved        { name: 'Orlando Vazquez',
+silly resolved          email: 'ovazquez@gmail.com',
+silly resolved          url: 'http://2wycked.net/' },
+silly resolved        { name: 'George Miroshnykov',
+silly resolved          email: 'gmiroshnykov@lohika.com' },
+silly resolved        { name: 'Geoff Flarity',
+silly resolved          url: 'http://ca.linkedin.com/pub/geoff-flarity/a/536/43a' },
+silly resolved        { name: 'Pete Kruckenberg',
+silly resolved          email: 'pete@kruckenberg.com' },
+silly resolved        { name: 'Laurie Harper',
+silly resolved          email: 'laurie@holoweb.net',
+silly resolved          url: 'http://laurie.holoweb.net/' },
+silly resolved        { name: 'Chris Wong',
+silly resolved          email: 'chris@chriswongstudio.com' },
+silly resolved        { name: 'Max Goodman',
+silly resolved          email: 'c@chromacode.com',
+silly resolved          url: 'http://chromacode.com/' },
+silly resolved        { name: 'Scott Bronson',
+silly resolved          email: 'brons_github@rinspin.com' },
+silly resolved        { name: 'Federico Romero',
+silly resolved          email: 'federomero@gmail.com' },
+silly resolved        { name: 'Visnu Pitiyanuvath',
+silly resolved          email: 'visnupx@gmail.com',
+silly resolved          url: 'http://visnup.com' },
+silly resolved        { name: 'Irakli Gozalishvili',
+silly resolved          email: 'rfobic@gmail.com',
+silly resolved          url: 'http://jeditoolkit.com/' },
+silly resolved        { name: 'Mark Cahill',
+silly resolved          email: 'mark@tiemonster.info',
+silly resolved          url: 'http://www.tiemonster.info/' },
+silly resolved        { name: 'Zearin', email: 'zearin@gonk.net' },
+silly resolved        { name: 'Iain Sproat', email: 'iainsproat@gmail.com' },
+silly resolved        { name: 'Trent Mick',
+silly resolved          email: 'trentm@gmail.com',
+silly resolved          url: 'http://trentm.com/' },
+silly resolved        { name: 'Felix Geisendörfer',
+silly resolved          email: 'felix@debuggable.com',
+silly resolved          url: 'http://www.debuggable.com/' },
+silly resolved        { name: 'Conny Brunnkvist',
+silly resolved          email: 'cbrunnkvist@gmail.com',
+silly resolved          url: 'http://twitter.com/connyb' },
+silly resolved        { name: 'Will Elwood',
+silly resolved          email: 'w.elwood08@gmail.com',
+silly resolved          url: 'https://github.com/welwood08' },
+silly resolved        { name: 'Oleg Efimov',
+silly resolved          email: 'efimovov@gmail.com',
+silly resolved          url: 'http://sannis.ru' },
+silly resolved        { name: 'Martin Cooper',
+silly resolved          email: 'mfncooper@gmail.com' },
+silly resolved        { name: 'Jameson Little',
+silly resolved          email: 't.jameson.little@gmail.com' },
+silly resolved        { name: 'cspotcode', email: 'cspotcode@gmail.com' },
+silly resolved        { name: 'Maciej Małecki',
+silly resolved          email: 'maciej.malecki@notimplemented.org' },
+silly resolved        { name: 'Stephen Sugden', email: 'glurgle@gmail.com' },
+silly resolved        { name: 'Gautham Pai', email: 'buzypi@gmail.com' },
+silly resolved        { name: 'David Trejo',
+silly resolved          email: 'david.daniel.trejo@gmail.com' },
+silly resolved        { name: 'Paul Vorbach', email: 'paul@vorb.de' },
+silly resolved        { name: 'George Ornbo',
+silly resolved          email: 'george@shapeshed.com' },
+silly resolved        { name: 'Tim Oxley', email: 'secoif@gmail.com' },
+silly resolved        { name: 'Tyler Green',
+silly resolved          email: 'tyler.green2@gmail.com' },
+silly resolved        { name: 'atomizer',
+silly resolved          email: 'danila.gerasimov@gmail.com' },
+silly resolved        { name: 'Rod Vagg', email: 'rod@vagg.org' },
+silly resolved        { name: 'Christian Howe',
+silly resolved          email: 'coderarity@gmail.com' },
+silly resolved        { name: 'Andrew Lunny', email: 'alunny@gmail.com' },
+silly resolved        { name: 'Henrik Hodne',
+silly resolved          email: 'dvyjones@binaryhex.com' },
+silly resolved        { name: 'Adam Blackburn',
+silly resolved          email: 'regality@gmail.com' },
+silly resolved        { name: 'Kris Windham',
+silly resolved          email: 'kriswindham@gmail.com' } ],
+silly resolved     _engineSupported: false,
+silly resolved     _npmVersion: '1.0.17',
+silly resolved     _nodeVersion: 'v0.4.11',
+silly resolved     _defaultsLoaded: true,
+silly resolved     man: 
+silly resolved      [ 'man/man1/adduser.1',
+silly resolved        'man/man1/author.1',
+silly resolved        'man/man1/bin.1',
+silly resolved        'man/man1/bugs.1',
+silly resolved        'man/man1/build.1',
+silly resolved        'man/man1/bundle.1',
+silly resolved        'man/man1/cache.1',
+silly resolved        'man/man1/changelog.1',
+silly resolved        'man/man1/coding-style.1',
+silly resolved        'man/man1/completion.1',
+silly resolved        'man/man1/config.1',
+silly resolved        'man/man1/deprecate.1',
+silly resolved        'man/man1/developers.1',
+silly resolved        'man/man1/disputes.1',
+silly resolved        'man/man1/docs.1',
+silly resolved        'man/man1/edit.1',
+silly resolved        'man/man1/explore.1',
+silly resolved        'man/man1/faq.1',
+silly resolved        'man/man1/find.1',
+silly resolved        'man/man1/folders.1',
+silly resolved        'man/man1/get.1',
+silly resolved        'man/man1/global.1',
+silly resolved        'man/man1/help-search.1',
+silly resolved        'man/man1/help.1',
+silly resolved        'man/man1/home.1',
+silly resolved        'man/man1/index.1',
+silly resolved        'man/man1/init.1',
+silly resolved        'man/man1/install.1',
+silly resolved        'man/man1/json.1',
+silly resolved        'man/man1/link.1',
+silly resolved        'man/man1/list.1',
+silly resolved        'man/man1/ln.1',
+silly resolved        'man/man1/ls.1',
+silly resolved        'man/man1/npm.1',
+silly resolved        'man/man1/outdated.1',
+silly resolved        'man/man1/owner.1',
+silly resolved        'man/man1/pack.1',
+silly resolved        'man/man1/prefix.1',
+silly resolved        'man/man1/prune.1',
+silly resolved        'man/man1/publish.1',
+silly resolved        'man/man1/README.1',
+silly resolved        'man/man1/rebuild.1',
+silly resolved        'man/man1/registry.1',
+silly resolved        'man/man1/removing-npm.1',
+silly resolved        'man/man1/restart.1',
+silly resolved        'man/man1/rm.1',
+silly resolved        'man/man1/root.1',
+silly resolved        'man/man1/run-script.1',
+silly resolved        'man/man1/scripts.1',
+silly resolved        'man/man1/search.1',
+silly resolved        'man/man1/semver.1',
+silly resolved        'man/man1/set.1',
+silly resolved        'man/man1/shrinkwrap.1',
+silly resolved        'man/man1/star.1',
+silly resolved        'man/man1/start.1',
+silly resolved        'man/man1/stop.1',
+silly resolved        'man/man1/submodule.1',
+silly resolved        'man/man1/tag.1',
+silly resolved        'man/man1/test.1',
+silly resolved        'man/man1/uninstall.1',
+silly resolved        'man/man1/unpublish.1',
+silly resolved        'man/man1/update.1',
+silly resolved        'man/man1/version.1',
+silly resolved        'man/man1/view.1',
+silly resolved        'man/man1/whoami.1',
+silly resolved        'man/man3/author.3',
+silly resolved        'man/man3/bin.3',
+silly resolved        'man/man3/bugs.3',
+silly resolved        'man/man3/commands.3',
+silly resolved        'man/man3/config.3',
+silly resolved        'man/man3/deprecate.3',
+silly resolved        'man/man3/docs.3',
+silly resolved        'man/man3/edit.3',
+silly resolved        'man/man3/explore.3',
+silly resolved        'man/man3/find.3',
+silly resolved        'man/man3/get.3',
+silly resolved        'man/man3/help-search.3',
+silly resolved        'man/man3/home.3',
+silly resolved        'man/man3/init.3',
+silly resolved        'man/man3/install.3',
+silly resolved        'man/man3/link.3',
+silly resolved        'man/man3/list.3',
+silly resolved        'man/man3/ln.3',
+silly resolved        'man/man3/load.3',
+silly resolved        'man/man3/ls.3',
+silly resolved        'man/man3/npm.3',
+silly resolved        'man/man3/outdated.3',
+silly resolved        'man/man3/owner.3',
+silly resolved        'man/man3/pack.3',
+silly resolved        'man/man3/prefix.3',
+silly resolved        'man/man3/prune.3',
+silly resolved        'man/man3/publish.3',
+silly resolved        'man/man3/rebuild.3',
+silly resolved        'man/man3/restart.3',
+silly resolved        'man/man3/rm.3',
+silly resolved        'man/man3/root.3',
+silly resolved        'man/man3/run-script.3',
+silly resolved        'man/man3/search.3',
+silly resolved        'man/man3/set.3',
+silly resolved        'man/man3/shrinkwrap.3',
+silly resolved        'man/man3/start.3',
+silly resolved        'man/man3/stop.3',
+silly resolved        'man/man3/submodule.3',
+silly resolved        'man/man3/tag.3',
+silly resolved        'man/man3/test.3',
+silly resolved        'man/man3/uninstall.3',
+silly resolved        'man/man3/unpublish.3',
+silly resolved        'man/man3/update.3',
+silly resolved        'man/man3/version.3',
+silly resolved        'man/man3/view.3',
+silly resolved        'man/man3/whoami.3' ] } ]
+info into /usr/lib npm@1.1.12
+info installOne npm@1.1.12
+verbose installOne cb npm@1.1.12
+ERR! Unsupported
+ERR! Not compatible with your version of node/npm: npm@1.1.12
+ERR! Required: {"node":"0.6 || 0.7 || 0.8","npm":"1"}
+ERR! Actual:   {"npm":"1.0.17","node":"v0.4.11"}
+ERR! 
+ERR! System Darwin 10.8.0
+ERR! command "node" "/usr/bin/npm" "update" "-g"
+ERR! cwd /Users/kenniyu/express/javis
+ERR! node -v v0.4.11
+ERR! npm -v 1.0.17
+verbose exit [ 1, true ]
