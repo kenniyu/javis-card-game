@@ -14,7 +14,7 @@
 }
 
 .card {
-	background-image: url("/images/domo.jpg");
+	background-image: url("/images/cardback/bicycle_blue.png");
 	background-size: 100px 130px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -709,4 +709,19 @@ li {
 .chat-message > .name {
 	font-weight: bold;
 /*	text-shadow: 0px -1px 1px #aaaaaa;*/
+}
+
+#card_options {
+	width: 150px;
+	height: 50px;
+	margin: 0 0 0 -80px;
+	white-space: nowrap;
+	overflow-x: scroll;
+	overflow-y: hidden;
+}
+
+#card_options img{
+	display: inline;
+	width: 20px;
+	height: 30px;
 }

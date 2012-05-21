@@ -13,7 +13,7 @@
 		var gameId = 0;
 		var currentCombosPlayed = 0;
 		var randomLeftOffset = 0;
-
+		var current_cardback_file_name = "bicycle_blue.png";
 		var chatFlashInterval, chatFlashTimeout;
 		var windowFocused = false;
 		var windowTitleInterval;
@@ -712,7 +712,7 @@
 					var left = Math.random()/3*100;
 					var top = Math.random()/3*100;
 			
-					var cardDiv = $(''+cardHtml).css("left", left+"%").css("top", top+"%");
+					var cardDiv = $(''+cardHtml).css("left", left+"%").css("top", top+"%").css("background-image", "url(/images/cardback/"+current_cardback_file_name+")");
 			
 					$('#slot-discard').append(cardDiv);
 				};
@@ -1018,6 +1018,18 @@
 
 			});
 			
+			
+			$('.card_select').live("click", function(e){
+				var cardback_file_name = $(this).attr("data-cardback-name");
+				current_cardback_file_name = cardback_file_name;
+				var cards = $('.card');
+				cards.each(function(card, index) {
+					$(this).css("background-image", "url('/images/cardback/"+cardback_file_name+"')");
+				});
+				e.preventDefault();
+			})
+			
+			
 		});
 
 		jQuery.fn.swapWith = function(to) {
@@ -1034,7 +1046,20 @@
 
 <body>
 	<div id="wrapper">
-		<div id="game-board" tabindex=1>			
+		<div id="game-board" tabindex=1>
+			<div id="card_options">
+				<a href="#" data-cardback-name="bicycle_blue.png" class="card_select"><img src="/images/cardback/bicycle_blue.png"/></a>
+				<a href="#" data-cardback-name="bicycle_red.jpg" class="card_select"><img src="/images/cardback/bicycle_red.jpg"/></a>
+				<a href="#" data-cardback-name="mirror.png" class="card_select"><img src="/images/cardback/mirror.png"/></a>
+				<a href="#" data-cardback-name="smoke.png" class="card_select"><img src="/images/cardback/smoke.png"/></a>
+				<a href="#" data-cardback-name="ultraviolet.png" class="card_select"><img src="/images/cardback/ultraviolet.png"/></a>
+				<a href="#" data-cardback-name="cutcaster_vector_1.jpg" class="card_select"><img src="/images/cardback/cutcaster_vector_1.jpg"/></a>
+				<a href="#" data-cardback-name="cutcaster_vector_2.jpg" class="card_select"><img src="/images/cardback/cutcaster_vector_2.jpg"/></a>
+				<a href="#" data-cardback-name="cutcaster_vector_3.jpg" class="card_select"><img src="/images/cardback/cutcaster_vector_3.jpg"/></a>
+				<a href="#" data-cardback-name="erdnase_acorn_green.jpg" class="card_select"><img src="/images/cardback/erdnase_acorn_green.jpg"/></a>
+				<a href="#" data-cardback-name="erdnase_smith_red.jpg" class="card_select"><img src="/images/cardback/erdnase_smith_red.jpg"/></a>
+				<a href="#" data-cardback-name="domo.jpg" class="card_select"><img src="/images/cardback/domo.jpg"/></a>
+			</div>			
 			<div id="slot-bot-container" class="slot-container"></div>
 			<div id="slot-bot-label" class="player-name"></div>
 			<div id="slot-bot" class="slot"></div>
@@ -1070,16 +1095,6 @@
 		
 		
 		<div id="sidebar">
-			<!-- <div id="rules-header" class="sb-header">What were the cards again?</div>
-			<div id="rules-list">
-				<strong>5</strong> - Draw X cards from the discard pile<br/>
-				<strong>7</strong> - Pass X cards to the next player<br/>
-				<strong>8</strong> - Clear the round and go again<br/>
-				<strong>10</strong> - Discard X cards<br/>
-				<strong>J</strong> - Play lower than the previous hand (until turn comes back around to the player who most recently played a J)<br/>
-				<br/>
-				Where X is how many of that card was in the hand that you played<br/>
-			</div> -->
 
 			<div id="chat-header" class="sb-header">
 				<span class="chat-icon"><img src="/images/icon-chat.png" width="18px" /></span>

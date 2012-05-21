@@ -33,8 +33,8 @@ app.configure('production', function(){
 var sessionStore = {};
 
 function sessionExists(sessionID){
-	for (var sessionId in sessionStore){
-		if (sessionId == sessionID){
+	for (var key in sessionStore){
+		if (key == sessionID){
 			return true;
 		}
 	}
@@ -61,22 +61,24 @@ function setClientId(sessionID, clientId){
 	return clientId;
 }
 
-function beforeFilterSession(request){
+function beforeFilterSession(request) {
+	// this gets run before every request. 
+	// First add session if not exists in our sessions hash
+	// Then set the sessions path variable
 	if (sessionExists(request.sessionID)){
-		console.log("session exists");
-		// loop through all rooms and update usersHash
+		console.log("This session already exists. Will not add to sessionStore");
 	}
 	else{
-		console.log("adding to sessionStore");
+		console.log("This session does not exist. Adding to sessionStore...");
 		addToSessionStore(request);
 	}
 	setPath(request);
 }
 
 function setPath(request){
-	// update the path var for session
+	// Updates the path variable for the session corresponding to this request
 	var path = request.route.path;
-	console.log("path = "+path);
+	console.log("Updating the path variable for this session. Path = "+path);
 	sessionStore[request.sessionID].path = path;
 }
 
@@ -99,7 +101,6 @@ app.get('/lobby', function(req, res){
 	
 	var mySession = sessionStore[req.sessionID];
 	// get rooms
-	// var rooms = couchRooms.findAllRooms();
 	console.log(req.route.path);
 	console.log("My session is : " );
 	console.log(mySession);
@@ -110,7 +111,7 @@ app.get('/lobby', function(req, res){
 app.get('/game/:id', function(req, res){
 	beforeFilterSession(req);
 	var roomId = req.params.id;
-	if (roomId < 1 || roomId > 5){
+	if (roomId < 1 || roomId > 3){
 		res.redirect('lobby');
 	}
 	else {
@@ -132,10 +133,6 @@ app.get('/game/:id', function(req, res){
 		}
 	}
 });
-// 
-// app.get('/game/:room_id', function(req, res){
-// 	
-// })
 
 
 app.get('/rules', function(req, res){
@@ -144,12 +141,6 @@ app.get('/rules', function(req, res){
 
 app.listen(3000);
 
-// var port = process.env.PORT || 3000;
-// app.listen(port, function() {
-// 	console.log("Listening on " + port);
-// });
-
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 var everyone = nowjs.initialize(app);
 
 var rooms = [];
@@ -191,7 +182,12 @@ function updateClientId(nowUserObj){
 function getClientSession(nowUserObj){
 	var clientSessionId = unescape(nowUserObj.cookie["connect.sid"]);
 	var clientSession = sessionStore[clientSessionId];
-	return clientSession;
+	if (clientSession == undefined) {
+		console.log("could not find this user in our session store!!!");
+	}
+	else {
+		return clientSession;	
+	}
 }
 
 function updateRoomClientId(sessionId, newClientId) {
@@ -266,7 +262,7 @@ nowjs.on('connect', function() {
 		else {
 			var score = 0;
 			var wins = 0;
-			var name = "anon"+room.anonId;
+			var name = "player"+room.anonId;
 			var facebookId = 0;
 			var numGames = 0;
 			room.anonId += 1;
@@ -748,6 +744,15 @@ function updatePlayerHand(cards, playerId, type, room){
 			}
 		});
 	});
+	
+}
+
+function checkTroll(room) {
+	var numPlayers = getNumPlayers(room);
+	var playerIds = getPlayerIds(room);
+	var usersHash = room.usersHash;
+	var gameState = room.gameState;
+	
 }
 
 // loops through all players and deals their hands on the client side, also shows their names
@@ -1009,7 +1014,6 @@ function checkForFives(hand, clientId, room){
 			numFives++;
 		}
 	}
-	console.log("numfives = "+numFives);
 	// drawing X cards from discard pile
 	var numDiscard = gameState["discardPile"].length;
 	var cardsToAdd = [];
@@ -1972,6 +1976,7 @@ function getNumPlayers(room) {
 everyone.now.submitChat = function(message) {
 	var clientSession = getClientSession(this.user);
 	var roomId = clientSession.roomId;
+	console.log(roomId);
 	var room = rooms[roomId - 1];
 	var roomClients = getRoomClients(room);
 	var usersHash = room.usersHash;
