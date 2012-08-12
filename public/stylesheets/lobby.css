@@ -1,24 +1,31 @@
 #wrapper {
-	width: 1000px;
+	width: 320px;
 	height: 100%;
     margin: auto;
 }
 
 #games-list {
 	color: #eeeeee;
-	display: block;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	background-color: #333333;
-	background: -webkit-gradient(linear, left top, left bottom, from(#454545), to(#000000));
-	background: -moz-linear-gradient(top,  #454545,  #000000);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#454545', endColorstr='#000000');
-	box-shadow: inset 0 1px 0 rgba(255,255,255,0.5),0 1px 0 rgba(0,0,0,0.25),0 0 0 1px #000000,0 3px 2px rgba(0,0,0,0.25);
 	
-	width: 700px;	
-	float: left;
-	margin: 0 10px 0 00px;
-/*	padding: 5px;*/
+/*	box-shadow: inset 0 1px 0 rgba(255,255,255,0.5),0 1px 0 rgba(0,0,0,0.25),0 0 0 1px #000000,0 3px 2px rgba(0,0,0,0.25);*/
+	
+	width: 100%;
+	margin-bottom: 20px;
+	
+	background-color: #F2F2F2;
+	background-repeat: no-repeat;
+	background-image: -moz-linear-gradient(#FAFAFA, #F2F2F2);
+	background-image: -ms-linear-gradient(top, #FAFAFA, #F2F2F2);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FAFAFA), to(#F2F2F2));
+	background-image: -webkit-linear-gradient(#FAFAFA, #F2F2F2);
+	background-image: linear-gradient(top, #FAFAFA, #F2F2F2);
+	border: 1px solid #c9c9c9;
+	
+	-moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.18);
+	-webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.18);
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.18);
 }
 
 .sidebar {
@@ -45,6 +52,10 @@
 
 }
 
+a.game-item {
+	text-decoration: none;
+	display: block;
+}
 .game-item:nth-child(odd) {
 	background-color: #dddddd;
 	color: black;
@@ -73,9 +84,10 @@
 }
 
 body {
-	background-image: url("/images/black-Linen.png");
-/*	background-color: black;*/
-	font: 15px "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+		background-image: url("/images/retina_dust.png");
+	/*	background-color: black;*/
+		font: 15px "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+		padding-bottom: 10px;
 }
 
 .heading{
@@ -86,74 +98,20 @@ body {
 	margin: 0 0 20 0;
 }
 
-.games-list-heading {
-	height: 45px;
-	padding: 15px;
-	vertical-align: middle;
-	font-size: 28px;
-	font-weight: bold;
-	text-shadow: 0px -1px 1px rgba(0, 0, 0, 1);
+.games-list-heading h1 {
+	margin: 0;
+	padding: 20px;
+	color: #333;
+	
 }
 
 #lobby-title {
-	color: rgba(255,155,255,0.8);
-	text-shadow: 0px 0px 70px rgba(255, 231, 0, 1);
-}
-
-.btn {
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	padding: 10px;
-/*	text-transform: uppercase;*/
-	font-size: 14px;
-	color: #000000;
+	text-shadow: 0px 1px 0 #ccc;
+	font-size: 70px;
 	font-weight: bold;
-	cursor: pointer;
+	text-transform: uppercase;
 	text-align: center;
-	text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.5);
-}
-
-.btn:hover{
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	box-shadow: 0 1px 2px rgba(0,0,0,.2);
-}
-
-.btn:active{
-    padding: 11px 10px 9px 10px; /* push text down 1px */
-}
-
-#join-game, #learn-game {
-	width: 100px;
-	background: #E0FFFF;
-	background: -webkit-gradient(linear, left top, left bottom, from(#E0FFFF), to(#97FFFF));
-	background: -moz-linear-gradient(top,  #E0FFFF,  #97FFFF);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#E0FFFF', endColorstr='#97FFFF');
-	margin: auto;
-	margin-bottom: 20px;
-}
-
-#join-game:hover, #learn-game:hover{
-	background: #05EDFF;
-	background: -webkit-gradient(linear, left top, left bottom, from(#E0FFFF), to(#05EDFF));
-	background: -moz-linear-gradient(top,  #E0FFFF,  #05EDFF);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#E0FFFF', endColorstr='#05EDFF');
-}
-
-#join-game:active, #learn-game:active {
-	background: #E0FFFF;
-	background: -webkit-gradient(linear, left top, left bottom, from(#05EDFF), to(#E0FFFF));
-	background: -moz-linear-gradient(top,  #05EDFF,  #E0FFFF);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#05EDFF', endColorstr='#E0FFFF');
-}
-
-.rules {
-	position: relative;
-}
-
-.current-games {
-	position: relative;
-	margin: 10px;
+	color: #666;
 }
 
 #fb-login {
@@ -203,14 +161,4 @@ img {
 	color: white;
 	text-align: center;
 	padding-bottom: 20px;
-}
-
-.user-stats-wrap {
-	padding: 10px;
-}
-
-.anon-info {
-	text-align: center;
-	line-height: 130%;
-	padding: 10px;
 }

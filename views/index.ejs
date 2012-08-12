@@ -5,23 +5,15 @@
 	<script type="text/javascript">
 		$().ready(function(){
 			$('#join-game').live("click", function(e){
+				e.preventDefault();
 				document.location.href="lobby";
 			});
 			
-			$('#fb-login').live("click", function(e){
-				document.location.href="auth/facebook";
-			});
-			
 			$('#learn-game').live("click", function(e){
+				e.preventDefault();
 				document.location.href="rules";
 			});
 			
-			
-			$('#jabys').fadeIn(1500);
-			$('#join-game').delay(2000).animate({"height": "show", "opacity": "show"});
-			$('#learn-game').delay(2500).animate({"height": "show", "opacity": "show"});
-			// $('#fb-login').delay(3000).animate({"height": "show", "opacity": "show"});
-			// $('#contact').delay(4000).fadeIn();
 		});
 	</script>
 </head>
@@ -30,10 +22,10 @@
 	<div id="wrapper">
 		<div id="wrapper-inner">
 			
-			<div class="heading" id="jabys" style="display:none;">Jabys</div>
+			<div class="heading" id="jabys">Jabys</div>
 			
-			<div class="btn" id="join-game" style="display:none;">Play Me!</div>
-			<div class="btn" id="learn-game" style="display:none;">How to Play</div>
+			<a href="#" class="btn" id="join-game">Play Me!</a>
+			<a href="#" class="btn" id="learn-game">How to Play</a>
 			
 			<!-- <div id="fb-login" style="display:none;"><img src="/images/icon-fb.gif" />Log In with Facebook</div> -->
 			

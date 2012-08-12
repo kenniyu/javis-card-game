@@ -143,12 +143,14 @@ app.listen(3000);
 
 var everyone = nowjs.initialize(app);
 
-var rooms = [];
-var colors = ["#8A0F0F", "#82742B", "#089D0B", "#053685", "#E02485", "#A107B5"];
-var colorCounter = 0;
+var rooms = [],
+	colors = ["#8A0F0F", "#82742B", "#089D0B", "#053685", "#E02485", "#A107B5"],
+	colorCounter = 0,
+	NUM_ROOMS = 10;
 
-function initializeRooms(numRooms){
-	for (var i = 0; i < numRooms; i++){
+
+function initializeRooms(){
+	for (var i = 0; i < NUM_ROOMS; i++){
 		var roomObj = new Object();
 		roomObj.roomId = (i+1);
 		roomObj.usersHash = {};
@@ -1280,14 +1282,10 @@ function getNumCardsLeft(room){
 }
 
 function getLobbyClients(){
-	console.log("Before updating session store:");
-	console.log(sessionStore);
 	updateSessionStore();
-	console.log("After updating session store:");
-	console.log(sessionStore);
-	console.log("Finished updating session store");
 	
 	var clientIds = [];
+	console.log(sessionStore);
 	for (var sessionId in sessionStore){
 		if (sessionStore[sessionId].path == "/lobby"){
 			clientIds.push(sessionStore[sessionId].clientId);

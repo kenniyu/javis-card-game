@@ -1,0 +1,25 @@
+{
+  "name": "nvm",
+  "version": "0.0.1",
+  "description": "Install and managing different versions of node and installing local versions into repos.",
+  "dependencies": {
+    "mkdirp": "~0.3.3"
+  },
+  "devDependencies": {},
+  "bin": {
+    "nvm": "./bin/nvm"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brianloveswords/nvm.git"
+  },
+  "keywords": [
+    "local",
+    "node"
+  ],
+  "author": "Brian J. Brennan (@brianloveswords)",
+  "license": "http://wtfpl.org/"
+}
