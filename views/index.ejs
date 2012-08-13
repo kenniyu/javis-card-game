@@ -1,18 +1,10 @@
 <head>
 	<link rel='stylesheet' href='../stylesheets/public.css' />
 	<title>jabys - the best card game</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
 	
 	<script type="text/javascript">
 		$().ready(function(){
-			$('#join-game').live("click", function(e){
-				e.preventDefault();
-				document.location.href="lobby";
-			});
-			
-			$('#learn-game').live("click", function(e){
-				e.preventDefault();
-				document.location.href="rules";
-			});
 			
 		});
 	</script>
@@ -24,8 +16,8 @@
 			
 			<div class="heading" id="jabys">Jabys</div>
 			
-			<a href="#" class="btn" id="join-game">Play Me!</a>
-			<a href="#" class="btn" id="learn-game">How to Play</a>
+			<a href="lobby" class="btn" id="join-game">Play Me!</a>
+			<a href="rules" class="btn" id="learn-game">How to Play</a>
 			
 			<!-- <div id="fb-login" style="display:none;"><img src="/images/icon-fb.gif" />Log In with Facebook</div> -->
 			

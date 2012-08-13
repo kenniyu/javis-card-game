@@ -1,27 +1,20 @@
 <html>
 <head>
 	<title>jabys - big2 on roids</title>
+
+	<link rel="stylesheet" media="screen and (min-width: 481px)" href="../stylesheets/lobby.css" />
+		
+	<link rel="stylesheet" media="screen and (min-width: 320px) and (max-width: 480px)" href="../stylesheets/lobby_iphone_320.css" />
 	
-	<link rel='stylesheet' href='../stylesheets/lobby.css' />
-	<link rel='stylesheet' href='../stylesheets/tipsy.css' />
+	
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
 	
 	<script src="/javascripts/jquery-ui-1.8.16.custom.min.js"></script>
 	<!-- // <script src="/nowjs/now.js"></script> -->
-	<script src="/javascripts/jquery.masonry.min.js"></script>
-	<script src="/javascripts/jquery.tipsy.js"></script>
 	
 	<script type="text/javascript">	// juicy stuff
 		$().ready(function(){
 			// $('#games-list').masonry();
-			$('#fb-login').live("click", function(e){
-				document.location.href="auth/facebook";
-			});
-			
-			$('.game-item').live("click", function(e){
-				var roomId = $(this).attr('data-room-id');
-				document.location.href="game/"+roomId;
-				e.preventDefault();
-			});
 			
 			now.updateClientCount = function(roomId, numPlayers){
 				$('#room-'+roomId).find('.game-players').text(numPlayers + "/4 players");
@@ -40,15 +33,14 @@
 
 <body>
 	<div id="wrapper">
-		<div class="heading" id="lobby-title">Lobby</div>
 		<div id="games-list">
 			<div class="games-list-heading">
-				<h1>Join a room</h1>
+				<h1>Lobby</h1>
 			</div>
 			
 			
 			<% myRooms.forEach(function(room, index){ %>
-				<a href="#" class="game-item" id="room-<%= room.roomId %>" data-room-id="<%= room.roomId %>">
+				<a href="game/<%= room.roomId %>" class="game-item" id="room-<%= room.roomId %>" data-room-id="<%= room.roomId %>">
 					<div class="game-id">Game <%= room.roomId %></div>
 					<div class="game-players">
 						<%= Object.size(room.usersHash) %>/4

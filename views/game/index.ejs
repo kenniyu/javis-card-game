@@ -2,8 +2,13 @@
 <head>
 	<title>jabys - big2 on roids</title>
 	
-	<link rel='stylesheet' href='../stylesheets/game.css' />
+	<link rel='stylesheet' media="screen and (min-width: 481px)" href='../stylesheets/game.css' />
 	<link rel='stylesheet' href='../stylesheets/tipsy.css' />
+			
+	<link rel="stylesheet" media="screen and (min-width: 320px) and (max-width: 480px)" href="../stylesheets/game_iphone_320.css" />
+	
+	
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
 	
 	<script src="/javascripts/jquery-ui-1.8.16.custom.min.js"></script>
 	<script src="/javascripts/jquery.tipsy.js"></script>
@@ -12,7 +17,6 @@
 		var players = [];
 		var gameId = 0;
 		var currentCombosPlayed = 0;
-		var randomLeftOffset = 0;
 		var current_cardback_file_name = "bicycle_blue.png";
 		var chatFlashInterval, chatFlashTimeout;
 		var windowFocused = false;
@@ -275,19 +279,19 @@
 	
 			now.showStartButton = function(){
 				if ($('#start-btn').length == 0){
-					$('#game-controls').prepend('<span id="start-btn" class="btn">Start</span>');
+					$('#game-controls').prepend('<a href="#" id="start-btn" class="btn">Start</a>');
 				}
 			}
 	
 			now.showMakeMoveButton = function(){
 				if ($('#make-move-btn').length == 0){
-					$('#game-controls').append('<span id="make-move-btn" class="btn">Make move</span>');
+					$('#game-controls').append('<a href="#" id="make-move-btn" class="btn">Make move</a>');
 				}
 			}
 	
 			now.showMakePassMoveButton = function(){
 				if ($('#make-pass-move-btn').length == 0){
-					$('#game-controls').append('<span id="make-pass-move-btn" class="btn">Pass</span>');
+					$('#game-controls').append('<a href="#" id="make-pass-move-btn" class="btn">Pass</a>');
 				}
 			}
 	
@@ -322,13 +326,14 @@
 				$('#game-jack-message').hide();
 				$('#game-error-message').hide();
 				// show game over
-				$('#game-controls').append('<span id="game-over-btn" class="btn">Game Over (Play Again)</span>');
+				$('#game-controls').append('<a href="#" id="game-over-btn" class="btn">Game Over (Play Again)</a>');
 			}
 	
 			// client button actions
 			$('#start-btn').live("click", function(e){
 				now.initGame();
 				$(this).remove();
+				e.preventDefault();
 			});
 	
 			$('#make-move-btn').live("click", function(e){
@@ -351,6 +356,7 @@
 				$('#game-seven-message').hide();
 				$('#game-ten-message').hide();
 				now.sendMove(hand);
+				e.preventDefault();
 			});
 	
 			$('#make-pass-move-btn').live("click", function(e){
@@ -359,18 +365,25 @@
 		
 				$(this).remove();
 				now.sendPassMove();
+				
+				e.preventDefault();
 			});
 	
 			$('#game-over-btn').live("click", function(e){
 				$(this).remove();
 				now.waitForGame();
+				e.preventDefault();
 			});
 	
 			// client dealing	
 			now.dealPersonalHand = function(hand){
+				var slotWidth 	= 	parseInt($('#slot-bot').width()),
+					cardWidth 	= 	parseInt($('#sample-card').first().width()),
+					maxWidth	=	slotWidth - cardWidth;
+				console.log(cardWidth);
 				$('#slot-bot').empty();
 				hand.forEach(function(card, index){
-					var leftOffset = index*(520-100)/(hand.length-1);
+					var leftOffset = index*maxWidth/(hand.length-1);
 					var cardHtml = getCardHtml(card, true);
 					var cardDiv = $(''+cardHtml).css("left", leftOffset);
 					$('#slot-bot').append(cardDiv);
@@ -462,8 +475,12 @@
 					}
 				}
 				$(div).empty();
+				
+				var slotWidth 	= 	parseInt($(div).width()),
+					cardWidth 	= 	parseInt($('#sample-card').width()),
+					maxWidth 	= 	slotWidth - cardWidth;
 				hand.forEach(function(card, index){
-					var leftOffset = index*($(div).width()-100)/(hand.length-1);
+					var leftOffset = index*(maxWidth)/(hand.length-1);
 					var cardHtml = getCardHtml("", false);
 					var cardDiv = $(''+cardHtml).css("left", leftOffset);
 					$(div).append(cardDiv);
@@ -498,12 +515,16 @@
 			}
 	
 			// add cards to slot middle
-			now.addToCurrentPlay = function(hand){
-				randomLeftOffset = 50 + Math.floor(30*Math.random());
+			now.addToCurrentPlay = function(hand) {
+				var cardWidth = parseInt($('#sample-card').width()),
+					cardHeight = parseInt($('#sample-card').height()),
+					randomLeftOffset = cardWidth/2 + Math.floor(30*Math.random()),
+					verticalOffset = cardHeight*23/130;
+					
 				hand.forEach(function(card, index){
 					var cardHtml = getCardHtml(card, true);
-					var leftOffset = index * 30 + randomLeftOffset;			
-					var cardDiv = $(''+cardHtml).css("left", leftOffset).css("top", currentCombosPlayed%4*23);
+					var leftOffset = index * (cardWidth*3/10) + randomLeftOffset;			
+					var cardDiv = $(''+cardHtml).css("left", leftOffset).css("top", currentCombosPlayed%4*verticalOffset);
 					$('#slot-middle').append(cardDiv);
 				});
 				currentCombosPlayed ++;
@@ -635,14 +656,18 @@
 	
 			function readjustDivs(div, margin){
 				var numCards = $(div).children().length;
-				var increment = 420/(numCards - 1);
+				var slotWidth = parseInt($(div).width());
+				var cardWidth = parseInt($('.card').width());
+				var maxWidth = slotWidth - cardWidth;
+
+				var increment = maxWidth/(numCards - 1);
 		
 				if (increment <= 50){
 					var leftMargin = 0;
 				}
 				else{
 					increment = 50;
-					var leftMargin = (420 - (numCards-1)*increment)/2;	
+					var leftMargin = (maxWidth - (numCards-1)*increment)/2;	
 				}
 				$(div).children().each(function(index, cardDiv){
 					if (margin){
@@ -993,8 +1018,11 @@
 				}
 			});
 			
-			$('.lobby-icon').live("click", function(e){
-				document.location.href="/lobby";
+			$('.lobby-icon').live("click", function(e) {
+				var confirmLobby = confirm("You are about to leave the game and go to the lobby.  Are you sure?");
+				if (confirmLobby) {
+					document.location.href="/lobby";
+				}
 			});
 			
 			now.redirectToLobby = function(message) {
@@ -1047,7 +1075,46 @@
 <body>
 	<div id="wrapper">
 		<div id="game-board" tabindex=1>
-			<div id="card_options">
+		
+			<div class="game-slots">		
+				<div id="slot-bot-container" class="slot-container">
+					<div id="slot-bot-label" class="player-name"></div>
+					<div id="slot-bot" class="slot"></div>
+					<div id="slot-bot-sc"></div>
+				</div>
+			
+				<div id="slot-left-container" class="slot-container horizontal-left">
+					<div id="slot-left-label" class="player-name"></div>
+					<div id="slot-left" class="slot"></div>
+				</div>
+			
+				<div id="slot-top-container" class="slot-container">
+					<div id="slot-top-label" class="player-name"></div>
+					<div id="slot-top" class="slot"></div>
+				</div>
+			
+				<div id="slot-right-container" class="slot-container horizontal">
+					<div id="slot-right-label" class="player-name"></div>
+					<div id="slot-right" class="slot"></div>
+				</div>		
+			
+				<div id="stage">
+					<div id="slot-middle">
+					</div>
+			
+					<div id="slot-discard">
+					</div>
+				</div>
+			
+				<div id="game-controls">
+					<div class="game-feedback" id="game-seven-message" style="display:none;"></div>
+					<div class="game-feedback" id="game-ten-message" style="display:none;"></div>
+					<div class="game-feedback" id="game-jack-message" style="display:none;">Play Lower!</div>
+					<div class="game-feedback" id="game-error-message" style="display:none;"></div>
+				</div>
+			</div>
+			
+			<div id="card-options">
 				<a href="#" data-cardback-name="bicycle_blue.png" class="card_select"><img src="/images/cardback/bicycle_blue.png"/></a>
 				<a href="#" data-cardback-name="bicycle_red.jpg" class="card_select"><img src="/images/cardback/bicycle_red.jpg"/></a>
 				<a href="#" data-cardback-name="mirror.png" class="card_select"><img src="/images/cardback/mirror.png"/></a>
@@ -1059,37 +1126,6 @@
 				<a href="#" data-cardback-name="erdnase_acorn_green.jpg" class="card_select"><img src="/images/cardback/erdnase_acorn_green.jpg"/></a>
 				<a href="#" data-cardback-name="erdnase_smith_red.jpg" class="card_select"><img src="/images/cardback/erdnase_smith_red.jpg"/></a>
 				<a href="#" data-cardback-name="domo.jpg" class="card_select"><img src="/images/cardback/domo.jpg"/></a>
-			</div>			
-			<div id="slot-bot-container" class="slot-container"></div>
-			<div id="slot-bot-label" class="player-name"></div>
-			<div id="slot-bot" class="slot"></div>
-			<div id="slot-bot-sc"></div>
-			
-			<div id="slot-left-container" class="slot-container horizontal-left"></div>
-			<div id="slot-left-label" class="player-name horizontal-left"></div>
-			<div id="slot-left" class="slot horizontal-left"></div>
-			
-			<div id="slot-top-container" class="slot-container"></div>
-			<div id="slot-top-label" class="player-name"></div>
-			<div id="slot-top" class="slot"></div>
-			
-			<div id="slot-right-container" class="slot-container horizontal"></div>		
-			<div id="slot-right-label" class="player-name horizontal"></div>
-			<div id="slot-right" class="slot horizontal"></div>
-			
-			<div id="stage">
-				<div id="slot-middle">
-				</div>
-			
-				<div id="slot-discard">
-				</div>
-			</div>
-			
-			<div id="game-controls">
-				<div class="game-feedback" id="game-seven-message" style="display:none;"></div>
-				<div class="game-feedback" id="game-ten-message" style="display:none;"></div>
-				<div class="game-feedback" id="game-jack-message" style="display:none;">Play Lower!</div>
-				<div class="game-feedback" id="game-error-message" style="display:none;"></div>
 			</div>
 		</div>		
 		
@@ -1144,5 +1180,7 @@
 		
 	
 	<audio id="ping" src="http://www.schillmania.com/projects/soundmanager2/demo/_mp3/mouseover.mp3" preload="auto"></audio>
+	
+	<div id="sample-card" class="card" style="display: none;"></div>
 </body>
 </html>

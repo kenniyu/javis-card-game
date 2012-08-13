@@ -9,36 +9,33 @@
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
-	-moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.18);
-	-webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.18);
-	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.18);
-	background-color: #F2F2F2;
+	color: #666;
+	padding-top: 30px;
+	margin: auto;
+}
+
+body {
+	padding: 5px 0;
+	margin: 0;
+/*	background-image: url("/images/retina_dust.png");*/
+/*	background-color: black;*/
+	background-image: url("/images/diamond_upholstery.png");
+	
+/*	background-color: #F2F2F2;
 	background-repeat: no-repeat;
 	background-image: -moz-linear-gradient(#FAFAFA, #F2F2F2);
 	background-image: -ms-linear-gradient(top, #FAFAFA, #F2F2F2);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FAFAFA), to(#F2F2F2));
 	background-image: -webkit-linear-gradient(#FAFAFA, #F2F2F2);
-	background-image: linear-gradient(top, #FAFAFA, #F2F2F2);
-	color: #666;
-	top: 18%;
-	padding: 40px 10px;
-	width: 300px;
-	height: 400px;
-	margin: auto;
-}
-
-body {
-	padding: 0;
-	margin: 0;
-	background-image: url("/images/retina_dust.png");
-/*	background-color: black;*/
+	background-image: linear-gradient(top, #FAFAFA, #F2F2F2);*/
 	font: 15px "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
 }
 
 
 #jabys{
+	font: 70px "Times New Roman", "Times";
 	text-shadow: 0px 1px 0 #ccc;
-	font-size: 70px;
+/*	font-size: 70px;*/
 	font-weight: bold;
 	text-transform: uppercase;
 	text-align: center;

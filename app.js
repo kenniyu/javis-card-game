@@ -111,7 +111,7 @@ app.get('/lobby', function(req, res){
 app.get('/game/:id', function(req, res){
 	beforeFilterSession(req);
 	var roomId = req.params.id;
-	if (roomId < 1 || roomId > 3){
+	if (roomId < 1 || roomId > NUM_ROOMS){
 		res.redirect('lobby');
 	}
 	else {
@@ -146,7 +146,7 @@ var everyone = nowjs.initialize(app);
 var rooms = [],
 	colors = ["#8A0F0F", "#82742B", "#089D0B", "#053685", "#E02485", "#A107B5"],
 	colorCounter = 0,
-	NUM_ROOMS = 10;
+	NUM_ROOMS = 20;
 
 
 function initializeRooms(){
@@ -164,7 +164,7 @@ function initializeRooms(){
 	}
 }
 
-initializeRooms(3);
+initializeRooms();
 
 function getGameState(nowUserObj){
 	var clientSession = getClientSession(nowUserObj);

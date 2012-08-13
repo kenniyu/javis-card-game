@@ -1,0 +1,439 @@
+body {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+	color: #cccccc;
+	background-image: url("/images/black-Linen.png");
+	width: 320px;
+	
+}
+
+#wrapper {
+	position: relative;
+	overflow: hidden;
+	width: 320px;
+	margin: auto;
+}
+
+#wrapper #game-board {
+	position: relative;
+	padding-top: 15px;
+}
+
+#wrapper #game-board .game-slots {
+	position: relative;
+	width: 320px;	
+	height: 500px;
+}
+
+
+#wrapper #game-board #card-options {
+	width: 320px;
+	padding: 10px 0;
+	white-space: nowrap;
+	overflow-x: scroll;
+	overflow-y: hidden;	
+	text-align: center;
+}
+
+#wrapper #game-board #card-options img {
+	display: inline-block;
+	width: 20px;
+	height: 30px;
+}
+
+.game-slots .slot-container {
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	position: absolute;
+	width: 250px;
+	height: 70px;
+	background-color: rgba(255,255,255,0.10);
+}
+
+.game-slots #stage {
+	
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
+	border-width: 3px 1px 1px 3px;
+	
+	border-bottom-color: rgba(255,255,255,0.25);
+	border-right-color: rgba(255,255,255,0.25);
+	border-top-color: rgba(0,0,0,0.1);
+	border-left-color: rgba(0,0,0,0.1);
+	
+	background-color: rgba(255,255,255,0.10);
+	
+	width: 130px;
+	height: 180px;
+	
+	position: absolute;
+	top: 80px;
+	left: 90px;
+}
+
+.game-slots #slot-middle {
+	width: 150px;
+	height: 100px;
+	
+}
+
+.game-slots #slot-discard {
+	width: 150px;
+	height: 80px;
+	position: absolute;
+	top: 100px;
+}
+
+.slot-container .player-name {
+	font-size: 10px;
+}
+
+.slot-container .slot {
+	position: absolute;
+	width: 250px;
+	height: 60px;
+}
+
+#slot-right-container {
+	top: 170px;
+	right: -70px;
+}
+
+#slot-right-container #slot-right-label {
+	text-align: center;
+	width: 250px;
+	position: absolute;
+	top: -12px;
+}
+
+#slot-right-container #slot-right {
+	position: absolute;
+	width: 240px;
+	left: 4px;
+	top: 3px;
+}
+
+#slot-bot-container {
+	top: 340px;
+	width: 310px;
+	left: 0px;
+}
+
+#slot-bot-container #slot-bot {
+	position: absolute;
+	width: 300px;
+	left: 4px;
+	top: 3px;
+}
+
+#slot-bot-sc {
+	display: none;
+}
+
+#slot-left-container {
+	top: 170px;
+	left: -80px;
+}
+
+#slot-left-container #slot-left-label {
+	text-align: center;
+	width: 250px;
+	position: absolute;
+	top: -12px;
+}
+
+#slot-left-container #slot-left {
+	position: absolute;
+	width: 240px;
+	left: 4px;
+	top: 3px;
+}
+
+
+#slot-top-container {
+	top: 0px;
+	left: 35px;
+}
+
+#slot-top-container #slot-top-label {
+	text-align: center;
+	width: 250px;
+	position: absolute;
+	top: -12px;
+}
+
+#slot-top-container #slot-top {
+	position: absolute;
+	width: 240px;
+	left: 4px;
+	top: 3px;
+}
+
+.black {
+	color: black;
+}
+
+.red {
+	color: #ff0000;
+}
+
+.card {
+	background-image: url("/images/cardback/bicycle_blue.png");
+	background-size: 33px 60px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #333333;
+	position: absolute;
+	font-size: 18px;
+	width: 33px;
+	height: 60px;
+	-webkit-box-shadow: 2px 2px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 2px 2px 2px rgba(0,0,0,.2);
+	box-shadow: 2px 2px 2px rgba(0,0,0,.2);
+	z-index: 20;
+}
+
+.front {
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 0px;
+	background-color: #ffffff;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+
+.spotA1 { font-size: 12px; position: absolute; left: 0.7em; top: 0.5em; }
+.spotA2 { font-size: 12px;  position: absolute; left: 0.7em; top: 1.333em; }
+.spotA3 { font-size: 12px;  position: absolute; left: 0.7em; top: 1.75em; }
+.spotA4 { font-size: 12px;  position: absolute; left: 0.7em; top: 2.167em; }
+.spotA5 { font-size: 12px;  position: absolute; left: 0.7em; top: 3em; }
+.spotB1 { font-size: 12px;  position: absolute; left: 1.2em; top: 0.5em; }
+.spotB2 { font-size: 12px;  position: absolute; left: 1.2em; top: 1.125em; }
+.spotB3 { font-size: 12px;  position: absolute; left: 1.2em; top: 1.75em; }
+.spotB4 { font-size: 12px;  position: absolute; left: 1.2em; top: 2.875em; }
+.spotB5 { font-size: 12px;  position: absolute; left: 1.2em; top: 3em; }
+.spotC1 { font-size: 12px;  position: absolute; left: 1.7em; top: 0.5em; }
+.spotC2 { font-size: 12px;  position: absolute; left: 1.7em; top: 1.333em; }
+.spotC3 { font-size: 12px;  position: absolute; left: 1.7em; top: 1.75em; }
+.spotC4 { font-size: 12px;  position: absolute; left: 1.7em; top: 2.167em; }
+.spotC5 { font-size: 12px;  position: absolute; left: 1.7em; top: 3em; }
+
+.horizontal {
+	-webkit-transform:rotate(90deg);
+	-o-transform:rotate(90deg);
+	-moz-transform:rotate(90deg);
+	-ms-transform:rotate(90deg);
+}
+
+.horizontal-left {
+	-webkit-transform:rotate(-90deg);
+	-o-transform:rotate(-90deg);
+	-moz-transform:rotate(-90deg);
+	-ms-transform:rotate(-90deg);
+}
+
+.ace {
+	font-size: 150%;
+	position: absolute;
+	left: 0.38em;
+	top:  0.35em;
+}
+.index {
+	font-size: 53%;
+	font-weight: bold;
+	text-align: center;
+	position: absolute;
+	left: 0.20em;
+	top:  0.25em;
+	line-height: 100%;
+}
+
+.face {
+	border: 1px solid #000000;
+	position: absolute;
+	left: 0.45em;
+	top:  0.56em;
+	width:  1em;
+	height: 2.3em;
+}
+
+/*game controls*/
+
+.btn:hover{
+	border-top-color: #aaaaaa;
+	border-left-color: #aaaaaa;
+	border-right-color: #aaaaaa;
+	border-bottom-color: #aaaaaa;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	background-color: #eeeeee;
+}
+
+.btn:active{
+    padding: 11px 10px 9px 10px; /* push text down 1px */
+	background-color: #eeeeee;
+}
+
+#game-controls {
+	position: absolute;
+	top: 270px;
+	left: 90px;
+	width: 130px;
+	height: 40px;
+	z-index: 10;
+}
+
+#wait-for-game, #auto-pass {
+	color: black;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border-width: 1px;
+	border-style: solid;
+	border-top-color: #cccccc;
+	border-left-color: #cccccc;
+	border-right-color: #aaaaaa;
+	border-bottom-color: #aaaaaa;
+	position: absolute;
+	padding: 10px;
+	text-transform: uppercase;
+	font-size: 12px;
+	font-weight: bold;
+	background: #dddddd;
+	left: 0px;
+	top: 0px;
+	margin: auto;
+}
+
+.game-feedback {
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border-width: 1px;
+	border-style: solid;
+	border-top-color: #cccccc;
+	border-left-color: #cccccc;
+	border-right-color: #aaaaaa;
+	border-bottom-color: #aaaaaa;
+	position: absolute;
+	padding: 7px 5px;
+	text-transform: uppercase;
+	text-shadow: 0 1px 0 #fff;
+	font-size: 7px;
+	font-weight: bold;
+	color: #000;
+	
+	background: #eeeeee; /* Old browsers */
+	background: -moz-linear-gradient(top,  #eeeeee 0%, #cccccc 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #eeeeee 0%,#cccccc 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #eeeeee 0%,#cccccc 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #eeeeee 0%,#cccccc 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #eeeeee 0%,#cccccc 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+	
+	top: 0px;
+	margin: auto;
+}
+
+#game-error-message {
+	left: 0;
+	top: 30px;
+	width: 110px;
+}
+
+#game-jack-message {
+	left: 0;
+	top: 30px;
+	width: 110px;
+}
+
+#game-seven-message {
+	left: 0;
+	top: 30px;
+	width: 110px;
+}
+
+#game-ten-message {
+	left: 0;
+	top: 30px;
+	width: 110px;
+	letter-spacing: -1px;
+}
+
+
+a.btn {
+	text-decoration: none;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	padding: 7px;
+	text-transform: uppercase;
+	font-size: 9px;
+	font-weight: bold;
+	margin-right: 5px;
+	float: left;
+
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+#make-move-btn, #start-btn {
+	-moz-box-shadow: inset 0 1px 0 #cff4ba,inset 1px 0 0 #cff4ba,inset -1px 0 0 #cff4ba,inset 0 -1px 0 #cff4ba,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: inset 0 1px 0 #cff4ba,inset 1px 0 0 #cff4ba,inset -1px 0 0 #cff4ba,inset 0 -1px 0 #cff4ba,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
+	box-shadow: inset 0 1px 0 #cff4ba,inset 1px 0 0 #cff4ba,inset -1px 0 0 #cff4ba,inset 0 -1px 0 #cff4ba,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
+	
+	background: #cff4ba; /* Old browsers */
+	background: -moz-linear-gradient(top,  #cff4ba 0%, #9ee881 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cff4ba), color-stop(100%,#9ee881)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #cff4ba 0%,#9ee881 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #cff4ba 0%,#9ee881 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #cff4ba 0%,#9ee881 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #cff4ba 0%,#9ee881 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cff4ba', endColorstr='#9ee881',GradientType=0 ); /* IE6-9 */
+	color: #000;
+	text-shadow: 0 1px 0 #fff;
+}
+
+#make-move-btn:hover, #start-btn:hover {
+	background: #b4e391; /* Old browsers */
+	background: -moz-linear-gradient(top,  #b4e391 0%, #61c419 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b4e391), color-stop(100%,#61c419)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #b4e391 0%,#61c419 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #b4e391 0%,#61c419 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #b4e391 0%,#61c419 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #b4e391 0%,#61c419 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4e391', endColorstr='#61c419',GradientType=0 ); /* IE6-9 */
+}
+
+#make-pass-move-btn {
+	-moz-box-shadow: inset 0 1px 0 #4a81a3,inset 1px 0 0 #4a81a3,inset -1px 0 0 #4a81a3,inset 0 -1px 0 #4a81a3,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: inset 0 1px 0 #4A81A3,inset 1px 0 0 #4A81A3,inset -1px 0 0 #4A81A3,inset 0 -1px 0 #4A81A3,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
+	box-shadow: inset 0 1px 0 #4A81A3,inset 1px 0 0 #4A81A3,inset -1px 0 0 #4A81A3,inset 0 -1px 0 #4A81A3,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
+	
+	color: #fff;
+	background-color: #5A95BD;
+	background-repeat: no-repeat;
+	background-image: -moz-linear-gradient(#83B6D1, #5A95BD);
+	background-image: -ms-linear-gradient(top, #83B6D1, #5A95BD);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#83B6D1), to(#5A95BD));
+	background-image: -webkit-linear-gradient(#83B6D1, #5A95BD);
+	background-image: linear-gradient(top, #83B6D1, #5A95BD);	
+}
+
+#make-pass-move-btn:hover {
+	background-color: #4E87B1;
+	background-repeat: no-repeat;
+	background-image: -moz-linear-gradient(#71ACC9, #4E87B1);
+	background-image: -ms-linear-gradient(top, #71ACC9, #4E87B1);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#71ACC9), to(#4E87B1));
+	background-image: -webkit-linear-gradient(#71ACC9, #4E87B1);
+	background-image: linear-gradient(top, #71ACC9, #4E87B1);
+}
+
+#make-move-btn:active, #start-btn:active, #make-pass-move-btn:active {
+	-moz-box-shadow: inset 0 1px 0 rgba(10, 10, 10, 0.5),inset 1px 0 0 rgba(10, 10, 10, 0.3),inset -1px 0 0 rgba(10, 10, 10, 0.4),inset 0 -1px 0 rgba(10, 10, 10, 0.5),inset 0 1px 5px rgba(0, 0, 0, 0.3),0 1px 0 rgba(255, 255, 255, 0.3);
+	-webkit-box-shadow: inset 0 1px 0 rgba(10, 10, 10, 0.5),inset 1px 0 0 rgba(10, 10, 10, 0.3),inset -1px 0 0 rgba(10, 10, 10, 0.4),inset 0 -1px 0 rgba(10, 10, 10, 0.5),inset 0 1px 5px rgba(0, 0, 0, 0.3),0 1px 0 rgba(255, 255, 255, 0.3);
+	box-shadow: inset 0 1px 0 rgba(10, 10, 10, 0.5),inset 1px 0 0 rgba(10, 10, 10, 0.3),inset -1px 0 0 rgba(10, 10, 10, 0.4),inset 0 -1px 0 rgba(10, 10, 10, 0.5),inset 0 1px 5px rgba(0, 0, 0, 0.3),0 1px 0 rgba(255, 255, 255, 0.3);
+}

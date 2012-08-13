@@ -1,0 +1,57 @@
+#wrapper {
+	width: 470px;
+    margin: auto;
+	background-color: rgba(255, 255, 255, 0.5);
+	border: 1px solid #ccc;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.games-list-heading h1 {
+	font: 9px "Times New Roman", "Times";
+	font-weight: bold;
+	text-align: center;
+	color: #333;
+	border-bottom: 1px solid #ccc;
+	box-shadow: 0 1px 0 #fff;
+	margin: 0;
+	padding: 20px;
+	text-transform: uppercase;
+}
+
+#games-list {
+	color: #eeeeee;
+	-moz-border-radius: 5px;
+	border-radius: 5px;	
+}
+
+a.game-item {
+	text-decoration: none;
+	display: block;
+	color: black;
+	height: 50px;
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+	box-shadow: 0 1px 0 #fff;
+	-webkit-box-shadow: 0 1px 0 #fff;
+    
+	line-height: 160%;
+}
+
+.game-id {
+	font-weight: bold;
+}
+
+.game-item:hover {
+	background-color: #F1F1F1;
+}
+
+body {
+		background-image: url("/images/diamond_upholstery.png");
+	/*	background-color: black;*/
+		font: 15px "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+		padding: 5px 0;
+/*		width: 320px;*/
+		margin: auto;
+}
