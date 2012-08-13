@@ -12,7 +12,7 @@
 	
 	<script src="/javascripts/jquery-ui-1.8.16.custom.min.js"></script>
 	<script src="/javascripts/jquery.tipsy.js"></script>
-	
+ 
 	<script type="text/javascript">	// juicy stuff
 		var players = [];
 		var gameId = 0;
@@ -249,13 +249,16 @@
 			var top = 30;
 			var left = 0;
 	
-			now.showCurrentPlayer = function(clientId){
-				$('.player-name').each(function(){
+			now.showCurrentPlayer = function(userObj){
+				var clientId = userObj['id'],
+					color = userObj['color'];
+					
+				$('.player-name').each(function() {
 					if ($(this).attr("data-id") == clientId){
-						$(this).css("color", "#33cc33").css("font-weight", "bold");
+						$(this).css("color", color).css("font-weight", "bold");
 					}
 					else{
-						$(this).css("color", "#cccccc").css("font-weight", "normal");
+						$(this).css("color", color).css("font-weight", "normal");
 					}
 				});
 			}
@@ -330,13 +333,13 @@
 			}
 	
 			// client button actions
-			$('#start-btn').live("click", function(e){
+			$('#start-btn').live("mousedown", function(e){
 				now.initGame();
 				$(this).remove();
 				e.preventDefault();
 			});
 	
-			$('#make-move-btn').live("click", function(e){
+			$('#make-move-btn').live("mousedown", function(e){
 				var selectedCards = $('.selected');
 				var hand = [];
 				var value;
@@ -359,7 +362,7 @@
 				e.preventDefault();
 			});
 	
-			$('#make-pass-move-btn').live("click", function(e){
+			$('#make-pass-move-btn').live("mousedown", function(e){
 				$('#make-move-btn').remove();
 				$('#game-jack-message').hide();
 		
@@ -369,7 +372,7 @@
 				e.preventDefault();
 			});
 	
-			$('#game-over-btn').live("click", function(e){
+			$('#game-over-btn').live("mousedown", function(e){
 				$(this).remove();
 				now.waitForGame();
 				e.preventDefault();
@@ -681,7 +684,7 @@
 					else{
 						var leftOffset = leftMargin+index*increment;
 					}
-					$(this).css("left", leftOffset);
+					$(this).css("left", leftOffset).css("background-image", "url(/images/cardback/"+current_cardback_file_name+")");
 				});
 		
 			}
@@ -751,7 +754,7 @@
 				}
 			}
 	
-			$('.card').live("click", function(e){
+			$('.card').live("mousedown", function(e){
 				if ($(this).find('.front').length > 0 && $(this).closest("#slot-middle").length == 0){
 					if ($(this).hasClass('selected')){
 						$(this).animate({top: '+=40'}, 10, "linear");
@@ -767,7 +770,7 @@
 				var message = $(this).val().trim();
 				if (e.keyCode == 13 && message != ""){
 					if (!$('#chat-messages').is(':visible')){
-						$('.chat-bar-button').click();
+						$('.chat-bar-button').trigger('mousedown');
 					}
 					now.submitChat(message);
 					$(this).val("");
@@ -843,7 +846,7 @@
 			// 	$('#chat-bar').slideToggle(100);
 			// });
 			
-			$('.chat-bar-button').live("click", function(e){
+			$('.chat-bar-button').live("mousedown", function(e){
 				$('.icon').toggle();
 				$('.input-box').toggle();
 				$('#clients-header, #clients-list, #chat-header, #chat-messages').toggle();
@@ -956,13 +959,13 @@
 			$('#game-board').live("keypress", function(e){
 				var cardIndex = keyMapping[e.keyCode];
 				if (e.keyCode == 13){
-					$('#make-move-btn').click();
+					$('#make-move-btn').trigger('mousedown');
 				}
 				else if (e.keyCode == 112){
-					$('#make-pass-move-btn').click();
+					$('#make-pass-move-btn').trigger('mousedown');
 				}
 				else if (cardIndex != undefined){
-					$('#slot-bot').find(".card:nth-child("+cardIndex+")").click();
+					$('#slot-bot').find(".card:nth-child("+cardIndex+")").trigger('mousedown');
 				}
 			});
 			
@@ -1010,7 +1013,7 @@
 				}
 				else if (e.keyCode == 40){
 					// unselect all selected cards
-					$('.selected').click();
+					$('.selected').trigger('mousedown');
 				}
 				else if (e.keyCode == 8){
 					// backspace
@@ -1018,7 +1021,7 @@
 				}
 			});
 			
-			$('.lobby-icon').live("click", function(e) {
+			$('.lobby-icon').live("mousedown", function(e) {
 				var confirmLobby = confirm("You are about to leave the game and go to the lobby.  Are you sure?");
 				if (confirmLobby) {
 					document.location.href="/lobby";
@@ -1026,13 +1029,13 @@
 			});
 			
 			now.redirectToLobby = function(message) {
-				$('.lobby-icon').click();
+				$('.lobby-icon').trigger('mousedown');
 			}
 			
 			$('.lobby-icon').tipsy({gravity: 'w', fade: true, html: true, theme: "white"});			
 			$('.rules-icon').tipsy({gravity: 'e', fade: true, html: true, theme: "white"});			
 			
-			$('.rules-icon').live("click", function(e){
+			$('.rules-icon').live("mousedown", function(e){
 				$(this).attr('data-loads', parseInt($(this).attr('data-loads')) + 1);
 				$('#rules').animate({"height": "toggle"}, 1);
 				if ($(this).attr('data-loads') % 2 == 1){
@@ -1055,7 +1058,7 @@
 					$(this).css("background-image", "url('/images/cardback/"+cardback_file_name+"')");
 				});
 				e.preventDefault();
-			})
+			});
 			
 			
 		});
@@ -1105,7 +1108,6 @@
 					<div id="slot-discard">
 					</div>
 				</div>
-			
 				<div id="game-controls">
 					<div class="game-feedback" id="game-seven-message" style="display:none;"></div>
 					<div class="game-feedback" id="game-ten-message" style="display:none;"></div>

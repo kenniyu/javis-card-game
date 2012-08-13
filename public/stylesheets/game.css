@@ -1,3 +1,9 @@
+body {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+	color: #cccccc;
+	background-image: url("/images/diamond_upholstery.png");
+}
+
 #wrapper {
 	position: relative;
 	width: 1200px;
@@ -94,13 +100,6 @@
 	height: 4.5em;
 }
 
-
-body {
-	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
-	color: #cccccc;
-	background-image: url("/images/black-Linen.png");
-}
-
 .heading {
 	font-size: 18px;
 	text-align: center;
@@ -126,12 +125,7 @@ body {
 	border: 1px solid;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	border-width: 3 1 1 3;
-	border-bottom-color: rgba(255,255,255,0.25);
-	border-right-color: rgba(255,255,255,0.25);
-	border-top-color: rgba(0,0,0,0.1);
-	border-left-color: rgba(0,0,0,0.1);
-	background-color: rgba(255,255,255,0.10);
+	box-shadow: inset 1px 1px 3px #aaa;
 	width: 535px;
 	height: 200px;
 	position: absolute;
@@ -141,13 +135,13 @@ body {
 
 #slot-middle {
 	width: 300px;
-	height: 240px;
+	height: 200px;
 	position: absolute;
 }
 
 #slot-discard {
-	width: 250px;
-	height: 240px;
+	width: 210px;
+	height: 200px;
 	position: absolute;
 	left: 320px;
 }
@@ -159,6 +153,7 @@ body {
 	left: 5px;
 	font-size: 11px;
 	font-weight: bold;
+	color: #333;
 }
 
 #slot-bot {
@@ -170,11 +165,7 @@ body {
 #slot-bot-container {
 	top: 460px;
 	left: 100px;
-	border-width: 3px 1px 1px 3px;
-	border-bottom-color: rgba(255,255,255,0.25);
-	border-right-color: rgba(255,255,255,0.25);
-	border-top-color: rgba(0,0,0,0.1);
-	border-left-color: rgba(0,0,0,0.1);
+	box-shadow: inset 1px 1px 3px #aaa;
 }
 
 #slot-bot-label {
@@ -187,11 +178,7 @@ body {
 #slot-top-container {
 	top: 0px;
 	left: 100px;
-	border-width: 3px 1px 1px 3px;
-	border-bottom-color: rgba(255,255,255,0.25);
-	border-right-color: rgba(255,255,255,0.25);
-	border-top-color: rgba(0,0,0,0.1);
-	border-left-color: rgba(0,0,0,0.1);
+	box-shadow: inset 1px 1px 3px #aaa;
 }
 
 #slot-top {
@@ -207,21 +194,13 @@ body {
 #slot-left-container {
 	top: 240px;
 	left: -270px;
-	border-width: 3 3 1 1;
-	border-bottom-color: rgba(255,255,255,0.25);
-	border-right-color: rgba(0,0,0,0.1);
-	border-top-color: rgba(0,0,0,0.1);
-	border-left-color: rgba(255,255,255,0.25);
+	box-shadow: inset -1px 1px 3px #aaa;
 }
 
 #slot-right-container {
 	top: 240px;
 	left: 470px;
-	border-width: 1 1 3 3;
-	border-bottom-color: rgba(0,0,0,0.1);
-	border-right-color: rgba(255,255,255,0.25);
-	border-top-color: rgba(255,255,255,0.25);
-	border-left-color: rgba(0,0,0,0.1);
+	box-shadow: inset 1px -1px 3px #aaa;
 }
 
 .slot-container {
@@ -290,24 +269,33 @@ body {
 }
 
 #wait-for-game, #auto-pass {
-	color: black;
+	color: #000;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	border-width: 1px;
-	border-style: solid;
-	border-top-color: #cccccc;
-	border-left-color: #cccccc;
-	border-right-color: #aaaaaa;
-	border-bottom-color: #aaaaaa;
-	position: absolute;
-	padding: 10px;
+	-webkit-border-radius: 3px;
+	
+	border: 1px solid #ccc;
+	box-shadow: 0 1px 0 #fff;
+
 	text-transform: uppercase;
 	font-size: 12px;
 	font-weight: bold;
-	background: #dddddd;
+	
+	position: absolute;	
 	left: 0px;
 	top: 0px;
+
+	padding: 10px;
 	margin: auto;
+	
+	background: #eeeeee; /* Old browsers */
+	background: -moz-linear-gradient(top,  #eeeeee 0%, #cccccc 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #eeeeee 0%,#cccccc 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #eeeeee 0%,#cccccc 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #eeeeee 0%,#cccccc 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #eeeeee 0%,#cccccc 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
 }
 
 .game-feedback {
@@ -367,9 +355,9 @@ a.btn {
 }
 
 #make-move-btn, #start-btn {
-	-moz-box-shadow: inset 0 1px 0 #cff4ba,inset 1px 0 0 #cff4ba,inset -1px 0 0 #cff4ba,inset 0 -1px 0 #cff4ba,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: inset 0 1px 0 #cff4ba,inset 1px 0 0 #cff4ba,inset -1px 0 0 #cff4ba,inset 0 -1px 0 #cff4ba,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
-	box-shadow: inset 0 1px 0 #cff4ba,inset 1px 0 0 #cff4ba,inset -1px 0 0 #cff4ba,inset 0 -1px 0 #cff4ba,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: inset 0 1px 0 #87D315,inset 1px 0 0 #87D315,inset -1px 0 0 #87D315,inset 0 -1px 0 #87D315,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: inset 0 1px 0 #87D315,inset 1px 0 0 #87D315,inset -1px 0 0 #87D315,inset 0 -1px 0 #87D315,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
+	box-shadow: inset 0 1px 0 #87D315,inset 1px 0 0 #87D315,inset -1px 0 0 #87D315,inset 0 -1px 0 #87D315,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
 	
 	background: #cff4ba; /* Old browsers */
 	background: -moz-linear-gradient(top,  #cff4ba 0%, #9ee881 100%); /* FF3.6+ */
@@ -380,6 +368,7 @@ a.btn {
 	background: linear-gradient(to bottom,  #cff4ba 0%,#9ee881 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cff4ba', endColorstr='#9ee881',GradientType=0 ); /* IE6-9 */
 	color: #000;
+	
 }
 
 #make-move-btn:hover, #start-btn:hover {
@@ -447,11 +436,13 @@ li {
 	top: 20px;
 	right: 0px;
 /*	background-color: rgba(250, 238, 217, 0.7);*/
-	background-color: rgba(255,255,255,0.2);
+	background-color: rgba(255,255,255,0.4);
 	max-height: 576px;
 /*	border: 1px solid;*/
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+	box-shadow: 0 0 10px #ccc;
+	
 /*	border-width: 3 0 0 3;
 	border-bottom-color: rgba(255,255,255,0.25);
 	border-right-color: rgba(255,255,255,0.25);
@@ -530,6 +521,7 @@ li {
 .player-name{
 	text-align: center;
 	width: 520px;
+	color: #333;
 }
 
 .active{

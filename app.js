@@ -144,7 +144,7 @@ app.listen(3000);
 var everyone = nowjs.initialize(app);
 
 var rooms = [],
-	colors = ["#8A0F0F", "#82742B", "#089D0B", "#053685", "#E02485", "#A107B5"],
+	colors = ["#EFA263", "#84C0DE", "#A59DC9", "#9AC77D", "#DDC868", "#6AB1B4"],
 	colorCounter = 0,
 	NUM_ROOMS = 20;
 
@@ -637,7 +637,7 @@ function initObserverView(clientId, room){
 			this.now.dealOtherHand(dummyHand, index, numPlayers, false);
 			var playerName = usersHash[playerId]["name"];
 			this.now.showPlayerName(index, playerName, playerId, numPlayers);
-			this.now.showCurrentPlayer(gameState["currentPlayer"]);
+			this.now.showCurrentPlayer(usersHash[gameState["currentPlayer"]]);
 		});
 	});
 	
@@ -829,7 +829,7 @@ function beginPlaying(room){
 	// starting player must make a move
 	roomClients.forEach(function(clientId){
 		nowjs.getClient(clientId, function(){
-			this.now.showCurrentPlayer(startingPlayerId);
+			this.now.showCurrentPlayer(usersHash[startingPlayerId]);
 		});
 	});
 	nowjs.getClient(startingPlayerId, function(){
@@ -1371,7 +1371,7 @@ function alertNextPlayer(room){
 					// highlight current player, then pass this player
 						roomClients.forEach(function(clientId){
 							nowjs.getClient(clientId, function(){
-								this.now.showCurrentPlayer(nextPlayerId);
+								this.now.showCurrentPlayer(usersHash[nextPlayerId]);
 							});
 						});
 						pass(nextPlayerId, room);
@@ -1399,7 +1399,7 @@ function alertNextPlayer(room){
 		
 		roomClients.forEach(function(clientId){
 			nowjs.getClient(clientId, function(){
-				this.now.showCurrentPlayer(nextPlayerId);
+				this.now.showCurrentPlayer(usersHash[nextPlayerId]);
 			});
 		});
 		nowjs.getClient(nextPlayerId, function(){
