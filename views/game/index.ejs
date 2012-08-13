@@ -2,15 +2,18 @@
 <head>
 	<title>jabys - big2 on roids</title>
 	
-	<link rel='stylesheet' media="screen and (min-width: 481px)" href='../stylesheets/game.css' />
+	<link rel='stylesheet' id="game-iphone-css" media="screen and (min-width: 481px)" href='../stylesheets/game.css' />
 	<link rel='stylesheet' href='../stylesheets/tipsy.css' />
 			
-	<link rel="stylesheet" media="screen and (min-width: 320px) and (max-width: 480px)" href="../stylesheets/game_iphone_320.css" />
+	<link rel="stylesheet" id="game-iphone-css" media="screen and (min-width: 321px) and (max-width: 480px)" href="../stylesheets/game_iphone_480.css" />
+	
+	<link rel="stylesheet" id="game-iphone-css" media="screen and (min-width: 320px) and (max-width: 320px)" href="../stylesheets/game_iphone_320.css" />
 	
 	
-	<meta name="viewport" content="width=device-width, user-scalable=no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 	
 	<script src="/javascripts/jquery-ui-1.8.16.custom.min.js"></script>
+    
 	<script src="/javascripts/jquery.tipsy.js"></script>
  
 	<script type="text/javascript">	// juicy stuff
@@ -244,8 +247,68 @@
 			}
 			return htmlString;
 		}
+		
+		function readjustDivs(div, margin){
+			var numCards = $(div).children().length;
+			var slotWidth = parseInt($(div).width());
+			var cardWidth = parseInt($('.card').width());
+			var maxWidth = slotWidth - cardWidth;
+			
+			var increment = maxWidth/(numCards - 1);
+	
+			if (increment <= 50){
+				var leftMargin = 0;
+			}
+			else{
+				increment = 50;
+				var leftMargin = (maxWidth - (numCards-1)*increment)/2;	
+			}
+			$(div).children().each(function(index, cardDiv){
+				if (margin){
+					if (numCards == 1){
+						var leftOffset = leftMargin+index*increment+100/2-2;
+					}
+					else{
+						var leftOffset = leftMargin+index*increment+increment/2-2;	
+					}
+				}
+				else{
+					var leftOffset = leftMargin+index*increment;
+				}
+				$(this).css("left", leftOffset).css("background-image", "url(/images/cardback/"+current_cardback_file_name+")");
+			});
+	
+		}
 
-		$(document).ready(function(){
+		$(window).bind('orientationchange', updateOrientation);
+		
+		function updateOrientation() {
+			// 		    var width;
+			// 		    switch(window.orientation) {
+			// 		        case 0:
+			// width = "360";
+			// break;
+			// 
+			// case -90:
+			// width = "480";
+			// break;
+			// 
+			// case 90:
+			// width = "480";
+			// break;
+			// 
+			// case 180:
+			// width = "360";
+			// break;
+			// 		    }
+			// $('#game-iphone-css').attr('href', '../stylesheets/game_iphone_'+width+'.css');
+			readjustDivs('#slot-bot', false);
+			readjustDivs('#slot-top', false);
+			readjustDivs('#slot-left', false);
+			readjustDivs('#slot-right', false);
+		}
+			
+		$(document).ready(function() {
 			var top = 30;
 			var left = 0;
 	
@@ -282,19 +345,19 @@
 	
 			now.showStartButton = function(){
 				if ($('#start-btn').length == 0){
-					$('#game-controls').prepend('<a href="#" id="start-btn" class="btn">Start</a>');
+					$('#game-controls').prepend('<a href="#" data-role="button" id="start-btn" class="btn">Start</a>');
 				}
 			}
 	
 			now.showMakeMoveButton = function(){
 				if ($('#make-move-btn').length == 0){
-					$('#game-controls').append('<a href="#" id="make-move-btn" class="btn">Make move</a>');
+					$('#game-controls').append('<a href="#" data-role="button" id="make-move-btn" class="btn">Make move</a>');
 				}
 			}
 	
 			now.showMakePassMoveButton = function(){
 				if ($('#make-pass-move-btn').length == 0){
-					$('#game-controls').append('<a href="#" id="make-pass-move-btn" class="btn">Pass</a>');
+					$('#game-controls').append('<a href="#" data-role="button" id="make-pass-move-btn" class="btn">Pass</a>');
 				}
 			}
 	
@@ -329,17 +392,17 @@
 				$('#game-jack-message').hide();
 				$('#game-error-message').hide();
 				// show game over
-				$('#game-controls').append('<a href="#" id="game-over-btn" class="btn">Game Over (Play Again)</a>');
+				$('#game-controls').append('<a href="#" data-role="button" id="game-over-btn" class="btn">Game Over (Play Again)</a>');
 			}
 	
 			// client button actions
-			$('#start-btn').live("mousedown", function(e){
+			$('#start-btn').live("click", function(e){
 				now.initGame();
 				$(this).remove();
 				e.preventDefault();
 			});
 	
-			$('#make-move-btn').live("mousedown", function(e){
+			$('#make-move-btn').live("click", function(e){
 				var selectedCards = $('.selected');
 				var hand = [];
 				var value;
@@ -372,7 +435,7 @@
 				e.preventDefault();
 			});
 	
-			$('#game-over-btn').live("mousedown", function(e){
+			$('#game-over-btn').live("click", function(e){
 				$(this).remove();
 				now.waitForGame();
 				e.preventDefault();
@@ -656,38 +719,7 @@
 				// readjust spacing of hand
 				readjustDivs(div, false);
 			}
-	
-			function readjustDivs(div, margin){
-				var numCards = $(div).children().length;
-				var slotWidth = parseInt($(div).width());
-				var cardWidth = parseInt($('.card').width());
-				var maxWidth = slotWidth - cardWidth;
 
-				var increment = maxWidth/(numCards - 1);
-		
-				if (increment <= 50){
-					var leftMargin = 0;
-				}
-				else{
-					increment = 50;
-					var leftMargin = (maxWidth - (numCards-1)*increment)/2;	
-				}
-				$(div).children().each(function(index, cardDiv){
-					if (margin){
-						if (numCards == 1){
-							var leftOffset = leftMargin+index*increment+100/2-2;
-						}
-						else{
-							var leftOffset = leftMargin+index*increment+increment/2-2;	
-						}
-					}
-					else{
-						var leftOffset = leftMargin+index*increment;
-					}
-					$(this).css("left", leftOffset).css("background-image", "url(/images/cardback/"+current_cardback_file_name+")");
-				});
-		
-			}
 	
 			now.showErrorMessage = function(message){
 				$('#game-error-message').text(message).show().delay(3000).fadeOut();
@@ -754,13 +786,17 @@
 				}
 			}
 	
-			$('.card').live("mousedown", function(e){
-				if ($(this).find('.front').length > 0 && $(this).closest("#slot-middle").length == 0){
+			$('.card').live("click", function(e){
+				var cardHeight = parseInt($(this).height()),
+					cardOutjogHeight = cardHeight*40/130;
+					
+				if ($(this).find('.front').length > 0 && $(this).closest("#slot-middle").length == 0) {
+					
 					if ($(this).hasClass('selected')){
-						$(this).animate({top: '+=40'}, 10, "linear");
+						$(this).animate({top: '+='+cardOutjogHeight+'px'}, 10, "linear");
 					}
 					else{
-						$(this).animate({top: '-=40'}, 10, "linear");
+						$(this).animate({top: '-='+cardOutjogHeight+'px'}, 10, "linear");
 					}
 					$(this).toggleClass('selected');
 				}
@@ -770,7 +806,7 @@
 				var message = $(this).val().trim();
 				if (e.keyCode == 13 && message != ""){
 					if (!$('#chat-messages').is(':visible')){
-						$('.chat-bar-button').trigger('mousedown');
+						$('.chat-bar-button').trigger('click');
 					}
 					now.submitChat(message);
 					$(this).val("");
@@ -846,11 +882,17 @@
 			// 	$('#chat-bar').slideToggle(100);
 			// });
 			
-			$('.chat-bar-button').live("mousedown", function(e){
+			$('.chat-bar-button').live("click", function(e){
 				$('.icon').toggle();
 				$('.input-box').toggle();
 				$('#clients-header, #clients-list, #chat-header, #chat-messages').toggle();
-				$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 1);
+				if ($('#chat-messages').is(':visible')) {
+					$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 1);	
+				} else {
+					$('body').animate({ scrollTop: $('body').prop('scrollHeight') }, 1);
+				}
+				$('.sb-header').removeClass('.sb-header').addClass('.sb-header');
+				e.preventDefault();
 			});
 	
 			// $('#rules-header').live("click", function(e){
@@ -959,13 +1001,13 @@
 			$('#game-board').live("keypress", function(e){
 				var cardIndex = keyMapping[e.keyCode];
 				if (e.keyCode == 13){
-					$('#make-move-btn').trigger('mousedown');
+					$('#make-move-btn').trigger('click');
 				}
 				else if (e.keyCode == 112){
 					$('#make-pass-move-btn').trigger('mousedown');
 				}
 				else if (cardIndex != undefined){
-					$('#slot-bot').find(".card:nth-child("+cardIndex+")").trigger('mousedown');
+					$('#slot-bot').find(".card:nth-child("+cardIndex+")").trigger('click');
 				}
 			});
 			
@@ -1013,7 +1055,7 @@
 				}
 				else if (e.keyCode == 40){
 					// unselect all selected cards
-					$('.selected').trigger('mousedown');
+					$('.selected').trigger('click');
 				}
 				else if (e.keyCode == 8){
 					// backspace
@@ -1021,7 +1063,7 @@
 				}
 			});
 			
-			$('.lobby-icon').live("mousedown", function(e) {
+			$('.lobby-icon').live("click", function(e) {
 				var confirmLobby = confirm("You are about to leave the game and go to the lobby.  Are you sure?");
 				if (confirmLobby) {
 					document.location.href="/lobby";
@@ -1029,13 +1071,13 @@
 			});
 			
 			now.redirectToLobby = function(message) {
-				$('.lobby-icon').trigger('mousedown');
+				$('.lobby-icon').trigger('click');
 			}
 			
 			$('.lobby-icon').tipsy({gravity: 'w', fade: true, html: true, theme: "white"});			
 			$('.rules-icon').tipsy({gravity: 'e', fade: true, html: true, theme: "white"});			
 			
-			$('.rules-icon').live("mousedown", function(e){
+			$('.rules-icon').live("click", function(e){
 				$(this).attr('data-loads', parseInt($(this).attr('data-loads')) + 1);
 				$('#rules').animate({"height": "toggle"}, 1);
 				if ($(this).attr('data-loads') % 2 == 1){

@@ -28,6 +28,8 @@ body {
 
 
 #wrapper #game-board #card-options {
+	border-top: 1px solid #e6e6e6;
+	
 	width: 310px;
 	padding: 10px 0;
 	margin-bottom: 10px;
@@ -72,6 +74,7 @@ body {
 	width: 250px;
 	height: 70px;
 	background-color: rgba(255,255,255,0.10);
+	border: 1px solid #ddd;
 }
 
 .game-slots #stage {
@@ -92,6 +95,8 @@ body {
 	-webkit-box-shadow: inset 1px 2px 3px #ccc;
 	-moz-box-shadow: inset 1px 2px 3px #ccc;
 	box-shadow: inset 1px 2px 3px #ccc;
+	
+	border: 1px solid #ddd;
 }
 
 .game-slots #slot-middle {
@@ -183,8 +188,9 @@ body {
 
 
 #slot-top-container {
-	top: 0px;
-	left: 30px;
+	top: 0;
+	left: 0;
+	width: 310px;
 	-webkit-box-shadow: inset 1px 2px 3px #ccc;
 	-moz-box-shadow: inset 1px 2px 3px #ccc;
 	box-shadow: inset 1px 2px 3px #ccc;
@@ -192,14 +198,14 @@ body {
 
 #slot-top-container #slot-top-label {
 	text-align: center;
-	width: 250px;
+	width: 310px;
 	position: absolute;
 	top: -13px;
 }
 
 #slot-top-container #slot-top {
 	position: absolute;
-	width: 240px;
+	width: 300px;
 	left: 4px;
 	top: 3px;
 }
@@ -323,27 +329,10 @@ body {
 }
 
 #wait-for-game, #auto-pass {
-	color: black;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	border-width: 1px;
-	border-style: solid;
-	border-top-color: #cccccc;
-	border-left-color: #cccccc;
-	border-right-color: #aaaaaa;
-	border-bottom-color: #aaaaaa;
-	position: absolute;
-	padding: 10px;
-	text-transform: uppercase;
-	font-size: 12px;
-	font-weight: bold;
-	background: #dddddd;
-	left: 0px;
-	top: 0px;
-	margin: auto;
+
 }
 
-.game-feedback {
+#game-over-btn, #wait-for-game, #auto-pass, .game-feedback {
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	border-width: 1px;

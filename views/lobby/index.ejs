@@ -2,22 +2,45 @@
 <head>
 	<title>jabys - big2 on roids</title>
 
-	<link rel="stylesheet" media="screen and (min-width: 481px)" href="../stylesheets/lobby.css" />
+	<link rel="stylesheet" id="lobby-iphone-css" media="screen and (min-width: 481px)" href="../stylesheets/lobby.css" />
+	
+	<link rel="stylesheet" id="lobby-iphone-css" media="screen and (min-width: 321px) and (max-width: 480px)" href="../stylesheets/lobby_iphone_480.css" />
 		
-	<link rel="stylesheet" media="screen and (min-width: 320px) and (max-width: 480px)" href="../stylesheets/lobby_iphone_320.css" />
+	<link rel="stylesheet" id="lobby-iphone-css" media="screen and (min-width: 320px) and (max-width: 320px)" href="../stylesheets/lobby_iphone_320.css" />
 	
 	
-	<meta name="viewport" content="width=device-width, user-scalable=no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 	
 	<script src="/javascripts/jquery-ui-1.8.16.custom.min.js"></script>
 	<!-- // <script src="/nowjs/now.js"></script> -->
 	
 	<script type="text/javascript">	// juicy stuff
-		$().ready(function(){
-			// $('#games-list').masonry();
+		$().ready(function() {
 			
 			now.updateClientCount = function(roomId, numPlayers){
 				$('#room-'+roomId).find('.game-players').text(numPlayers + "/4 players");
+			}
+			
+			function updateOrientation(){
+			    var width;
+			    switch(window.orientation) {
+			        case 0:
+				width = "360";
+				break;
+
+				case -90:
+				width = "480";
+				break;
+
+				case 90:
+				width = "480";
+				break;
+
+				case 180:
+				width = "360";
+				break;
+			    }
+				$('#lobby-iphone-css').attr('href', '../stylesheets/lobby_iphone_'+width+'.css');
 			}
 		});
 		
@@ -31,7 +54,7 @@
 	</script>
 </head>
 
-<body>
+<body onorientationchange="updateOrientation();">
 	<div id="wrapper">
 		<div id="games-list">
 			<div class="games-list-heading">
