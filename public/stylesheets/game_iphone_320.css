@@ -3,13 +3,15 @@ body {
 	color: #cccccc;
 	background-image: url("/images/diamond_upholstery.png");
 	width: 320px;
-	
+	padding: 0;
+	margin: 0;
 }
 
 #wrapper {
 	position: relative;
 	overflow: hidden;
-	width: 320px;
+	width: 310px;
+	padding: 5px;
 	margin: auto;
 }
 
@@ -35,12 +37,16 @@ body {
 	overflow-y: hidden;	
 	text-align: center;
 
-	border-bottom: 1px solid #eee;
+	
+/*	border-bottom: 1px solid #eee;*/
 	border-top: 1px solid #eaeaea;
-
-	-webkit-box-shadow: 0 1px 0 #fff;
-	-moz-box-shadow: 0 1px 0 #fff;
-	box-shadow: 0 1px 0 #fff;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	
+	-webkit-box-shadow: inset 1px 2px 3px #f3f3f3;
+	-moz-box-shadow: inset 1px 2px 3px #f3f3f3;
+	box-shadow: inset 1px 2px 3px #f3f3f3;
 	
 	background: #eeeeee; /* Old browsers */
 	background: -moz-linear-gradient(top,  #eeeeee 0%, #dddddd 100%); /* FF3.6+ */
@@ -72,6 +78,7 @@ body {
 	
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+	-webkit-border-radius: 5px;
 	
 	background-color: rgba(255,255,255,0.10);
 	
@@ -408,9 +415,9 @@ a.btn {
 }
 
 #make-move-btn, #start-btn {
-	-moz-box-shadow: inset 0 1px 0 #cff4ba,inset 1px 0 0 #cff4ba,inset -1px 0 0 #cff4ba,inset 0 -1px 0 #cff4ba,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: inset 0 1px 0 #cff4ba,inset 1px 0 0 #cff4ba,inset -1px 0 0 #cff4ba,inset 0 -1px 0 #cff4ba,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
-	box-shadow: inset 0 1px 0 #cff4ba,inset 1px 0 0 #cff4ba,inset -1px 0 0 #cff4ba,inset 0 -1px 0 #cff4ba,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: inset 0 1px 0 #87D315,inset 1px 0 0 #87D315,inset -1px 0 0 #87D315,inset 0 -1px 0 #87D315,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: inset 0 1px 0 #87D315,inset 1px 0 0 #87D315,inset -1px 0 0 #87D315,inset 0 -1px 0 #87D315,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
+	box-shadow: inset 0 1px 0 #87D315,inset 1px 0 0 #87D315,inset -1px 0 0 #87D315,inset 0 -1px 0 #87D315,inset 0 2px 0 rgba(255, 255, 255, 0.3),inset 0 0 4px rgba(255, 255, 255, 0.3),0 1px 2px rgba(0, 0, 0, 0.3);
 	
 	background: #cff4ba; /* Old browsers */
 	background: -moz-linear-gradient(top,  #cff4ba 0%, #9ee881 100%); /* FF3.6+ */
@@ -478,19 +485,9 @@ a.btn {
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	box-shadow: 0 1px 2px rgba(0,0,0,.2);
-}
-
-#scoreboard {
-	font-size: 12px;
-	float: right;
-	width: 310px;
-	position: absolute;
-	right: 0px;
-	top: 0px;
-	background-color: #eeeeee;
+	-webkit-box-shadow: 0 0px 10px #ccc;
+	-moz-box-shadow: 0 0px 10px #ccc;
+	box-shadow: 0 0px 10px #ccc;
 }
 
 #chat-header {
@@ -514,7 +511,7 @@ a.btn {
 }
 
 #chat-messages, #clients-list {
-	height: 202px;
+	height: 150px;
 	overflow: auto;
 	overflow-x: hidden;
 	color: black;
@@ -618,7 +615,7 @@ a.btn {
 
 .input-box {
 	position: absolute;
-	width: 214px;
+	width: 279px;
 	left: 36px;
 }
 
@@ -641,8 +638,15 @@ a.btn {
 
 #chat-submit {
 	padding: 3px 3px 3px 6px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border: 1px solid #ccc;
+	
+	-webkit-box-shadow: inset 0 1px 1px #666;
+	-moz-box-shadow: 0 1px 1px #666;
+	box-shadow: 0 1px 1px #666;
+	
 	position: absolute;
 	top: 5px;
 	left: 5px;
@@ -653,35 +657,49 @@ a.btn {
 
 #clients-search {
 	padding: 3px 3px 3px 6px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	
+	border: 1px solid #ccc;
+	-webkit-box-shadow: inset 0 1px 1px #666;
+	-moz-box-shadow: 0 1px 1px #666;
+	box-shadow: 0 1px 1px #666;
+	
 	position: absolute;
 	top: 5px;
-	left: 90px;
+	left: 145px;
 	margin: auto;
-	width: 120px;
+	width: 125px;
 }
 
 #nickname-submit {
 	padding: 3px 3px 3px 6px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	
+	border: 1px solid #ccc;
+	-webkit-box-shadow: inset 0 1px 1px #666;
+	-moz-box-shadow: 0 1px 1px #666;
+	box-shadow: 0 1px 1px #666;
+	
 	position: absolute;
 	top: 5px;
 	left: 5px;
 	margin: auto;
-	width: 80px;
+	width: 135px;
 }
 
 
 #chat-header .chat-icon {
 	position: absolute;
-	left: 48px;
+	left: 58px;
 }
 
 #clients-header .clients-icon {
 	position: absolute;
-	left: 63px;
+	left: 73px;
 }
 
 #chat-bar .clients-icon {
@@ -694,13 +712,13 @@ a.btn {
 
 #chat-header .lobby-icon, #clients-header .lobby-icon {
 	position: absolute;
-	left: 225px;
+	left: 285px;
 	cursor: pointer;
 }
 
 #chat-header .rules-icon, #clients-header .rules-icon {
 	position: absolute;
-	left: 200px;
+	left: 255px;
 	cursor: pointer;
 }
 

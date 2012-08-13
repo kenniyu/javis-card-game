@@ -368,7 +368,7 @@ a.btn {
 	background: linear-gradient(to bottom,  #cff4ba 0%,#9ee881 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cff4ba', endColorstr='#9ee881',GradientType=0 ); /* IE6-9 */
 	color: #000;
-	
+	text-shadow: 0 1px 0 #fff;
 }
 
 #make-move-btn:hover, #start-btn:hover {
