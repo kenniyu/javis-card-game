@@ -124,8 +124,9 @@ body {
 }
 
 #slot-right-container {
-	top: 110px;
-	right: -95px;
+	top: 73px;
+	right: -58px;
+	width: 215px;
 	-webkit-box-shadow: inset 1px -2px 3px #ccc;
 	-moz-box-shadow: inset 1px -2px 3px #ccc;
 	box-shadow: inset 1px -2px 3px #ccc;
@@ -133,22 +134,22 @@ body {
 
 #slot-right-container #slot-right-label {
 	text-align: center;
-	width: 250px;
+	width: 215px;
 	position: absolute;
 	top: -13px;
 }
 
 #slot-right-container #slot-right {
 	position: absolute;
-	width: 280px;
+	width: 205px;
 	left: 4px;
 	top: 3px;
 }
 
 #slot-bot-container {
 	top: 220px;
-	width: 290px;
-	left: 90px;
+	width: 438px;
+	left: 15px;
 	-webkit-box-shadow: inset 1px 2px 3px #ccc;
 	-moz-box-shadow: inset 1px 2px 3px #ccc;
 	box-shadow: inset 1px 2px 3px #ccc;
@@ -156,7 +157,7 @@ body {
 
 #slot-bot-container #slot-bot {
 	position: absolute;
-	width: 280px;
+	width: 428px;
 	left: 4px;
 	top: 3px;
 }
@@ -166,8 +167,9 @@ body {
 }
 
 #slot-left-container {
-	top: 110px;
-	left: -95px;
+	width: 215px;
+	top: 73px;
+	left: -57px;
 	-webkit-box-shadow: inset -1px 2px 3px #ccc;
 	-moz-box-shadow: inset -1px 2px 3px #ccc;
 	box-shadow: inset -1px 2px 3px #ccc;
@@ -175,14 +177,14 @@ body {
 
 #slot-left-container #slot-left-label {
 	text-align: center;
-	width: 250px;
+	width: 215px;
 	position: absolute;
 	top: -13px;
 }
 
 #slot-left-container #slot-left {
 	position: absolute;
-	width: 280px;
+	width: 205px;
 	left: 4px;
 	top: 3px;
 }

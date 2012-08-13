@@ -24,6 +24,7 @@
 		var chatFlashInterval, chatFlashTimeout;
 		var windowFocused = false;
 		var windowTitleInterval;
+		var currentWindowWidth = $(window).width();
 		var keyMapping = {
 			49: 1, 50: 2, 51: 3, 52: 4, 53: 5, 
 			113: 6, 119: 7, 101: 8, 114: 9, 116: 10, 
@@ -309,6 +310,26 @@
 		}
 			
 		$(document).ready(function() {
+			$(window).resize(function() {
+				var width = parseInt($(this).width());
+				if ( (currentWindowWidth > 320 && width <= 320) ) {
+					currentWindowWidth = width;
+					readjustDivs('#slot-bot', false);
+					readjustDivs('#slot-top', false);
+					readjustDivs('#slot-left', false);
+					readjustDivs('#slot-right', false);
+					readjustDivs('#slot-bot-sc', true);
+				} else if ( (currentWindowWidth <= 480 && width > 480) || (currentWindowWidth > 480 && width <= 480) ) {
+					currentWindowWidth = width;
+					readjustDivs('#slot-bot', false);
+					readjustDivs('#slot-top', false);
+					readjustDivs('#slot-left', false);
+					readjustDivs('#slot-right', false);
+					readjustDivs('#slot-bot-sc', true);
+				}
+				
+			});
+			
 			var top = 30;
 			var left = 0;
 	
