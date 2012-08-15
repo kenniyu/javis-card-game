@@ -276,7 +276,10 @@
 				else{
 					var leftOffset = leftMargin+index*increment;
 				}
-				$(this).css("left", leftOffset).css("background-image", "url(/images/cardback/"+current_cardback_file_name+")");
+				$(this).css("left", leftOffset);
+				if (div != '#slot-bot-sc') {
+					$(this).css("background-image", "url(/images/cardback/"+current_cardback_file_name+")");	
+				}
 			});
 	
 		}
@@ -284,25 +287,6 @@
 		$(window).bind('orientationchange', updateOrientation);
 		
 		function updateOrientation() {
-			// 		    var width;
-			// 		    switch(window.orientation) {
-			// 		        case 0:
-			// width = "360";
-			// break;
-			// 
-			// case -90:
-			// width = "480";
-			// break;
-			// 
-			// case 90:
-			// width = "480";
-			// break;
-			// 
-			// case 180:
-			// width = "360";
-			// break;
-			// 		    }
-			// $('#game-iphone-css').attr('href', '../stylesheets/game_iphone_'+width+'.css');
 			readjustDivs('#slot-bot', false);
 			readjustDivs('#slot-top', false);
 			readjustDivs('#slot-left', false);
@@ -342,7 +326,7 @@
 						$(this).css("color", color).css("font-weight", "bold");
 					}
 					else{
-						$(this).css("color", color).css("font-weight", "normal");
+						$(this).css("font-weight", "normal");
 					}
 				});
 			}
@@ -476,6 +460,24 @@
 					$('#slot-bot').append(cardDiv);
 				});
 				showShortcuts();
+			}
+			
+			now.broadcastHandPlayed = function(userObj, hand) {
+				var card,
+					username = userObj.name,
+					color = userObj.color,
+					chatHtml = '<span class="name" style="color: '+color+';">'+username + '</span> played <span class="hand-played">',
+					cardValue;
+				for (var i = 0; i < hand.length; i++) {
+					card = hand[i];
+					cardValue = card.substring(0, card.length - 1);
+					chatHtml += cardValue + '-'
+				}
+				chatHtml = chatHtml.substring(0, chatHtml.length - 1);
+				chatHtml += "</span>";
+				
+				$('#chat-messages').append("<div class='chat-message active'>"+chatHtml+"</div>");
+				$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 100);
 			}
 	
 			function showShortcuts(){

@@ -715,3 +715,7 @@ a.btn {
 	font-weight: bold;
 /*	text-shadow: 0px -1px 1px #aaaaaa;*/
 }
+
+.chat-message .hand-played {
+	font-weight: bold;
+}

@@ -48,11 +48,9 @@ function addToSessionStore(request){
 	request.session.lastActiveTime = new Date();
 	// store session in sessionStore, with key = sessionID
 	sessionStore[request.sessionID] = request.session;
-	console.log("sessionStore with key " + request.sessionID + " was added at " + new Date());
 }
 
 function setClientId(sessionID, clientId){
-	console.log("setting client id at " + new Date());
 	// update any room user hash corresponding to this client
 	updateRoomClientId(sessionID, clientId);
 	
@@ -66,10 +64,8 @@ function beforeFilterSession(request) {
 	// First add session if not exists in our sessions hash
 	// Then set the sessions path variable
 	if (sessionExists(request.sessionID)){
-		console.log("This session already exists. Will not add to sessionStore");
 	}
 	else{
-		console.log("This session does not exist. Adding to sessionStore...");
 		addToSessionStore(request);
 	}
 	setPath(request);
@@ -78,7 +74,6 @@ function beforeFilterSession(request) {
 function setPath(request){
 	// Updates the path variable for the session corresponding to this request
 	var path = request.route.path;
-	console.log("Updating the path variable for this session. Path = "+path);
 	sessionStore[request.sessionID].path = path;
 }
 
@@ -101,9 +96,6 @@ app.get('/lobby', function(req, res){
 	
 	var mySession = sessionStore[req.sessionID];
 	// get rooms
-	console.log(req.route.path);
-	console.log("My session is : " );
-	console.log(mySession);
 
 	res.render('lobby', {sess: mySession, myRooms: myRooms});	
 });
@@ -185,7 +177,6 @@ function getClientSession(nowUserObj){
 	var clientSessionId = unescape(nowUserObj.cookie["connect.sid"]);
 	var clientSession = sessionStore[clientSessionId];
 	if (clientSession == undefined) {
-		console.log("could not find this user in our session store!!!");
 	}
 	else {
 		return clientSession;	
@@ -228,7 +219,6 @@ function updateRoomClientId(sessionId, newClientId) {
 
 				// restore game state
 				rooms[i].gameState = gameState;
-				console.log("found and updated room user hash and gamestate");
 				
 			}
 		}
@@ -241,7 +231,6 @@ nowjs.on('connect', function() {
 	var clientId = updateClientId(this.user);
 	var clientSession = getClientSession(this.user);
 	
-	console.log("Connecting at " + (new Date()));
 	// check the path to figure out where they're connecting to, as well as their state
 	if (clientSession.path.substring(0,5) == "/game" && clientSession.state != "game" && clientSession.roomId != -1){
 		// if they're trying to access /game and their state is not "game", 
@@ -321,7 +310,6 @@ nowjs.on('connect', function() {
 		updateLobbyClientCount(room);
 	}
 	else if (clientSession.path.substring(0,6) == '/lobby' && clientSession.state == "game") {
-		console.log(clientSession);
 		// disconnectFromGame(clientId, clientSession);
 	}
 });
@@ -369,16 +357,13 @@ function disconnectFromGame(clientId, clientSession){
 	// their previous state was in a game.
 	if (Object.size(usersHash) > 1) {
 		// continue if there's still someone connected to the server
-		console.log(clientId+" is disconnecting, but there is still someone connected to server");
-		console.log("At this point, clientId = "+clientId + " and clientSession.clientId = "+clientSession.clientId);
+
 		// update chat
-		console.log("updating the chat");
 		broadcastLeave(clientId, oldRoom);
-		console.log("chat shouldve been updated. " + clientId + " left");
 		
 		var playerIndex = gameState["players"].indexOf(clientId);
 		if (playerIndex > -1) {
-			console.log("removing player "+clientId+" and his index is "+playerIndex);
+
 			// remove cards from the FRONTEND
 			updatePlayerHand(usersHash[clientId]["hand"], clientId, "remove", oldRoom);
 			// update moveBits
@@ -433,7 +418,7 @@ function disconnectFromGame(clientId, clientSession){
 		}
 	}
 	else{
-		console.log("user is disconnecting, and no one else is connected to server");
+
 		delete usersHash[clientId];
 	}
 	// someone left the room, update lobby
@@ -446,7 +431,7 @@ nowjs.on('disconnect', function() {
 	var clientSession = getClientSession(this.user);
 	
 	if (clientSession.state == "game"){
-		console.log("Disconnect called for client "+clientId+". His current state = game");
+
 		disconnectFromGame(clientId, clientSession);
 	}
 	
@@ -456,7 +441,6 @@ function updateLobbyClientCount(room){
 	var lobbyClientIds = getLobbyClients();
 	var playerIds = getPlayerIds(room);
 	
-	console.log("lobby clients = " + lobbyClientIds);
 	lobbyClientIds.forEach(function(clientId){
 		nowjs.getClient(clientId, function(){
 			this.now.updateClientCount(room.roomId, playerIds.length);
@@ -530,7 +514,6 @@ everyone.now.initGame = function(){
 			var freeSeats = 4 - numPlayers;
 			var playersToAdd = Math.min(freeSeats, waitingPlayers.length);
 			while (getPlayerIds(room).length != 4 && waitingPlayers.length > 0){
-				console.log(getPlayerIds(room).length);
 				var clientId = waitingPlayers.shift();	// remove first in line from waitingPlayers
 				if (usersHash[clientId] != undefined){
 					usersHash[clientId]["type"] = "Player";	// assign as player	
@@ -600,7 +583,7 @@ function broadcastLeave(clientId, room){
 	usersHash = room.usersHash;
 	
 	var name = getPlayerName(clientId, room);
-	console.log("In broadcast leave. Name = "+name);
+
 	if (name != null){
 		var text = " left.";
 		var userInfo = {"id": clientId, "name": name};
@@ -610,7 +593,7 @@ function broadcastLeave(clientId, room){
 	
 	var clientIds = getRoomClients(room);
 	clientIds.splice(clientIds.indexOf(clientId), 1);
-	console.log("Clients to broadcast about leave = "+clientIds);
+
 	clientIds.forEach(function(clientId){
 		nowjs.getClient(clientId, function(){
 			this.now.updateChat(messageHash, color);
@@ -660,7 +643,7 @@ function initObserverView(clientId, room){
 function assignHands(room){
 	var numPlayers = getNumPlayers(room);		// we need to get number of players for later...
 	var playerIds = getPlayerIds(room);			// and each player's ids
-	console.log("Player ids:" + playerIds);
+
 	var usersHash = room.usersHash;
 	var deck = room.deck;
 	
@@ -701,7 +684,7 @@ function updatePlayerHand(cards, playerId, type, room){
 			this.now.removeFromPersonalHand(cards);
 		}
 		else{
-			console.log("adding to personal hand: " + cards);
+
 			this.now.addToPersonalHand(cards);
 		}
 	});
@@ -768,7 +751,7 @@ function dealPlayerHands(room){
 		nowjs.getClient(clientId, function(){
 			// deal this player's personal hand by first sorting, then calling dealPersonalHand on client side
 			usersHash[clientId]["hand"] = sortHand(usersHash[clientId]["hand"]);	
-			console.log("player "+clientId+" with " + usersHash[clientId]["hand"].length + " cards: "+ usersHash[clientId]["hand"]);
+
 			this.now.dealPersonalHand(usersHash[clientId]["hand"]);					
 			
 			// deal other players hands
@@ -841,6 +824,17 @@ everyone.now.sendMove = function(hand){
 	var clientSession = getClientSession(this.user);
 	var roomId = clientSession.roomId;
 	var room = rooms[roomId - 1];
+	
+	if (room == undefined) {
+		updateClientId(this.user);
+		
+		var message = "Something went wrong...";
+		this.now.showErrorMessage(message);
+		// show make move button again
+		this.now.showMakeMoveButton();
+		return;
+	}
+	
 	var gameState = room.gameState;
 	var usersHash = room.usersHash;
 	var roomClients = getRoomClients(room);
@@ -853,14 +847,16 @@ everyone.now.sendMove = function(hand){
 			setMoveBitsToOne(room);
 
 			var clientId = this.user.clientId;
+			var userObj = usersHash[clientId];
 			// remove the hand from the player who made the move (BACKEND and FRONTEND)
 			removeCardsFromHand(hand, clientId, room);
 			// update everyone's view of the stage (FRONTEND)
-			roomClients.forEach(function(clientId){
-				nowjs.getClient(clientId, function(){
+			roomClients.forEach(function(clientId) {
+				nowjs.getClient(clientId, function() {
 					this.now.addToCurrentPlay(hand);
 				});
 			});
+			everyone.now.broadcastHandPlayed(userObj, hand);
 
 			// LOGISTICS
 			// check for 5's, draw if hand not empty
@@ -882,12 +878,10 @@ everyone.now.sendMove = function(hand){
 				}
 				else{
 					if (containsEight(hand) || threesOverJacks(hand) || fourThreesOneJack(hand)){
-						console.log("passing everyone");
 						passEveryone(room);
 						resetJackCounter(room);
 					}
 					else{
-						console.log("alerting next player 1");
 						alertNextPlayer(room);
 					}
 					updateJackCounter(room);
@@ -902,7 +896,7 @@ everyone.now.sendMove = function(hand){
 			// show make move button again
 			this.now.showMakeMoveButton();
 			// only show the pass button if it's NOT the first hand of the round
-			if (gameState["currentPlaySize"] != null){
+			if (gameState["currentPlaySize"] != null) {
 				this.now.showMakePassMoveButton();
 			}
 			notifyJackInPlay(room);
@@ -938,12 +932,10 @@ everyone.now.sendMove = function(hand){
 				}
 				else{
 					if (containsEight(playedHand) || threesOverJacks(playedHand) || fourThreesOneJack(playedHand)){
-						console.log("passing everyone");
 						passEveryone(room);
 						resetJackCounter(room);
 					}
 					else{
-						console.log("alerting next player 2");
 						alertNextPlayer(room);
 					}
 					updateJackCounter(room);
@@ -980,12 +972,10 @@ everyone.now.sendMove = function(hand){
 				var currentPlayHistory = gameState["currentPlayHistory"];
 				var playedHand = currentPlayHistory[currentPlayHistory.length - 1];
 				if (containsEight(playedHand) || threesOverJacks(playedHand) || fourThreesOneJack(playedHand)){
-					console.log("passing everyone");
 					passEveryone(room);
 					resetJackCounter(room);
 				}
 				else{
-					console.log("alerting next player 3");
 					alertNextPlayer(room);
 				}
 				updateJackCounter(room);
@@ -1106,7 +1096,6 @@ function checkForTens(hand, clientId, room){
 	}
 	if (numTens > 0){
 		var currentHand = usersHash[clientId]["hand"];
-		console.log("chekcing for tens. hand is "+currentHand);
 		if (currentHand.length == 0){
 			alertNextPlayer(room);
 		}
@@ -1208,7 +1197,6 @@ function checkEmptyHand(clientId, room){
 	var tempHand = usersHash[clientId]["hand"];
 	var playerIndex = gameState["players"].indexOf(clientId);
 	if (tempHand.length == 0){
-		console.log("hand is empty for "+clientId);
 		var activePlayerIndex = gameState["activePlayers"].indexOf(clientId);
 		
 		gameState["moveBits"][playerIndex] = -1;		// use -1 to indicate the player is done playing
@@ -1221,7 +1209,6 @@ function checkEmptyHand(clientId, room){
 		checkGameOver(room);
 	}
 	else{
-		console.log("hand is not empty for "+clientId);
 		// set player who just made a move to 2
 		gameState["moveBits"][playerIndex] = 2;
 	}
@@ -1285,14 +1272,12 @@ function getLobbyClients(){
 	updateSessionStore();
 	
 	var clientIds = [];
-	console.log(sessionStore);
 	for (var sessionId in sessionStore){
 		if (sessionStore[sessionId].path == "/lobby"){
 			clientIds.push(sessionStore[sessionId].clientId);
 		}
 	}
 	
-	console.log(clientIds);
 	return clientIds;
 }
 
@@ -1430,7 +1415,6 @@ function passEveryone(room){
 	
 	var numPlayers = playersToPass.length;
 	if (numPlayers > 0){	// sanity check
-		console.log("players to pass = " + playersToPass);
 		
 		setTimeout(function(){
 			playersToPass.forEach(function(playerId){
@@ -1508,7 +1492,6 @@ function handleEveryonePass(room){
 
 function pass(clientId, room){
 	var gameState = room.gameState;
-	console.log("client "+ clientId + " is passing");
 	updateJackCounter(room);
 	var playerIndex = gameState["players"].indexOf(clientId);	
 	gameState["moveBits"][playerIndex] = 0;		// use 0 to indicate that the player has just passed
@@ -1579,13 +1562,10 @@ function checkRules(hand, room){
 				return true;
 			}
 			else{
-				console.log("this is not a valid combo!");
 			}
 		}
 		else{
-			console.log("this is not a valid hand length");
 		}
-		console.log(gameState);
 	}
 	else{
 		// there was a hand played before this
@@ -1606,11 +1586,9 @@ function checkRules(hand, room){
 				return true;
 			}
 			else{
-				console.log("not a valid combo");
 			}
 		}
 		else{
-			console.log("not a valid length");
 		}
 	}
 	return false;
@@ -1837,7 +1815,6 @@ function isFourKind(hand){
 		if ( (countsArr[0] == 1 && countsArr[1] == 4) || (countsArr[0] == 4 && countsArr[1] == 1) ){
 			return true;
 		}
-		console.log(countsArr);
 	}
 	return false;
 }
@@ -1974,7 +1951,6 @@ function getNumPlayers(room) {
 everyone.now.submitChat = function(message) {
 	var clientSession = getClientSession(this.user);
 	var roomId = clientSession.roomId;
-	console.log(roomId);
 	var room = rooms[roomId - 1];
 	var roomClients = getRoomClients(room);
 	var usersHash = room.usersHash;

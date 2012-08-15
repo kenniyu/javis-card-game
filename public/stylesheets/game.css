@@ -520,6 +520,10 @@ li {
 	color: #000000;
 }
 
+.chat-message .hand-played {
+	font-weight: bold;
+}
+
 .passive{
 	color: #1E2641;
 	font-style: italic;
