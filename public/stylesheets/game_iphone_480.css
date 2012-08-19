@@ -127,9 +127,9 @@ body {
 	top: 73px;
 	right: -58px;
 	width: 215px;
-	-webkit-box-shadow: inset 1px -2px 3px #ccc;
-	-moz-box-shadow: inset 1px -2px 3px #ccc;
-	box-shadow: inset 1px -2px 3px #ccc;
+	-webkit-box-shadow: inset 1px -2px 10px #ccc;
+	-moz-box-shadow: inset 1px -2px 10px #ccc;
+	box-shadow: inset 1px -2px 10px #ccc;
 }
 
 #slot-right-container #slot-right-label {
@@ -150,9 +150,9 @@ body {
 	top: 220px;
 	width: 438px;
 	left: 15px;
-	-webkit-box-shadow: inset 1px 2px 3px #ccc;
-	-moz-box-shadow: inset 1px 2px 3px #ccc;
-	box-shadow: inset 1px 2px 3px #ccc;
+	-webkit-box-shadow: inset 1px 2px 10px #ccc;
+	-moz-box-shadow: inset 1px 2px 10px #ccc;
+	box-shadow: inset 1px 2px 10px #ccc;
 }
 
 #slot-bot-container #slot-bot {
@@ -170,9 +170,9 @@ body {
 	width: 215px;
 	top: 73px;
 	left: -57px;
-	-webkit-box-shadow: inset -1px 2px 3px #ccc;
-	-moz-box-shadow: inset -1px 2px 3px #ccc;
-	box-shadow: inset -1px 2px 3px #ccc;
+	-webkit-box-shadow: inset -1px 2px 10px #ccc;
+	-moz-box-shadow: inset -1px 2px 10px #ccc;
+	box-shadow: inset -1px 2px 10px #ccc;
 }
 
 #slot-left-container #slot-left-label {
@@ -193,9 +193,9 @@ body {
 #slot-top-container {
 	top: 0px;
 	left: 90px;
-	-webkit-box-shadow: inset 1px 2px 3px #ccc;
-	-moz-box-shadow: inset 1px 2px 3px #ccc;
-	box-shadow: inset 1px 2px 3px #ccc;
+	-webkit-box-shadow: inset 1px 2px 10px #ccc;
+	-moz-box-shadow: inset 1px 2px 10px #ccc;
+	box-shadow: inset 1px 2px 10px #ccc;
 }
 
 #slot-top-container #slot-top-label {
@@ -718,4 +718,10 @@ a.btn {
 
 .chat-message .hand-played {
 	font-weight: bold;
+	color: #9E0530;
+}
+
+.chat-message .win-streak-message {
+	font-weight: bold;
+	color: #FF40C2;
 }

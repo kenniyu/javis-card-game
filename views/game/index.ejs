@@ -27,9 +27,9 @@
 		var currentWindowWidth = $(window).width();
 		var keyMapping = {
 			49: 1, 50: 2, 51: 3, 52: 4, 53: 5, 
-			113: 6, 119: 7, 101: 8, 114: 9, 116: 10, 
-			97: 11, 115: 12, 100: 13, 102: 14, 103: 15, 
-			122: 16, 120: 17, 99: 18, 118: 19, 98: 20};
+			81: 6, 87: 7, 69: 8, 82: 9, 84: 10, 
+			65: 11, 83: 12, 68: 13, 70: 14, 71: 15, 
+			90: 16, 88: 17, 67: 18, 86: 19, 66: 20};
 		var cardValueMapping = {"A": 14, "2": 15, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "10": 10, "J": 11, "Q": 12, "K": 13};
 		function urlify(text) {
 		    var urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -49,6 +49,10 @@
 
 		function ping(){
 			document.getElementById('ping').play();
+		}
+		
+		function holyshit() {
+			document.getElementById('holy-shit').play();
 		}
 
 		function encodeHTML(s) {
@@ -451,7 +455,7 @@
 				var slotWidth 	= 	parseInt($('#slot-bot').width()),
 					cardWidth 	= 	parseInt($('#sample-card').first().width()),
 					maxWidth	=	slotWidth - cardWidth;
-				console.log(cardWidth);
+
 				$('#slot-bot').empty();
 				hand.forEach(function(card, index){
 					var leftOffset = index*maxWidth/(hand.length-1);
@@ -478,6 +482,77 @@
 				
 				$('#chat-messages').append("<div class='chat-message active'>"+chatHtml+"</div>");
 				$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 100);
+			}
+			
+			now.broadcastPassedPlayers = function(passedPlayerObjs) {
+				var passedPlayerObj,
+					chatHtml = '',
+					username,
+					color;
+				
+				for (var i = 0; i < passedPlayerObjs.length; i++) {
+					passedPlayerObj = passedPlayerObjs[i];
+					username = passedPlayerObj.name,
+					color = passedPlayerObj.color,
+					chatHtml += '<span class="name" style="color: '+color+';">' + username + '</span>';
+					if (i < passedPlayerObjs.length - 1) {
+						chatHtml += ', ';
+					}
+				}
+				chatHtml += ' passed!';
+				$('#chat-messages').append("<div class='chat-message active'>"+chatHtml+"</div>");
+				$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 100);
+			}
+			
+			now.broadcastWinner = function(userObj) {
+				var username 	= userObj.name,
+					color 		= userObj.color,
+					chatHtml 	= '<span class="name" style="color: '+color+';">' + username + '</span> won!';
+				$('#chat-messages').append("<div class='chat-message active'>"+chatHtml+"</div>");
+				$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 100);
+			}
+			
+			now.broadcastWinStreakMessage = function(userObj, winStreaks, winStreakMessage) {
+				var username 	= userObj.name,
+					color 		= userObj.color,
+					chatHtml 	= '<span class="name" style="color: '+color+';">' + username + '</span> <span class="win-streak-message">'+winStreakMessage+'</span>';
+				$('#chat-messages').append("<div class='chat-message active'>"+chatHtml+"</div>");
+				$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 100);
+				
+				if (winStreaks >= 10) {
+					holyshit();
+				}
+			}
+			
+			now.broadcastCardsDrawn = function(userObj, cards) {
+				var card,
+					username = userObj.name,
+					color = userObj.color,
+					chatHtml = '<span class="name" style="color: '+color+';">'+username + '</span> drew <span class="hand-played">',
+					cardValue;
+					
+				for (var i = 0; i < cards.length; i++) {
+					card = cards[i];
+					console.log(card);
+					cardValue = card.substring(0, card.length - 1);
+					chatHtml += cardValue;
+					if (i < cards.length - 1) {
+						chatHtml += ', ';
+					}
+				}
+				chatHtml += "</span>";
+				
+				$('#chat-messages').append('<div class="chat-message active history">'+chatHtml+'</div>');
+				$('#chat-messages').animate({ scrollTop: $('#chat-messages').prop('scrollHeight') }, 100);
+			}
+			
+			now.broadcastGameStart = function(startGameUserObj) {
+				var username 	= startGameUserObj.name,
+					color 		= startGameUserObj.color,
+					chatHtml 	= '<span class="name" style="color: '+color+';">'+username + '</span> has started the game.';
+				
+				$('#chat-messages').append('<div class="chat-message active history">'+chatHtml+'</div>');
+				$('#chat-messages').animate({ scrollTop: $('#chat-messages').prop('scrollHeight') }, 100);
 			}
 	
 			function showShortcuts(){
@@ -1020,22 +1095,16 @@
 				clearInterval(windowTitleInterval);
 				document.title = "jabys - big2 on roids";
 			}
-	
-			$('#game-board').live("keypress", function(e){
+			
+			$('#game-board').keydown(function(e) {
 				var cardIndex = keyMapping[e.keyCode];
 				if (e.keyCode == 13){
 					$('#make-move-btn').trigger('click');
 				}
-				else if (e.keyCode == 112){
+				else if (e.keyCode == 80){
 					$('#make-pass-move-btn').trigger('mousedown');
 				}
-				else if (cardIndex != undefined){
-					$('#slot-bot').find(".card:nth-child("+cardIndex+")").trigger('click');
-				}
-			});
-			
-			$('#game-board').keydown(function(e){
-				if (e.keyCode == 37){
+				else if (e.keyCode == 37){
 					// shift selected cards to the left
 					var selectedCards = $('.selected');
 					var lowestIndexSoFar = 0;
@@ -1083,6 +1152,9 @@
 				else if (e.keyCode == 8){
 					// backspace
 					e.preventDefault();
+				}
+				else if (cardIndex != undefined){
+					$('#slot-bot').find(".card:nth-child("+cardIndex+")").trigger('click');
 				}
 			});
 			
@@ -1142,7 +1214,7 @@
 
 <body>
 	<div id="wrapper">
-		<div id="game-board" tabindex=1>
+		<div id="game-board" tabindex="0">
 		
 			<div class="game-slots">		
 				<div id="slot-bot-container" class="slot-container">
@@ -1246,7 +1318,8 @@
 	
 		
 	
-	<audio id="ping" src="http://www.schillmania.com/projects/soundmanager2/demo/_mp3/mouseover.mp3" preload="auto"></audio>
+	<audio id="ping" src="http://jjc.changsclan.net/ken/tri-tone.mp3" preload="auto"></audio>
+	<audio id="holy-shit" src="http://jjc.changsclan.net/ken/holyshit.wav" preload="auto"></audio>
 	
 	<div id="sample-card" class="card" style="display: none;"></div>
 </body>
