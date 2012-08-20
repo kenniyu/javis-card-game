@@ -51,8 +51,16 @@
 			document.getElementById('ping').play();
 		}
 		
-		function holyshit() {
-			document.getElementById('holy-shit').play();
+		function playWinStreakAudio(filename) {
+			var audioEl = document.getElementById('win-streak');
+			audioEl.src = '/audio/'+filename;
+			audioEl.play();
+		}
+		
+		function playKillStreakAudio(filename) {
+			var audioEl = document.getElementById('kill-streak');
+			audioEl.src = '/audio/'+filename;
+			audioEl.play();
 		}
 
 		function encodeHTML(s) {
@@ -512,15 +520,23 @@
 				$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 100);
 			}
 			
-			now.broadcastWinStreakMessage = function(userObj, winStreaks, winStreakMessage) {
+			now.broadcastWinStreakMessage = function(userObj, winStreaks, winStreakMessage, winStreakAudio, simultaneousKillMessage, simultaneousKillAudio) {
 				var username 	= userObj.name,
 					color 		= userObj.color,
-					chatHtml 	= '<span class="name" style="color: '+color+';">' + username + '</span> <span class="win-streak-message">'+winStreakMessage+'</span>';
-				$('#chat-messages').append("<div class='chat-message active'>"+chatHtml+"</div>");
-				$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 100);
+					chatHtml;
 				
-				if (winStreaks >= 10) {
-					holyshit();
+				if (winStreakMessage) {
+					chatHtml = '<span class="name" style="color: '+color+';">' + username + '</span> <span class="win-streak-message">'+winStreakMessage+'</span>';
+					$('#chat-messages').append("<div class='chat-message active'>"+chatHtml+"</div>");
+					$("#chat-messages").animate({ scrollTop: $("#chat-messages").prop("scrollHeight") }, 100);
+					playWinStreakAudio(winStreakAudio);
+				}
+				
+				if (simultaneousKillMessage) {
+					chatHtml 	= '<span class="name" style="color: '+color+';">' + username + '</span> <span class="win-streak-message">'+simultaneousKillMessage+'</span>';
+					$('#chat-messages').append('<div class="chat-message active">'+chatHtml+'</div>');
+					$('#chat-messages').animate({ scrollTop: $('#chat-messages').prop('scrollHeight') }, 100);
+					playKillStreakAudio(simultaneousKillStreakAudio);
 				}
 			}
 			
@@ -1319,7 +1335,8 @@
 		
 	
 	<audio id="ping" src="http://jjc.changsclan.net/ken/tri-tone.mp3" preload="auto"></audio>
-	<audio id="holy-shit" src="http://jjc.changsclan.net/ken/holyshit.wav" preload="auto"></audio>
+	<audio id="win-streak" src="/audio/holyshit.wav" preload="auto"></audio>
+	<audio id="kill-streak" src="/audio/doublekill.wav" preload="auto"></audio>
 	
 	<div id="sample-card" class="card" style="display: none;"></div>
 </body>

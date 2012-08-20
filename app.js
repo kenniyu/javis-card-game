@@ -1282,67 +1282,79 @@ function checkWinner(room) {
 	var gameState 		= room.gameState,
 		roomClientIds 	= getRoomClients(room),
 		usersHash 		= room.usersHash,
+		prevWinnerId	= gameState['prevWinnerId'],
 		winnerId,
 		userObj,
-		roomClientId;
+		numKills 		= gameState['activePlayers'].length;
 		
 	if (gameState['places'].length == 1) {
-		// we have a winner
+		// we have a winner, set userObj to winner
 		winnerId = gameState['places'][0];
-		
-		console.log('*********************'+gameState['prevWinnerId']);
-		
-		if (gameState['prevWinnerId'] == -1) {
-			gameState['prevWinnerId'] = winnerId;
-		}
-		for (var i = 0; i < roomClientIds.length; i++) {
-			roomClientId = roomClientIds[i];
-			userObj = usersHash[roomClientId];
-			if (gameState['prevWinnerId'] == winnerId) {
-				userObj['winStreaks'] += 1;
-			} else {
-				userObj['winStreaks'] = 0;
-			}
-		}
-		
-		// set userObj to winner, and check win streaks
 		userObj = usersHash[winnerId];
 		
-		// if there's only one active player left, then the game is over, so call gameOver		
+		// if the previous winner id is not this winner's id, set it to this winner's id
+		if (prevWinnerId != winnerId) {
+			// get the previous winner, if any, and set winStreak to 0
+			if (usersHash[prevWinnerId]) {
+				usersHash[prevWinnerId]['winStreaks'] = 0;	
+			}
+			// set the gameState's prevWinnerId to this winner's id
+			gameState['prevWinnerId'] = winnerId;
+		}
+		userObj['winStreaks'] += numKills;
+		
+
+		// broadcast the winner to everyone in the room
 		roomClientIds.forEach(function(roomClientId) {
 			nowjs.getClient(roomClientId, function() {
 				this.now.broadcastWinner(userObj);
 			});
 		});
-
+		
 		// after the winner is broadcasted, check win streaks
-		checkWinStreaks(room, userObj);
+		checkWinStreaks(room, userObj, numKills);
 	}	
 }
 
-function checkWinStreaks(room, userObj) {
+function checkWinStreaks(room, userObj, numKills) {
 	console.log('checkWinStreaks');
+	console.log(numKills);
 	var roomClientIds = getRoomClients(room),
 		winStreaks = Math.min(10, userObj['winStreaks']),
+		winStreakMessage,
+		winStreakAudio,
+		simultaneousKillMessage,
+		simultaneousKillAudio,
 		winStreakMessageHash = {
-			3: 	'is on a killing spree!',
-			4: 	'is dominating!',
-			5: 	'has mega kill!',
-			6: 	'is unstoppable!',
-			7: 	'is wicked sick!',
-			8: 	'has monster kill!',
-			9: 	'is GODLIKE!!',
-			10: 'is BEYOND GODLIKE!!! Somebody stop this pro!!!'
+			3: 	{ message: 'is on a killing spree!', filename: 'killingspree.wav' },
+			4: 	{ message: 'is dominating!', filename: 'dominating.wav' },
+			5: 	{ message: 'has mega kill!', filename: 'megakill.wav' },
+			6: 	{ message: 'is unstoppable!', filename: 'unstoppable.wav' },
+			7: 	{ message: 'is wicked sick!', filename: 'wickedsick.wav' },
+			8: 	{ message: 'has monster kill!', filename: 'monsterkill.wav' },
+			9: 	{ message: 'is GODLIKE!!', filename: 'godlike.wav' },
+			10: { message: 'is BEYOND GODLIKE!!! Somebody stop this pro!!!', filename: 'holyshit.wav' }
+		},
+		simultaneousKillsHash = {
+			2:  { message: 'just got a double kill!', filename: 'doublekill.wav' },
+			3: 	{ message: 'just got a triple kill!', filename: 'triplekill.wav' }
 		};
-	console.log('win streaks = '+winStreaks);
-	if (winStreaks >= 3) {
-		winStreakMessage = winStreakMessageHash[winStreaks];
-		roomClientIds.forEach(function(roomClientId) {
-			nowjs.getClient(roomClientId, function() {
-				this.now.broadcastWinStreakMessage(userObj, winStreaks, winStreakMessage);
-			});
-		});	
+	
+	if (numKills >= 2) {
+		simultaneousKillMessage = 	simultaneousKillsHash[numKills]['message'];
+		simultaneousKillAudio 	=	simultaneousKillsHash[numKills]['filename'];
 	}
+	
+	if (winStreaks >= 3) {
+		winStreakMessage = winStreakMessageHash[winStreaks]['message'];
+		winStreakAudio = winStreakMessageHash[winStreaks]['filename'];
+	}
+	
+	roomClientIds.forEach(function(roomClientId) {
+		nowjs.getClient(roomClientId, function() {
+			this.now.broadcastWinStreakMessage(userObj, winStreaks, winStreakMessage, winStreakAudio, simultaneousKillMessage, simultaneousKillAudio);
+		});
+	});
 	
 }
 
