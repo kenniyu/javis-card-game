@@ -1,21 +1,24 @@
 {
-  "version": "0.7.6-325",
+  "version": "0.7.6-348",
   "domains": [
     "www.jabys.us",
     "blah.jabys.us"
   ],
   "dependencies": {
-    "express": "2.5.2",
-    "jade": ">= 0.0.1",
     "now": "0.7.x",
-    "ejs": "",
-    "socket.io": "0.8.5",
-    "socket.io-client": "",
-    "zlib": ""
+    "ejs": "*",
+    "socket.io-client": "*",
+    "zlib": "*"
   },
   "scripts": {
     "start": "app.js"
   },
+  "bundleDependencies": [
+    "express",
+    "jade",
+    "socket.io"
+  ],
+  "analyze": false,
   "subdomain": "jabys",
   "name": "jabys",
   "engines": {
