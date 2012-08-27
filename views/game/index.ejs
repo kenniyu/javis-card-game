@@ -306,6 +306,10 @@
 		}
 			
 		$(document).ready(function() {
+			var splitUrl = document.URL.split('/');
+			now.state = 'game',
+			now.roomId = parseInt( splitUrl[splitUrl.length - 1] );
+			
 			$(window).resize(function() {
 				var width = parseInt($(this).width());
 				if ( (currentWindowWidth > 320 && width <= 320) ) {
@@ -1179,6 +1183,11 @@
 				if (confirmLobby) {
 					document.location.href="/lobby";
 				}
+			});
+			
+			$(window).unload(function(e) {
+				document.location.href="/lobby";
+				e.preventDefault();
 			});
 			
 			now.redirectToLobby = function(message) {

@@ -5,7 +5,6 @@ var express = require('express'),
 var app = module.exports = express.createServer();
 
 var nowjs = require('now');
-var connectedFbIds = [];
 
 // Configuration
 
@@ -32,101 +31,44 @@ app.configure('production', function(){
 
 var sessionStore = {};
 
-function sessionExists(sessionID) {
-	console.log('sessionExists');
-	for (var key in sessionStore){
-		if (key == sessionID){
-			return true;
-		}
-	}
-	return false;
-}
-
-function addToSessionStore(request) {
-	console.log('addToSessionStore');
-	// session doesnt store sessionID...
-	request.session.sessionId = request.sessionID;
-	request.session.clientId = -1;
-	request.session.lastActiveTime = new Date();
-	// store session in sessionStore, with key = sessionID
-	sessionStore[request.sessionID] = request.session;
-}
-
-function setClientId(sessionID, clientId) {
-	console.log('setClientId');
-	// update any room user hash corresponding to this client
-	updateRoomClientId(sessionID, clientId);
+function beforeFilterUpdateSessionStore(requestObj, path) {
 	
-	sessionStore[sessionID].clientId = clientId;
-	sessionStore[sessionID].lastActiveTime = new Date();
-	return clientId;
-}
-
-function beforeFilterSession(request) {
-	console.log('beforeFilterSession');
-	// this gets run before every request. 
-	// First add session if not exists in our sessions hash
-	// Then set the sessions path variable
-	if (sessionExists(request.sessionID)){
+	var sessionID = requestObj['sessionID'];
+	if (!sessionStore[sessionID]) {
+		// add to session store
+		console.log('adding to session store');
+		sessionStore[sessionID] = {};
+	} else {
+		// exists, update state
+		sessionStore[sessionID]['state'] = path;
 	}
-	else{
-		addToSessionStore(request);
-	}
-	setPath(request);
+	
 }
 
-function setPath(request) {
-	console.log('setPath');
-	// Updates the path variable for the session corresponding to this request
-	var path = request.route.path;
-	sessionStore[request.sessionID].path = path;
-}
+app.get('/', function(req, res) {
+	beforeFilterUpdateSessionStore(req, 'index');
+	
+	res.render('index');
+});
 
-app.get('/', function(req, res){
-	beforeFilterSession(req);
+app.get('/lobby', function(req, res) {
+	beforeFilterUpdateSessionStore(req, 'lobby');
+	console.log('set state to lobby');
 	var myRooms = rooms;
-	if (req.session.auth == undefined){
-		// for anonymous users
-		res.render('index');
-	}
-	else {
-		// logged in with fb already, so redirect to lobby
-		res.redirect('/lobby');
-	}
+	res.render('lobby', { myRooms: myRooms } );	
 });
 
-app.get('/lobby', function(req, res){
-	beforeFilterSession(req);
-	var myRooms = rooms,
-		mySession = sessionStore[req.sessionID];
-	// get rooms
-
-	res.render('lobby', {sess: mySession, myRooms: myRooms});	
-});
-
-app.get('/game/:id', function(req, res){
-	beforeFilterSession(req);
-	var roomId = req.params.id;
+app.get('/game/:id', function(req, res) {
+	beforeFilterUpdateSessionStore(req, 'game');
+	var roomId = req.params.id,
+		sessionID = req['sessionID'];
 	if (roomId < 1 || roomId > NUM_ROOMS){
 		res.redirect('lobby');
 	}
 	else {
-		if (req.session.auth == undefined){
-			// playing as anon, set room id
-			sessionStore[req.sessionID].roomId = roomId;
-			res.render('game');
-		}
-		else if (sessionStore[req.sessionID].state == "game"){
-			// player is already connected, redirect to index
-			res.redirect('/');
-		}
-		else{
-			// playing as fb user
-			// connectedFbIds.push(req.session.auth.userId);
-			// set room id
-			sessionStore[req.sessionID].roomId = roomId;
-			res.render('game');
-		}
+		sessionStore[sessionID]['roomId'] = roomId;
+		console.log('we just set the room id. it is '+sessionStore[sessionID]['roomId']);
+		res.render('game');
 	}
 });
 
@@ -134,6 +76,7 @@ app.get('/game/:id', function(req, res){
 app.get('/rules', function(req, res){
 	res.render('rules');
 });
+
 
 app.listen(3000);
 
@@ -145,7 +88,7 @@ var rooms = [],
 	NUM_ROOMS = 20;
 
 
-function initializeRooms(){
+function initializeRooms() {
 	for (var i = 0; i < NUM_ROOMS; i++){
 		var roomObj = new Object();
 		roomObj.roomId = (i+1);
@@ -179,29 +122,11 @@ initializeRooms();
 
 function getGameState(nowUserObj) {
 	console.log('getGameState');
-	var clientSession = getClientSession(nowUserObj),
+	var clientSession = getSessionObj(nowUserObj),
 		roomId = clientSession.roomId,
 		gameState = rooms[roomId].gameState;
 		
 	return gameState;
-}
-
-function updateClientId(nowUserObj) {
-	console.log('updateClientId');
-	var clientSessionId = unescape(nowUserObj.cookie["connect.sid"]),
-		clientId = setClientId(clientSessionId, nowUserObj.clientId);
-	return clientId;
-}
-
-function getClientSession(nowUserObj) {
-	console.log('getClientSession');
-	var clientSessionId = unescape(nowUserObj.cookie["connect.sid"]);
-	var clientSession = sessionStore[clientSessionId];
-	if (clientSession == undefined) {
-	}
-	else {
-		return clientSession;	
-	}
 }
 
 function updateRoomClientId(sessionId, newClientId) {
@@ -247,46 +172,64 @@ function updateRoomClientId(sessionId, newClientId) {
 	}
 }
 
+function getSessionObj(nowUserObj) {
+	var sessionID			= nowUserObj['cookie']['connect.sid'],
+		unescapedSessionID 	= unescape(sessionID),
+		sessionObj			= sessionStore[unescapedSessionID];
+		
+	return sessionObj;
+}
+
 // when a client connects
 nowjs.on('connect', function() {
-	// whenever someone connects, they get a new clientId, so update the clientId
-	var clientId = updateClientId(this.user);
-	var clientSession = getClientSession(this.user);
+	var sessionObj 	= getSessionObj(this.user),
+		clientId	= this.user.clientId,
+		currState	= this.now['state'],
+		roomId,
+		room;
 	
-	// check the path to figure out where they're connecting to, as well as their state
-	if (clientSession.path.substring(0,5) == "/game" && clientSession.state != "game" && clientSession.roomId != -1){
-		// if they're trying to access /game and their state is not "game", 
-		// then set their state to "game"
-		clientSession.state = "game";
-		// client is in a game, so get room object
-		var roomId = clientSession.roomId;
-		var room = rooms[roomId - 1];
+	
+	// set the connected user's clientId,
+	sessionObj['clientId'] = clientId;
+	
+	if (currState == 'lobby') {
+		updateLobbyClientCount();
+	} else if (currState == 'game' && this.now['roomId']) {
+		roomId = this.now['roomId'];
+		sessionObj['roomId'] = roomId;
+		room		= rooms[roomId - 1];
 		
-		// setting up clientData
-		var clientData = clientSession.doc;
-		if (clientData != undefined) {	
-			// client is logged in with fb
-			var score = clientData.score;
-			var wins = clientData.wins;
-			var name = clientData.name.split(" ")[0];
-			var facebookId = clientData.facebookId;
-			var numGames = clientData.numGames;
-		}
-		else {
-			var score = 0;
-			var wins = 0;
-			var name = "n00b"+room.anonId;
-			var facebookId = 0;
-			var numGames = 0;
+		console.log('in this game statemenet');
+		// user vars
+		var score = 0,
+			wins = 0,
+			name = "n00b"+room.anonId,
+			numGames = 0;
+
+		// 	room vars
+		var gameState = room.gameState,
+			usersHash = room.usersHash,
+			waitingPlayers = room.waitingPlayers;
+
 			room.anonId += 1;
-		}
-		var gameState = room.gameState;
-		var usersHash = room.usersHash;
-		var waitingPlayers = room.waitingPlayers;
-		
+
 		var userType = ((gameState["isPlaying"] || getNumPlayers(room) == 4) ? "Observer": "Player");
 		this.now.name = name;
-		usersHash[clientId] = {"id": clientId, "name": name, "type": userType, "score": score, "wins": wins, "hand": [], "color": "#000000", "fbid": facebookId, "numGames": numGames, "sessionId": clientSession.sessionId, 'winStreaks': 0};
+
+		usersHash[clientId] = { 
+			"id": clientId, 
+			"name": name, 
+			"type": userType, 
+			"score": score, 
+			"wins": wins, 
+			"hand": [], 
+			"color": "#000000", 
+			"numGames": numGames,
+			'winStreaks': 0 
+		};
+
+		sessionObj['state'] = 'game';
+
 		var roomClients = getRoomClients(room);
 		
 		// populate the nickname input
@@ -327,12 +270,9 @@ nowjs.on('connect', function() {
 				});
 			});
 		}
-		
+
 		// someone joined this room, update lobby
-		updateLobbyClientCount(room);
-	}
-	else if (clientSession.path.substring(0,6) == '/lobby' && clientSession.state == "game") {
-		// disconnectFromGame(clientId, clientSession);
+		updateLobbyClientCount();
 	}
 });
 
@@ -366,118 +306,127 @@ function savePlayerStats(clientId, room) {
 	}
 }
 
-function disconnectFromGame(clientId, clientSession) {
+function disconnectFromGame(sessionObj, nowObj, clientId) {
 	console.log('disconnectFromGame');
 	
-	// if they were in a game, change their state to lobby		
-	var oldRoom = rooms[clientSession.roomId - 1];
-	var gameState = oldRoom.gameState;
-	var usersHash = oldRoom.usersHash;
-	clientSession.state = "lobby";
-	clientSession.roomId = -1;
-	if (clientSession.doc != undefined){
-		// if they logged in via fb, remove them from array of logged in fb users.
-		connectedFbIds.splice(connectedFbIds.indexOf(usersHash[clientId]["fbid"]), 1);
-	}
-	
+	var oldRoomId	=	nowObj['roomId'],
+		nextState 	= 	sessionObj['state'],
+		oldRoom,
+		gameState,
+		usersHash;
+
 	// their previous state was in a game.
-	if (Object.size(usersHash) > 1) {
-		// continue if there's still someone connected to the server
+	if (oldRoomId) {
 
-		// update chat
-		broadcastLeave(clientId, oldRoom);
+		oldRoom		=	rooms[oldRoomId - 1];
+		gameState 	= 	oldRoom['gameState'];
+		usersHash 	= 	oldRoom['usersHash'];
+
+		if (Object.size(usersHash) > 1) {
+			// continue if there's still someone connected to the server
+
+			// update chat
+			broadcastLeave(clientId, oldRoom);
 		
-		var playerIndex = gameState["players"].indexOf(clientId);
-		if (playerIndex > -1) {
+			var playerIndex = gameState["players"].indexOf(clientId);
+			if (playerIndex > -1) {
 
-			// remove cards from the FRONTEND
-			updatePlayerHand(usersHash[clientId]["hand"], clientId, "remove", oldRoom);
-			// update moveBits
-			gameState["moveBits"][playerIndex] = -1
+				// remove cards from the FRONTEND
+				updatePlayerHand(usersHash[clientId]["hand"], clientId, "remove", oldRoom);
+				// update moveBits
+				gameState["moveBits"][playerIndex] = -1
 
-			if (gameState["activePlayers"].indexOf(clientId) > -1) {
-				// player was active. splice him (and don't place him)
-				gameState["activePlayers"].splice(gameState["activePlayers"].indexOf(clientId), 1);
-				// update leaver score. since he was active, isWinner = false
-				preparePlayerStats(clientId, false, true, oldRoom);
+				if (gameState["activePlayers"].indexOf(clientId) > -1) {
+					// player was active. splice him (and don't place him)
+					gameState["activePlayers"].splice(gameState["activePlayers"].indexOf(clientId), 1);
+					// update leaver score. since he was active, isWinner = false
+					preparePlayerStats(clientId, false, true, oldRoom);
 
-				if (gameState["activePlayers"].length == 1){
-					// number of active players went from 2 to 1, so update the player that's left's score
-					// if no one has been placed, then he is the winner
-					var remainingActivePlayer = gameState["activePlayers"][0];
-					preparePlayerStats(remainingActivePlayer, gameState["places"].length == 0, false, oldRoom);
+					if (gameState["activePlayers"].length == 1){
+						// number of active players went from 2 to 1, so update the player that's left's score
+						// if no one has been placed, then he is the winner
+						var remainingActivePlayer = gameState["activePlayers"][0];
+						preparePlayerStats(remainingActivePlayer, gameState["places"].length == 0, false, oldRoom);
+					}
 				}
-			}
-			else{
-				// player is not active, already played all of his cards
-				// his score should've already been updated
-			}
-
-			if (gameState["activePlayers"].length > 1){
-				if (gameState["currentPlayer"] == clientId) {
-					alertNextPlayer(oldRoom);
+				else{
+					// player is not active, already played all of his cards
+					// his score should've already been updated
 				}
+
+				if (gameState["activePlayers"].length > 1){
+					if (gameState["currentPlayer"] == clientId) {
+						alertNextPlayer(oldRoom);
+					}
+				}
+
+				// check game over to broadcast
+				checkGameOver(oldRoom);
 			}
+			// delete user from the server
+			delete usersHash[clientId];
 
-			// check game over to broadcast
-			checkGameOver(oldRoom);
-		}
-		// delete user from the server
-		delete usersHash[clientId];
-
-		// update scoreboard
-		var roomClients = getRoomClients(oldRoom);
-		roomClients.forEach(function(clientId){
-			nowjs.getClient(clientId, function(){
-				this.now.updateScoreboard(usersHash);
-			});
-		});
-		
-		if (gameState["isPlaying"] == false && Object.size(usersHash) < 2) {
-			// hide the start button
+			// update scoreboard
+			var roomClients = getRoomClients(oldRoom);
 			roomClients.forEach(function(clientId){
 				nowjs.getClient(clientId, function(){
-					this.now.removeStartButton();
-					this.now.showWaitForGame();
+					this.now.updateScoreboard(usersHash);
 				});
 			});
+		
+			if (gameState["isPlaying"] == false && Object.size(usersHash) < 2) {
+				// hide the start button
+				roomClients.forEach(function(clientId){
+					nowjs.getClient(clientId, function(){
+						this.now.removeStartButton();
+						this.now.showWaitForGame();
+					});
+				});
+			}
 		}
+		else {
+			console.log('here');
+			delete usersHash[clientId];
+		}
+		delete sessionObj['roomId'];
+
+		// potentially usersHash
 	}
-	else {
-		delete usersHash[clientId];
-	}
-	// someone left the room, update lobby
-	updateLobbyClientCount(oldRoom);
 }
 
 // when a client disconnects
 nowjs.on('disconnect', function() {
-	
-	var clientId = updateClientId(this.user)
-	var clientSession = getClientSession(this.user);
-	
-	if (clientSession.state == "game"){
-
-		disconnectFromGame(clientId, clientSession);
-	}
+	var	sessionObj	=	getSessionObj(this.user),
+		clientId	= 	this.user.clientId;
+	disconnectFromGame(sessionObj, this.now, clientId);
 	
 });
 
-function updateLobbyClientCount(room) {
+function updateLobbyClientCount() {
 	console.log('updateLobbyClientCount');
-	var lobbyClientIds = getLobbyClients();
-	var playerIds = getPlayerIds(room);
+	var lobbyClientIds 		= getLobbyClients(),
+		roomsHash			= {},
+		room;	
 	
-	lobbyClientIds.forEach(function(clientId){
-		nowjs.getClient(clientId, function(){
-			this.now.updateClientCount(room.roomId, playerIds.length);
+	console.log('lobby clients = ');
+	console.log(lobbyClientIds);
+	
+	for (var i = 0; i < rooms.length; i++) {
+		room = rooms[i];
+		roomsHash[i+1] = getNumPlayers(room);
+	}
+	console.log(roomsHash);
+	
+	lobbyClientIds.forEach(function(clientId) {
+		nowjs.getClient(clientId, function() {
+			this.now.updateClientCount(roomsHash);
 		});
 	});
 }
 
 everyone.now.waitForGame = function() {
 	console.log('now.waitForGame');
-	var clientSession = getClientSession(this.user);
+	var clientSession = getSessionObj(this.user);
 	var roomId = clientSession.roomId;
 	
 	var room = rooms[roomId - 1];
@@ -503,12 +452,12 @@ everyone.now.waitForGame = function() {
 // called when anyone on client side presses start game button
 everyone.now.initGame = function() {
 	console.log('now.initGame');
-	var clientSession = getClientSession(this.user);
+	var clientSession = getSessionObj(this.user);
 	var roomId = clientSession.roomId;
 	var room = rooms[roomId - 1];
 	if (room == undefined){
 		// return error
-		disconnectFromGame(this.user.clientId, clientSession);
+		disconnectFromGame(this.user.clientId, this.now, clientSession);
 		var errorMessage = "An error has occurred. Please try joining a room again.";
 		this.now.redirectToLobby(errorMessage);
 		return;
@@ -592,6 +541,8 @@ function getRoomClients(room) {
 	for (var clientId in usersHash){
 		clientIds.push(clientId);
 	}
+	console.log('room clients = ');
+	console.log(clientIds);
 	return clientIds;
 }
 
@@ -857,7 +808,7 @@ function beginPlaying(room) {
 everyone.now.sendMove = function(hand) {
 	console.log('now.sendMove');
 	
-	var clientSession = getClientSession(this.user),
+	var clientSession = getSessionObj(this.user),
 		roomId = clientSession.roomId,
 		room = rooms[roomId - 1],
 		message;
@@ -1425,16 +1376,14 @@ function getNumCardsLeft(room) {
 
 function getLobbyClients() {
 	console.log('getLobbyClients');
-	updateSessionStore();
-	
-	var clientIds = [];
+	var lobbyClientIds = [];
 	for (var sessionId in sessionStore){
-		if (sessionStore[sessionId].path == "/lobby"){
-			clientIds.push(sessionStore[sessionId].clientId);
+		if (sessionStore[sessionId]['state'] == 'lobby') {
+			lobbyClientIds.push(sessionStore[sessionId].clientId);
 		}
 	}
 	
-	return clientIds;
+	return lobbyClientIds;
 }
 
 function broadcastGameOver(room) {
@@ -1732,7 +1681,7 @@ function checkEveryonePassed(room) {
 
 everyone.now.sendPassMove = function() {
 	console.log('now.sendPassMove');
-	var clientSession = getClientSession(this.user),
+	var clientSession = getSessionObj(this.user),
 		roomId = clientSession.roomId,
 		room = rooms[roomId - 1];
 	
@@ -2163,6 +2112,8 @@ function getPlayerIds(room) {
 	var playerIds = [];
 	var usersHash = room.usersHash;
 	
+	console.log(usersHash);
+	
 	for (var key in usersHash){
 		if (usersHash[key]["type"] == "Player"){
 			playerIds.push(key);
@@ -2199,40 +2150,41 @@ function getNumPlayers(room) {
 // chat, nickname functions
 everyone.now.submitChat = function(message) {
 	console.log('now.submitChat');
-	var clientSession = getClientSession(this.user);
-	var roomId = clientSession.roomId;
-	var room = rooms[roomId - 1];
-	var roomClients = getRoomClients(room);
-	var usersHash = room.usersHash;
+	var clientSession = getSessionObj(this.user),
+		roomId = clientSession.roomId;
 	
-	// when a user submits chat message
-	var text = encodeHTML(message);
-	
-	if (text.substring(0,4) == "/me ") {
-		type = "emote";
-		text = text.substring(4);
-	}
-	else {
-		type = "chat";
-	}
-	
-	var clientId = this.user.clientId;
-	var clientName = getPlayerName(clientId, room);
-	var userInfo = {"id": clientId, "name": clientName};
-	var messageHash = {"userInfo": userInfo, "type": type, "text": text}
-	var color = usersHash[clientId]["color"];
-	
-	roomClients.forEach(function(clientId){
-		nowjs.getClient(clientId, function(){
-			this.now.updateChat(messageHash, color);
+	if (roomId) {
+		var room = rooms[roomId - 1];
+		var roomClients = getRoomClients(room);
+		var usersHash = room.usersHash;
+
+		// when a user submits chat message
+		var text = encodeHTML(message);
+
+		if (text.substring(0,4) == "/me ") {
+			type = "emote";
+			text = text.substring(4);
+		}
+		else {
+			type = "chat";
+		}
+
+		var clientId = this.user.clientId;
+		var clientName = getPlayerName(clientId, room);
+		var userInfo = {"id": clientId, "name": clientName};
+		var messageHash = {"userInfo": userInfo, "type": type, "text": text}
+		var color = usersHash[clientId]["color"];
+
+		roomClients.forEach(function(clientId){
+			nowjs.getClient(clientId, function(){
+				this.now.updateChat(messageHash, color);
+			});
 		});
-	});
-	
-	
+	}
 }
 everyone.now.submitNickname = function(name) {
 	console.log('now.submitNickname');
-	var clientSession = getClientSession(this.user);
+	var clientSession = getSessionObj(this.user);
 	var roomId = clientSession.roomId;
 	var room = rooms[roomId - 1];
 	var roomClients = getRoomClients(room);
@@ -2336,14 +2288,3 @@ Array.prototype.flatten = function flatten() {
 function encodeHTML(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 }
-
-
-setInterval(function(){
-	// if session doesn't exist anymore delete from session store
-	var currentTime = new Date();
-	for (var sessionId in sessionStore){
-		if (sessionStore[sessionId] == undefined){
-			delete sessionStore[sessionId];
-		}
-	}
-}, 10000);

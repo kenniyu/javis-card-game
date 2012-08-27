@@ -15,10 +15,17 @@
 	<!-- // <script src="/nowjs/now.js"></script> -->
 	
 	<script type="text/javascript">	// juicy stuff
+	
 		$().ready(function() {
+			now.state = 'lobby',
 			
-			now.updateClientCount = function(roomId, numPlayers){
-				$('#room-'+roomId).find('.game-players').text(numPlayers + "/4 players");
+			now.updateClientCount = function(roomsHash){
+				console.log(now);
+				var numPlayers;
+				for (var roomId in roomsHash) {
+					numPlayers = roomsHash[roomId];
+					$('#room-'+roomId).find('.game-players').text(numPlayers + "/4 players");
+				}
 			}
 			
 			function updateOrientation(){
